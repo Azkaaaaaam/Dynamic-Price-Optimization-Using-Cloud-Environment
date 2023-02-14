@@ -1,187 +1,175 @@
-
-# -*- coding: utf-8 -*-
-# Copyright 2018-2022 Streamlit Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-"""An example of showing geographic data."""
-
-import altair as alt
-import numpy as np
-import pandas as pd
-import pydeck as pdk
+import coiled
+import dask
+import dask.dataframe as dd
+import folium
 import streamlit as st
+from dask.distributed import Client
+from folium.plugins import HeatMap
+from streamlit_folium import folium_static
 
-# SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
-st.set_page_config(layout="wide", page_title="NYC Ridesharing Demo", page_icon=":taxi:")
+# Text in Streamlit
+st.header("Coiled and Streamlit")
+st.subheader("Analyzing Large Datasets with Coiled and Streamlit")
+st.write(
+    """
+    The computations for this Streamlit app are powered by Coiled, which
+    provides on-demand, hosted Dask clusters in the cloud. Change the options
+    below to view different visualizations of transportation pickups/dropoffs,
+    then let Coiled handle all of the infrastructure and compute.
+    """
+)
 
-# LOAD DATA ONCE
-@st.experimental_singleton
+# Interactive widgets in Streamlit
+taxi_mode = st.selectbox("Taxi pickup or dropoff?", ("Pickups", "Dropoffs"))
+num_passengers = st.slider("Number of passengers", 0, 9, (0, 9))
+
+# Start and connect to Coiled cluster
+cluster_state = st.empty()
+
+@st.cache(allow_output_mutation=True)
+def get_client():
+    cluster_state.write("Starting or connecting to Coiled cluster...")
+    cluster = coiled.Cluster(
+        n_workers=10,
+        name="coiled-streamlit",
+        software="coiled-examples/streamlit"
+    )
+    client = Client(cluster)
+    return client
+
+
+client = get_client()
+if client.status == "closed":
+    # In a long-running Streamlit app, the cluster could have shut down from idleness.
+    # If so, clear the Streamlit cache to restart it.
+    st.caching.clear_cache()
+    client = get_client()
+cluster_state.write(f"Coiled cluster is up! ({client.dashboard_link})")
+
+# Load data (runs on Coiled)
+@st.cache(hash_funcs={dd.DataFrame: dask.base.tokenize})
 def load_data():
-    data = pd.read_csv(
-        "uber-raw-data-sep14.csv.gz",
-        nrows=100000,  # approx. 10% of data
-        names=[
-            "date/time",
-            "lat",
-            "lon",
-        ],  # specify names directly since they don't change
-        skiprows=1,  # don't read header since names specified directly
-        usecols=[0, 1, 2],  # doesn't load last column, constant value "B02512"
-        parse_dates=[
-            "date/time"
-        ],  # set as datetime instead of converting after the fact
+    df = dd.read_csv(
+        "s3://nyc-tlc/trip data/yellow_tripdata_2015-*.csv",
+        usecols=[
+            "passenger_count",
+            "pickup_longitude",
+            "pickup_latitude",
+            "dropoff_longitude",
+            "dropoff_latitude",
+            "tip_amount",
+            "payment_type",
+        ],
+        storage_options={"anon": True},
+        blocksize="16 MiB",
     )
-
-    return data
-
-
-# FUNCTION FOR AIRPORT MAPS
-def map(data, lat, lon, zoom):
-    st.write(
-        pdk.Deck(
-            map_style="mapbox://styles/mapbox/light-v9",
-            initial_view_state={
-                "latitude": lat,
-                "longitude": lon,
-                "zoom": zoom,
-                "pitch": 50,
-            },
-            layers=[
-                pdk.Layer(
-                    "HexagonLayer",
-                    data=data,
-                    get_position=["lon", "lat"],
-                    radius=100,
-                    elevation_scale=4,
-                    elevation_range=[0, 1000],
-                    pickable=True,
-                    extruded=True,
-                ),
-            ],
-        )
-    )
+    df = df.dropna()
+    df.persist()
+    return df
 
 
-# FILTER DATA FOR A SPECIFIC HOUR, CACHE
-@st.experimental_memo
-def filterdata(df, hour_selected):
-    return df[df["date/time"].dt.hour == hour_selected]
+df = load_data()
 
-
-# CALCULATE MIDPOINT FOR GIVEN SET OF DATA
-@st.experimental_memo
-def mpoint(lat, lon):
-    return (np.average(lat), np.average(lon))
-
-
-# FILTER DATA BY HOUR
-@st.experimental_memo
-def histdata(df, hr):
-    filtered = data[
-        (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
+# Filter data based on inputs (runs on Coiled)
+with st.spinner("Calculating map data..."):
+    map_data = df[
+        (df["passenger_count"] >= num_passengers[0])
+        & (df["passenger_count"] <= num_passengers[1])
     ]
 
-    hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
+    if taxi_mode == "Pickups":
+        map_data = map_data.iloc[:, [2, 1]]
+    elif taxi_mode == "Dropoffs":
+        map_data = map_data.iloc[:, [4, 3]]
 
-    return pd.DataFrame({"minute": range(60), "pickups": hist})
+    map_data.columns = ["lat", "lon"]
+    map_data = map_data.loc[~(map_data == 0).all(axis=1)]
+    map_data = map_data.head(500)
 
+# Display map in Streamlit
+st.subheader("Map of selected rides")
+m = folium.Map([40.76, -73.95], tiles="cartodbpositron", zoom_start=12)
+HeatMap(map_data).add_to(folium.FeatureGroup(name="Heat Map").add_to(m))
+folium_static(m)
 
-# STREAMLIT APP LAYOUT
-data = load_data()
+# Performing a groupby
+st.subheader(
+    'Time for some heavier lifting!'
+)
 
-# LAYING OUT THE TOP SECTION OF THE APP
-row1_1, row1_2 = st.columns((2, 3))
-
-# SEE IF THERE'S A QUERY PARAM IN THE URL (e.g. ?pickup_hour=2)
-# THIS ALLOWS YOU TO PASS A STATEFUL URL TO SOMEONE WITH A SPECIFIC HOUR SELECTED,
-# E.G. https://share.streamlit.io/streamlit/demo-uber-nyc-pickups/main?pickup_hour=2
-if not st.session_state.get("url_synced", False):
-    try:
-        pickup_hour = int(st.experimental_get_query_params()["pickup_hour"][0])
-        st.session_state["pickup_hour"] = pickup_hour
-        st.session_state["url_synced"] = True
-    except KeyError:
-        pass
-
-# IF THE SLIDER CHANGES, UPDATE THE QUERY PARAM
-def update_query_params():
-    hour_selected = st.session_state["pickup_hour"]
-    st.experimental_set_query_params(pickup_hour=hour_selected)
-
-
-with row1_1:
-    st.title("NYC Uber Ridesharing Data")
-    hour_selected = st.slider(
-        "Select hour of pickup", 0, 23, key="pickup_hour", on_change=update_query_params
-    )
-
-
-with row1_2:
-    st.write(
-        """
-    ##
-    Examining how Uber pickups vary over time in New York City's and at its major regional airports.
-    By sliding the slider on the left you can view different slices of time and explore different transportation trends.
-    """
-    )
-
-# LAYING OUT THE MIDDLE SECTION OF THE APP WITH THE MAPS
-row2_1, row2_2, row2_3, row2_4 = st.columns((2, 1, 1, 1))
-
-# SETTING THE ZOOM LOCATIONS FOR THE AIRPORTS
-la_guardia = [40.7900, -73.8700]
-jfk = [40.6650, -73.7821]
-newark = [40.7090, -74.1805]
-zoom_level = 12
-midpoint = mpoint(data["lat"], data["lon"])
-
-with row2_1:
-    st.write(
-        f"""**All New York City from {hour_selected}:00 and {(hour_selected + 1) % 24}:00**"""
-    )
-    map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
-
-with row2_2:
-    st.write("**La Guardia Airport**")
-    map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
-
-with row2_3:
-    st.write("**JFK Airport**")
-    map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
-
-with row2_4:
-    st.write("**Newark Airport**")
-    map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
-
-# CALCULATING DATA FOR THE HISTOGRAM
-chart_data = histdata(data, hour_selected)
-
-# LAYING OUT THE HISTOGRAM SECTION
 st.write(
-    f"""**Breakdown of rides per minute between {hour_selected}:00 and {(hour_selected + 1) % 24}:00**"""
+    '''
+    Let's move on to doing some heavier lifting to really see Dask in action.
+    We'll try grouping a column and calculating a summary statistic for the tip amount.
+    \n Select a column to group by below and a summary statistic to calculate:
+    '''
 )
 
-st.altair_chart(
-    alt.Chart(chart_data)
-    .mark_area(
-        interpolate="step-after",
-    )
-    .encode(
-        x=alt.X("minute:Q", scale=alt.Scale(nice=False)),
-        y=alt.Y("pickups:Q"),
-        tooltip=["minute", "pickups"],
-    )
-    .configure_mark(opacity=0.2, color="red"),
-    use_container_width=True,
+# Interactive widgets in Streamlit
+groupby_column = st.selectbox(
+    "Which column do you want to group by?",
+    ('passenger_count', 'payment_type')
 )
+
+aggregator = st.selectbox(
+    "Which summary statistic do you want to calculate?",
+    ("Mean", "Sum", "Median")
+)
+
+st.subheader(
+    f"The {aggregator} tip_amount by {groupby_column} is:"
+)
+
+if st.button('Start Computation!'):
+    with st.spinner("Performing your groupby aggregation..."):
+        if aggregator == "Sum":
+            st.write(
+                df.groupby(groupby_column).tip_amount.sum().compute()
+            )
+        elif aggregator == "Mean":
+            st.write(
+                df.groupby(groupby_column).tip_amount.mean().compute()
+            )
+        elif aggregator == "Median":
+            st.write(
+                df.groupby(groupby_column).tip_amount.median().compute()
+            )
+
+# Option to scale cluster up/down
+st.subheader(
+    "Scaling your cluster up or down"
+)
+
+st.write(
+    '''
+    By default, your Coiled Cluster spins up with 10 workers.
+    You can scale this number up or down using the slider and button below.
+    '''
+)
+
+num_workers = st.slider(
+    "Number of workers",
+    5,
+    20,
+    (10)
+)
+
+if st.button("Scale your cluster!"):
+    coiled.Cluster(name='coiled-streamlit').scale(num_workers)
+
+
+# Option to shutdown cluster
+st.subheader(
+    "Cluster Hygiene"
+)
+
+st.write(
+    '''
+    To avoid incurring unnecessary costs, click the button below to shut down your cluster.
+    Note that this means that a new cluster will have to be spun up the next time you run the app.
+    '''
+)
+
+if st.button('Shutdown Cluster'):
+    with st.spinner("Shutting down your cluster..."):
+        client.shutdown()
