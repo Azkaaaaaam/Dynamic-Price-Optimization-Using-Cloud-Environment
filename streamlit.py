@@ -85,7 +85,7 @@ def estimate_duration(distance, speed):
 
     return duration
 
-col1, col2, col3 = st.columns(3, widths=[25, 50, 25])
+col1, col2, col3 = st.columns(3, widths=[0.25, 0.50, 0.25])
 
 with col1:
     with st.form("my_form"):
