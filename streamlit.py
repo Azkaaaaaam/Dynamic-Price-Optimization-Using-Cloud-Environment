@@ -78,6 +78,13 @@ def haversine(lon1, lat1, lon2, lat2):
     r = 6371  # Radius of earth in kilometers
     return c * r
 
+# Estimate the duration of a trip based on the distance and assuming that the speed average that we define later ( 60 km/h) 
+def estimate_duration(distance, speed):
+    # Calculate the duration in minutes
+    duration = distance / speed * 60
+
+    return duration
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -121,11 +128,13 @@ if submitted:
     pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
     dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0] 
     dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
-       # Calculate the distance between the pickup and dropoff locations
+    # Calculate the distance between the pickup and dropoff locations
     distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
+    # Estimate the duration of the trip based on the distance and average speed
+    speed = 60  # Average speed in kilometers per hour
+    duration = estimate_duration(distance, speed)
 
- 
-    
+
     # Do something with the form results and calculated distance
     st.write(f"Pickup location: {pulocation}")
     st.write(f"Pickup lat: {pickup_lat}")
