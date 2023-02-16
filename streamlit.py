@@ -35,5 +35,5 @@ with col1:
             st.write("Outside the form")
 
 with col2:
-            st.subheader('Map of all pickups at %s:00' % hour_to_filter)
+            st.subheader('Map of all pickups at %s:00')
             st.map(filtered_data)
