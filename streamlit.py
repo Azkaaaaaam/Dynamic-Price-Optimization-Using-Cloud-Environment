@@ -135,6 +135,15 @@ if submitted:
     duration = estimate_duration(distance, speed)
 
 
+with col2:
+      st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="500" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
+
+
+import streamlit as st
+
+st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km", icon="✅")
+
+
     # Do something with the form results and calculated distance
     st.write(f"Pickup location: {pulocation}")
     st.write(f"Pickup lat: {pickup_lat}")
@@ -145,10 +154,3 @@ if submitted:
     st.write(f"Dropoff lon: {dropoff_lon}")
     st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
     st.write(f"Trip Duration: {duration:.2f} mins")
-
-with col2:
-      st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="600" height="600" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
-
-
-
-
