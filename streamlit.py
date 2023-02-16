@@ -40,7 +40,7 @@ if response.status_code == 200:
             # Check if the the_geom key exists in the current item
             if 'the_geom' in item:
                 # Get the coordinates from the geometry
-                geometry = item['the_geom']
+                geometry = item.get['the_geom']
                 if 'coordinates' in geometry:
                     coordinates = geometry['coordinates']
                     if len(coordinates) >= 2:
