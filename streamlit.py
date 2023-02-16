@@ -83,6 +83,13 @@ with col1:
 
                 # Every form must have a submit button.
                 submitted = st.form_submit_button("Submit")
+            if submitted:
+                pulocation = st.form_result['Pickup location']
+                dolocation = st.form_result['Dropoff location']
+                date_of_pickup = st.form_result['Date of pickup']
+                time_of_pickup = st.form_result['Time of pickup']
+                tpep_pickup_datetime = pd.Timestamp.combine(date_of_pickup, time_of_pickup)
+
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="600" height="600" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
 
