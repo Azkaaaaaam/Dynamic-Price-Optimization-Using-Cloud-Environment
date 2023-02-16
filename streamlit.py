@@ -70,17 +70,7 @@ data_dict = {
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
-def haversine(lon1, lat1, lon2, lat2):
-    # Convert latitude and longitude values to radians
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-    
-    # Calculate the haversine distance
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-    c = 2 * asin(sqrt(a))
-    r = 6371  # Radius of earth in kilometers
-    return c * r
+
 
 
 col1, col2 = st.columns(2)
@@ -127,8 +117,7 @@ if submitted:
     dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0] 
     dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
     
-    # Calculate the distance between the pickup and dropoff locations
-    distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
+ 
     
     # Do something with the form results and calculated distance
     st.write(f"Pickup location: {pulocation}")
@@ -139,7 +128,6 @@ if submitted:
     st.write(f"Dropoff lat: {dropoff_lat}")
     st.write(f"Dropoff lon: {dropoff_lon}")
     
-    st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
 
 
 
