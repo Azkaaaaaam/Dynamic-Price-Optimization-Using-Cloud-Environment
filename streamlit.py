@@ -44,7 +44,7 @@ if response.status_code == 200:
               # Extract the latitude and longitude from the coordinates
                 latitude = coordinates[1]
                 longitude = coordinates[0]
-             else:
+            else:
                 latitude = None
                 longitude = None
 
