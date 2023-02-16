@@ -20,12 +20,8 @@ def load_data(nrows):
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
 data_load_state.text("Done!")
- 
-# Load the CSV file into a pandas DataFrame
-df = pd.read_csv(taxi_zones.csv)
 
-# Print the first few rows of the DataFrame
-print(df.head(3))
+
 col1, col2 = st.columns(2)
 
 with col1:
