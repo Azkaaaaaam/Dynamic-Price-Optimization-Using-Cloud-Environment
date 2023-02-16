@@ -18,7 +18,9 @@ root = ET.fromstring(xml_data)
 # Extract the zones data
 zones = []
 for elem in root.iter("row"):
-    zone = elem.find("zone").text
+    zone_element = elem.find("zone")
+    zone = zone_element.text if zone_element is not None else ""
+
     location_id = elem.find("locationid").text
     borough = elem.find("borough").text
     zones.append([zone, location_id, borough])
