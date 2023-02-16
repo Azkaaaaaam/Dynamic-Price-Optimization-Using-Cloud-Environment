@@ -53,5 +53,4 @@ with col2:
                     latitude=37.76,
                     longitude=-122.4,
                     zoom=11,
-                    pitch=50,
-                )
+                    pitch=50)
