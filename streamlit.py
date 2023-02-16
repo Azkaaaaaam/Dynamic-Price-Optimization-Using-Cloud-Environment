@@ -80,19 +80,20 @@ data_dict = {
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
-def haversine(lat1, lon1, lat2, lon2):
-    """
-    Calculate the great circle distance between two points
-    on the earth (specified in decimal degrees)
-    """
-    # convert decimal degrees to radians
+def haversine(lon1, lat1, lon2, lat2):
+    # Check if any input value is missing or not a number
+    if not all(isinstance(v, (float, int)) for v in (lon1, lat1, lon2, lat2)):
+        return 0
+    
+    # Convert latitude and longitude values to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-    # haversine formula 
-    dlon = lon2 - lon1 
-    dlat = lat2 - lat1 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a)) 
-    r = 6371 # Radius of earth in kilometers. Use 3956 for miles
+    
+    # Calculate the haversine distance
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * asin(sqrt(a))
+    r = 6371  # Radius of earth in kilometers
     return c * r
 
 
@@ -141,7 +142,7 @@ if submitted:
     dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  or 0.0
     
     # Calculate the distance between the pickup and dropoff locations
-    distance = haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
+    distance = haversine(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat)
     
     # Do something with the form results and calculated distance
     st.write(f"Pickup location: {pulocation}")
