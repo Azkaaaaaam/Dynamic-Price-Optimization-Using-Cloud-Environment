@@ -47,11 +47,11 @@ with col1:
             with st.form("my_form"):
                 st.selectbox(
                     'Pickup location',
-                    zone
+                    location_id
                 )  
                 st.selectbox(
                     'Dropoff location',
-                    zone
+                    location_id
                 )  
                 st.date_input(
                     'Date of pickup',
