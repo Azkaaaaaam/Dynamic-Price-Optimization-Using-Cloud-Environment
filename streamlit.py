@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 import requests
 from math import radians, cos, sin, asin, sqrt
 import pydeck as pdk
-
+st.set_page_config(layout="wide")
 st.title('Uber pickups in NYC')
 
 # Set the API endpoint URL
@@ -85,7 +85,7 @@ def estimate_duration(distance, speed):
 
     return duration
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns(3, widths=[25, 50, 25])
 
 with col1:
     with st.form("my_form"):
