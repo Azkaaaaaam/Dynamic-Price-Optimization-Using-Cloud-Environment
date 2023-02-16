@@ -81,10 +81,6 @@ data_dict = {
 df = pd.DataFrame(data_dict)
 
 def haversine(lon1, lat1, lon2, lat2):
-    # Check if any input value is missing or not a number
-    if not all(isinstance(v, (float, int)) for v in (lon1, lat1, lon2, lat2)):
-        return 0
-    
     # Convert latitude and longitude values to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
     
