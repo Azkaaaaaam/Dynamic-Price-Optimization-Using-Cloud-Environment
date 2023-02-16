@@ -22,18 +22,23 @@ data_load_state.text("Done!")
 col1, col2 = st.columns(2)
 
 with col1:
-            if st.checkbox('Show raw data'):
-                st.subheader('Raw data')
-                st.write(data)
 
-            st.subheader('Number of pickups by hour')
-            hist_values = np.histogram(data[DATE_COLUMN].dt.hour, bins=24, range=(0,24))[0]
-            st.bar_chart(hist_values)
+            with st.form("my_form"):
+               st.write("Inside the form")
+               slider_val = st.slider("Form slider")
+               checkbox_val = st.checkbox("Form checkbox")
 
-            # Some number in the range 0-23
-            hour_to_filter = st.slider('hour', 0, 23, 17)
-            filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
+               # Every form must have a submit button.
+               submitted = st.form_submit_button("Submit")
+               if submitted:
+                   st.write("slider", slider_val, "checkbox", checkbox_val)
+            st.write("Outside the form")
+            form = st.form("my_form")
+            form.slider("Inside the form")
+            st.slider("Outside the form")
 
+            # Now add a submit button to the form:
+            form.form_submit_button("Submit")
 with col2:
             st.subheader('Map of all pickups at %s:00' % hour_to_filter)
             st.map(filtered_data)
