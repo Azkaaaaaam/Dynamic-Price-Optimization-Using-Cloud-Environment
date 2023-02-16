@@ -142,7 +142,7 @@ if submitted:
     dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  or 0.0
     
     # Calculate the distance between the pickup and dropoff locations
-    distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon
+    distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
     
     # Do something with the form results and calculated distance
     st.write(f"Pickup location: {pulocation}")
@@ -152,7 +152,6 @@ if submitted:
     st.write(f"Dropoff location: {dolocation}")
     st.write(f"Dropoff lat: {dropoff_lat}")
     st.write(f"Dropoff lon: {dropoff_lon}")
-
     
     st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
 
