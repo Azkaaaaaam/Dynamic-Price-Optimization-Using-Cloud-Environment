@@ -87,7 +87,6 @@ def estimate_duration(distance, speed):
 
 col1, col2, col3 = st.columns([0.25, 0.5, 0.25])
 
-
 with col1:
     with st.form("my_form"):
         pickup_location = st.selectbox(
