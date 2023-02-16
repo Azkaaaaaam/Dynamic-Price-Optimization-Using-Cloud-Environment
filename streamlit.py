@@ -30,9 +30,7 @@ xml_data = response.read()
 
 # Parse the XML data and extract the id of the pickup place
 root = ET.fromstring(xml_data)
-for row in root.iter("row"):
-    pickup_place_id = row.find("pickup_location_id").text
-    print(pickup_place_id)
+
 col1, col2 = st.columns(2)
 
 with col1:
