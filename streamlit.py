@@ -135,11 +135,11 @@ with col1:
         duration = estimate_duration(distance, speed)
 
 with col2:
-      st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="500" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
+      st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="400" height="400" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
         
 with col3:
-    st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
-    st.success(f"Trip Duration: {duration:.2f} mins")
+      st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+      st.success(f"Trip Duration: {duration:.2f} mins")
 
 # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
