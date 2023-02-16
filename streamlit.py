@@ -8,40 +8,24 @@ import xml.etree.ElementTree as ET
 
 st.title('Uber pickups in NYC')
 
-# Retrieve the XML file from the URL
-url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOWNLOAD"
-try:
-    with urllib.request.urlopen(url) as response:
-        xml_data = response.read()
-except urllib.error.URLError as e:
-    print(f"Error retrieving XML file: {e.reason}")
-    xml_data = None
+import requests
 
-if xml_data is not None:
-    # Parse the XML data
-    try:
-        root = ET.fromstring(xml_data)
-    except ET.ParseError as e:
-        print(f"Error parsing XML data: {e}")
-        root = None
+url = "https://data.cityofnewyork.us/resource/755u-8jsi.json"
+response = requests.get(url)
 
-    if root is not None:
-        # Extract the zones data
-        unique_zones = set()
-        unique_location_ids = set()
-        
-        for elem in root.iter("row"):
-            zone_element = elem.find("zone")
-            zone = zone_element.text if zone_element is not None else ""
-
-            location_id_element = elem.find("location_id")
-            location_id = location_id_element.text if location_id_element is not None else ""
-
-            unique_zones.add(zone)
-            unique_location_ids.add(location_id)
-            
-        print("Unique zones:", unique_zones)
-        print("Unique location IDs:", unique_location_ids)
+if response.status_code == 200:
+    data = response.json()
+    zones = []
+    location_ids = []
+    for item in data:
+        zone = item.get("zone")
+        if zone not in zones:
+            zones.append(zone)
+        location_id = item.get("location_id")
+        if location_id not in location_ids:
+            location_ids.append(location_id)
+else:
+    print(f"Error retrieving data: {response.reason}")
 
 col1, col2 = st.columns(2)
 
