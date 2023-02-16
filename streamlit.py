@@ -8,28 +8,15 @@ import xml.etree.ElementTree as ET
 
 st.title('Uber pickups in NYC')
 
-DATE_COLUMN = 'date/time'
-DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
-            'streamlit-demo-data/uber-raw-data-sep14.csv.gz')
-
-def load_data(nrows):
-    data = pd.read_csv(DATA_URL, nrows=nrows)
-    lowercase = lambda x: str(x).lower()
-    data.rename(lowercase, axis='columns', inplace=True)
-    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
-    return data
-
-data_load_state = st.text('Loading data...')
-data = load_data(10000)
-data_load_state.text("Done!")
-
 # Retrieve the XML file from the URL
 url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOWNLOAD"
 response = urllib.request.urlopen(url)
 xml_data = response.read()
 
-# Parse the XML data and extract the id of the pickup place
+# Parse the XML data and extract the list of zones
 root = ET.fromstring(xml_data)
+zones = [elem.find("zone").text for elem in root.iter("row")]
+
 
 col1, col2 = st.columns(2)
 
@@ -37,11 +24,11 @@ with col1:
             with st.form("my_form"):
                 st.selectbox(
                     'Pickup location',
-                    ('NYC','NYC2','NYC4','NYC5')
+                    zones
                 )  
                 st.selectbox(
                     'Dropoff location',
-                    ('NYC','NYC2','NYC4','NYC5')
+                    zones
                 )  
                 st.date_input(
                     'Date of pickup',
@@ -63,6 +50,6 @@ with col1:
                 # Every form must have a submit button.
                 submitted = st.form_submit_button("Submit")
 with col2:
-      st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="700" height="700" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
+      st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="600" height="600" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
 
 
