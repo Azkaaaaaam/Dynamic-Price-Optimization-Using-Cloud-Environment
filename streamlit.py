@@ -37,12 +37,24 @@ if response.status_code == 200:
             
             # Check if the the_geom key exists in the current item
             if 'the_geom' in item:
-                # Extract the latitude and longitude from the coordinates
-                latitude = item['the_geom']['coordinates'][1]
-                longitude = item['the_geom']['coordinates'][0]
+                # Get the coordinates from the geometry
+                geometry = item['the_geom']
+                if 'coordinates' in geometry:
+                    coordinates = geometry['coordinates']
+                    if len(coordinates) >= 2:
+                        # Extract the latitude and longitude from the coordinates
+                        latitude = coordinates[1]
+                        longitude = coordinates[0]
+                    else:
+                        latitude = None
+                        longitude = None
+                else:
+                    latitude = None
+                    longitude = None
             else:
                 latitude = None
                 longitude = None
+
 
             # Append the extracted information to the lists
             location_ids.append(location_id)
