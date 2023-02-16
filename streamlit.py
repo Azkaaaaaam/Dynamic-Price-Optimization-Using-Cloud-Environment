@@ -115,11 +115,16 @@ if submitted:
     pulocation = pickup_location
     dolocation = dropoff_location
     tpep_pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
+    
+    # Find the latitude and longitude of the pickup and dropoff locations
+    pickup_lat = df.loc[df['Pickup location'] == pulocation, 'Latitude'].iloc[0]
+    pickup_lon = df.loc[df['Pickup location'] == pulocation, 'Longitude'].iloc[0]
+    dropoff_lat = df.loc[df['Dropoff location'] == dolocation, 'Latitude'].iloc[0]
+    dropoff_lon = df.loc[df['Dropoff location'] == dolocation, 'Longitude'].iloc[0]
+    
     # Do something with the form results
-    st.write(f"Pickup location: {pulocation}")
-    st.write(f"Dropoff location: {dolocation}")
-    st.write(f"Latitude: {Latitude}")
-    st.write(f"Longitude: {Longitude}")
+    st.write(f"Pickup location: {pulocation} ({pickup_lat}, {pickup_lon})")
+    st.write(f"Dropoff location: {dolocation} ({dropoff_lat}, {dropoff_lon})")
 
 
 with col2:
