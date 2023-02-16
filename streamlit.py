@@ -85,7 +85,7 @@ def estimate_duration(distance, speed):
 
     return duration
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     with st.form("my_form"):
@@ -136,13 +136,9 @@ with col1:
 
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="500" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
-
-with col1:
+        
+with col3:
     st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
-
-with col2:
     st.success(f"Trip Duration: {duration:.2f} mins")
 
 # Do something with the form results and calculated distance
