@@ -27,7 +27,9 @@ if xml_data is not None:
 
     if root is not None:
         # Extract the zones data
-        zones = []
+        unique_zones = set()
+        unique_location_ids = set()
+        
         for elem in root.iter("row"):
             zone_element = elem.find("zone")
             zone = zone_element.text if zone_element is not None else ""
@@ -35,11 +37,11 @@ if xml_data is not None:
             location_id_element = elem.find("location_id")
             location_id = location_id_element.text if location_id_element is not None else ""
 
-            borough_element = elem.find("borough")
-            borough = borough_element.text if borough_element is not None else ""
-
-            zones.append([zone, location_id, borough])
-
+            unique_zones.add(zone)
+            unique_location_ids.add(location_id)
+            
+        print("Unique zones:", unique_zones)
+        print("Unique location IDs:", unique_location_ids)
 
 col1, col2 = st.columns(2)
 
