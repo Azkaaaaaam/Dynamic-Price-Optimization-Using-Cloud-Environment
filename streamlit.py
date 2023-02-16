@@ -26,30 +26,30 @@ col1, col2 = st.columns(2)
 with col1:
 
             with st.form("my_form"):
-            st.selectbox(
-              'Pickup location',
-              ('NYC','NYC2','NYC4','NYC5'),
-            )  
-            st.selectbox(
-              'Dropoff location',
-              ('NYC','NYC2','NYC4','NYC5'),
-            )  
-            st.date_input(
-              'Date of pickup',
-              dt.date(2023, 25, 5)
-            )            
-            st.time_input(
-              'Label goes here',
-              dt.time(0, 0),
-              help='Help message goes here'
-            )
-            st.number_input(
-              'Number of Users',
-              1,
-              help='The number of users need to be from 1 to 5'
-            )
-                 # Every form must have a submit button.
-             submitted = st.form_submit_button("Estimate my Fare")
+                        st.selectbox(
+                          'Pickup location',
+                          ('NYC','NYC2','NYC4','NYC5'),
+                        )  
+                        st.selectbox(
+                          'Dropoff location',
+                          ('NYC','NYC2','NYC4','NYC5'),
+                        )  
+                        st.date_input(
+                          'Date of pickup',
+                          dt.date(2023, 25, 5)
+                        )            
+                        st.time_input(
+                          'Label goes here',
+                          dt.time(0, 0),
+                          help='Help message goes here'
+                        )
+                        st.number_input(
+                          'Number of Users',
+                          1,
+                          help='The number of users need to be from 1 to 5'
+                        )
+                             # Every form must have a submit button.
+                         submitted = st.form_submit_button("Estimate my Fare")
              if submitted:
                         st.write("slider", slider_val, "checkbox", checkbox_val)
 
