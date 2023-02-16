@@ -27,7 +27,9 @@ with col1:
                st.write("Inside the form")
                slider_val = st.slider("Form slider")
                checkbox_val = st.checkbox("Form checkbox")
-
+               # Some number in the range 0-23
+               hour_to_filter = st.slider('hour', 0, 23, 17)
+               filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
                # Every form must have a submit button.
                submitted = st.form_submit_button("Submit")
                if submitted:
@@ -35,5 +37,5 @@ with col1:
             st.write("Outside the form")
 
 with col2:
-            st.subheader('Map of all pickups at %s:00')
+            st.subheader('Map of all pickups at %s:00' % hour_to_filter)
             st.map(filtered_data)
