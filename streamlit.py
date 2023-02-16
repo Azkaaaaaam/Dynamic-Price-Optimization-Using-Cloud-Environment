@@ -5,10 +5,9 @@ import pydeck as pdk
 import datetime as dt
 import urllib.request
 import xml.etree.ElementTree as ET
+import requests
 
 st.title('Uber pickups in NYC')
-
-import requests
 
 # Set the API endpoint URL
 url = "https://data.cityofnewyork.us/resource/755u-8jsi.json"
@@ -21,6 +20,10 @@ if response.status_code == 200:
     # Convert the response to a JSON object
     data = response.json()
 
+    # Initialize empty lists to store location_ids and zones
+    location_ids = []
+    zones = []
+
     # Loop through the data to extract the desired information
     for item in data:
         # Check if the object_id is within the desired range
@@ -30,10 +33,23 @@ if response.status_code == 200:
             borough = item.get('borough')
             zone = item.get('zone')
 
+            # Append the extracted information to the lists
+            location_ids.append(location_id)
+            zones.append(zone)
+
             # Print the extracted information
             print(f"Location ID: {location_id}, Borough: {borough}, Zone: {zone}")
 else:
     print("Error: Failed to retrieve data from the API")
+
+# Create a dictionary to store the location_ids and zones
+data_dict = {
+    "Pickup location": location_ids,
+    "Dropoff location": location_ids
+}
+
+# Create a pandas DataFrame from the dictionary
+df = pd.DataFrame(data_dict)
 
 
 col1, col2 = st.columns(2)
@@ -42,11 +58,11 @@ with col1:
             with st.form("my_form"):
                 st.selectbox(
                     'Pickup location',
-                    zone
+                    df['Pickup location'].unique()
                 )  
                 st.selectbox(
                     'Dropoff location',
-                    location_id
+                    df['Dropoff location'].unique()
                 )  
                 st.date_input(
                     'Date of pickup',
