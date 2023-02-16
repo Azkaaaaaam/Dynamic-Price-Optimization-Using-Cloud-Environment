@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import pydeck as pdk
 import datetime as dt
+import urllib.request
+import xml.etree.ElementTree as ET
 
 st.title('Uber pickups in NYC')
 
@@ -21,7 +23,16 @@ data_load_state = st.text('Loading data...')
 data = load_data(10000)
 data_load_state.text("Done!")
 
+# Retrieve the XML file from the URL
+url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOWNLOAD"
+response = urllib.request.urlopen(url)
+xml_data = response.read()
 
+# Parse the XML data and extract the id of the pickup place
+root = ET.fromstring(xml_data)
+for row in root.iter("row"):
+    pickup_place_id = row.find("pickup_location_id").text
+    print(pickup_place_id)
 col1, col2 = st.columns(2)
 
 with col1:
