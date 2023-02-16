@@ -40,14 +40,10 @@ if response.status_code == 200:
             # Get the coordinates from the geometry
             geometry = item.get('the_geom')
             coordinates = geometry['coordinates']
-            if len(coordinates) >= 2:
-              # Extract the latitude and longitude from the coordinates
-                latitude = coordinates[1]
-                longitude = coordinates[0]
-            else:
-                latitude = None
-                longitude = None
-
+            coordinates =coordinates[0][0][0]
+            latitude = coordinates[1]
+            longitude = coordinates[0]
+    
             # Append the extracted information to the lists
             location_ids.append(location_id)
             zones.append(zone)
@@ -55,10 +51,10 @@ if response.status_code == 200:
             longitudes.append(longitude)
 
             # Print the extracted information
-            print(f"Location ID: {location_id}, Borough: {borough}, Zone: {zone}, Latitude: {latitude}, Longitude: {longitude}")
+            print(f"Location ID: {location_id}, Borough: {borough}, Zone: {zone}, coordinates: {coordinates}, Latitude: {latitude}, Longitude: {longitude}")
 else:
     print("Error: Failed to retrieve data from the API")
-
+    
 # Create a dictionary to store the location_ids, zones, latitudes, and longitudes
 data_dict = {
     "Pickup location": zones,
