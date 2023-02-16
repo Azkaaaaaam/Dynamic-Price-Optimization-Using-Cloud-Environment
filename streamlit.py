@@ -20,14 +20,12 @@ def load_data(nrows):
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
 data_load_state.text("Done!")
-# URL of the raw CSV file on GitHub
-url = 'https://raw.githubusercontent.com/Azkaaaaaam/Thesis/main/taxi_zones.csv'
-
+ 
 # Load the CSV file into a pandas DataFrame
-df = pd.read_csv(url)
+df = pd.read_csv(taxi_zones.csv)
 
 # Print the first few rows of the DataFrame
-print(df.head())
+print(df.head(3))
 col1, col2 = st.columns(2)
 
 with col1:
