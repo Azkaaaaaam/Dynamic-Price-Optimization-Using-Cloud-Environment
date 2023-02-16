@@ -13,7 +13,6 @@ url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOW
 response = urllib.request.urlopen(url)
 xml_data = response.read()
 
-# Parse the XML data and extract the list of zones
 root = ET.fromstring(xml_data)
 zones = [elem.find("zone").text for elem in root.iter("row")]
 
