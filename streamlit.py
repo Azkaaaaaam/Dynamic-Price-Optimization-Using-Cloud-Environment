@@ -132,10 +132,10 @@ if submitted:
     tpep_pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
     
     # Get the latitude and longitude of the pickup and dropoff locations
-    pickup_lat = df[df["Pickup location"] == pulocation]["Latitude"].iloc[0]  or 0.0
-    pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]  or 0.0
-    dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0]  or 0.0
-    dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  or 0.0
+    pickup_lat = df[df["Pickup location"] == pulocation]["Latitude"].iloc[0] 
+    pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
+    dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0] 
+    dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
     
     # Calculate the distance between the pickup and dropoff locations
     distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
