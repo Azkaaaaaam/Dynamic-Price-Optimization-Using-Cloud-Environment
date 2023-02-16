@@ -6,8 +6,10 @@ import datetime as dt
 import urllib.request
 import xml.etree.ElementTree as ET
 import requests
-from math import radians, cos, sin, asin, sqrt
 import pydeck as pdk
+from geopy import distance
+from math import radians, cos, sin, asin, sqrt
+
 st.set_page_config(layout="wide")
 st.title('Uber pickups in NYC')
 
@@ -138,8 +140,9 @@ with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="620" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
         
 with col3:
-      st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
-      st.success(f"Trip Duration: {duration:.2f} mins")
+      if pickup and dropoff:
+          st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+          st.success(f"Trip Duration: {duration:.2f} mins")
 
 # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
