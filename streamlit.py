@@ -49,7 +49,8 @@ with col1:
                           help='The number of users need to be from 1 to 5'
                         )
                              # Every form must have a submit button.
-                        submitted = st.form_submit_button("Estimate my Fare")
+            submitted = st.form_submit_button("Estimate my Fare")
+
 with col2:
             chart_data = pd.DataFrame(
                np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
