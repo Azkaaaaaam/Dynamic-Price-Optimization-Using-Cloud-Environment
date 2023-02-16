@@ -42,13 +42,14 @@ with col1:
                     dt.time(0, 0),
                     help='Specify the time of pickup'
                 )
-                st.number_input(
-                    'Number of Users',
-                    1,
+               st.number_input(
+                   'Number of Users',
+                    value=1,
                     min_value=1,
                     max_value=5,
                     help='The number of users should be between 1 and 5'
                 )
+
                 # Every form must have a submit button.
                 submitted = st.form_submit_button("Submit")
 with col2:
