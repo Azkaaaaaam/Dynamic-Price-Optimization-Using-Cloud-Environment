@@ -6,6 +6,7 @@ import datetime as dt
 import urllib.request
 import xml.etree.ElementTree as ET
 import requests
+from math import radians, cos, sin, asin, sqrt
 
 st.title('Uber pickups in NYC')
 
@@ -78,6 +79,25 @@ data_dict = {
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
+def haversine(lon1, lat1, lon2, lat2):
+    """
+    Calculate the great circle distance between two points
+    on the earth (specified in decimal degrees)
+    """
+    # Convert decimal degrees to radians
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+    # Haversine formula
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * asin(sqrt(a))
+
+    # Radius of earth in kilometers. Use 3956 for miles
+    r = 6371
+
+    # Calculate the result
+    return c * r
 col1, col2 = st.columns(2)
 
 with col1:
@@ -115,44 +135,26 @@ if submitted:
     pulocation = pickup_location
     dolocation = dropoff_location
     tpep_pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
-
-    # Do something with the form results
+    
+    # Get the latitude and longitude of the pickup and dropoff locations
+    pickup_lat = df[df["Pickup location"] == pulocation]["Latitude"].iloc[0]
+    pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
+    dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0]
+    dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]
+    
+    # Calculate the distance between the pickup and dropoff locations
+    distance = haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
+    
+    # Do something with the form results and calculated distance
     st.write(f"Pickup location: {pulocation}")
-    st.write(f"Dropoff location: {dolocation} ")
+    st.write(f"Dropoff location: {dolocation}")
+    st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+
 
 
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="600" height="600" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
 
 
-from math import radians, cos, sin, asin, sqrt
-
-def haversine(lon1, lat1, lon2, lat2):
-    """
-    Calculate the great circle distance between two points
-    on the earth (specified in decimal degrees)
-    """
-    # Convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-
-    # Haversine formula
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-    c = 2 * asin(sqrt(a))
-
-    # Radius of earth in kilometers. Use 3956 for miles
-    r = 6371
-
-    # Calculate the result
-    return c * r
 
 
-# Example usage
-pickup_lat = df[df["Pickup location"] == pulocation]["Latitude"].iloc[0]
-pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
-dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0]
-dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]
-
-distance = haversine(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat)
-st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
