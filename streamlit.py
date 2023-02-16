@@ -32,6 +32,12 @@ with col1:
                filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
                # Every form must have a submit button.
                submitted = st.form_submit_button("Submit")
+                        
+                        
+               pickup = st.text_input("Pickup location")
+               dropoff = st.text_input("Dropoff location")
+               date = st.date_input("Date of pickup")
+               time = st.time_input("Time of pickup")
                if submitted:
                    st.write("slider", slider_val, "checkbox", checkbox_val)
             st.write("Outside the form")
