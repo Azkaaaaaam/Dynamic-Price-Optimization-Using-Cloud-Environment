@@ -36,11 +36,8 @@ if response.status_code == 200:
             location_id = item.get('locationid')
             borough = item.get('borough')
             zone = item.get('zone')
-            
-            # Check if the the_geom key exists in the current item
-            if 'the_geom' in item:
-                # Get the coordinates from the geometry
-                geometry = item.get['the_geom']
+            # Get the coordinates from the geometry
+            geometry = item.get('the_geom')
                 if 'coordinates' in geometry:
                     coordinates = geometry['coordinates']
                     if len(coordinates) >= 2:
