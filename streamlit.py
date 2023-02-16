@@ -10,22 +10,31 @@ st.title('Uber pickups in NYC')
 
 import requests
 
+# Set the API endpoint URL
 url = "https://data.cityofnewyork.us/resource/755u-8jsi.json"
+
+# Make a GET request to the API endpoint and store the response
 response = requests.get(url)
 
+# Check if the response was successful (status code 200)
 if response.status_code == 200:
+    # Convert the response to a JSON object
     data = response.json()
-    zones = []
-    location_ids = []
+
+    # Loop through the data to extract the desired information
     for item in data:
-        zone = item.get("zone")
-        if zone not in zones:
-            zones.append(zone)
-        location_id = item.get("location_id")
-        if location_id not in location_ids:
-            location_ids.append(location_id)
+        # Check if the object_id is within the desired range
+        if int(item['objectid']) >= 1 and int(item['objectid']) <= 262:
+            # Extract the location_id, borough, and zone from the current item
+            location_id = item['locationid']
+            borough = item['borough']
+            zone = item['zone']
+
+            # Print the extracted information
+            print(f"Location ID: {location_id}, Borough: {borough}, Zone: {zone}")
 else:
-    print(f"Error retrieving data: {response.reason}")
+    print("Error: Failed to retrieve data from the API")
+
 
 col1, col2 = st.columns(2)
 
