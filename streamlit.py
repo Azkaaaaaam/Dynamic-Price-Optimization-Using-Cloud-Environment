@@ -66,7 +66,6 @@ with col1:
                 submitted = st.form_submit_button("Submit")
 with col2:
       with st.sidebar:
-            st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" 
-                        width="500" height="425" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
+            st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="500" height="425" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
 
 
