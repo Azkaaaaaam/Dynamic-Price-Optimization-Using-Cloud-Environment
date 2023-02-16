@@ -55,13 +55,10 @@ with col1:
                 submitted = st.form_submit_button("Submit")
 with col2:
     st.markdown("""
-        <div>
             <iframe width="500px" title="NYC Taxi Zones" height="425px" 
                 src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" 
                 frameborder="0" scrolling="no">
                 <a href="https://data.cityofnewyork.us/Transportation/NYC-Taxi-Zones/d3c5-ddgc" 
                 title="NYC Taxi Zones" target="_blank">NYC Taxi Zones</a>
             </iframe>
-            <p><a href="http://www.socrata.com/" target="_blank">Powered by Tyler Technologies</a></p>
-        </div>
     """)
