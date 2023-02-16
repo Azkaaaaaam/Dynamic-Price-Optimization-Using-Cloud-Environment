@@ -44,8 +44,8 @@ else:
 
 # Create a dictionary to store the location_ids and zones
 data_dict = {
-    "Pickup location": zone,
-    "Dropoff location": zone
+    "Pickup location": zones,
+    "Dropoff location": zones
 }
 
 # Create a pandas DataFrame from the dictionary
