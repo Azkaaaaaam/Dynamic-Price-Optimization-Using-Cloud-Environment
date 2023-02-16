@@ -137,6 +137,22 @@ with col1:
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="500" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
 
-st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
-st.success(f"Trip Duration: {duration:.2f} mins")
+col1, col2 = st.columns(2)
+
+with col1:
+    st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+with col2:
+    st.success(f"Trip Duration: {duration:.2f} mins")
+
+
+# Do something with the form results and calculated distance
+#st.write(f"Pickup location: {pulocation}")
+#st.write(f"Pickup lat: {pickup_lat}")
+#st.write(f"Pickup lon: {pickup_lon}")
+
+#st.write(f"Dropoff location: {dolocation}")
+#st.write(f"Dropoff lat: {dropoff_lat}")
+#st.write(f"Dropoff lon: {dropoff_lon}")
+#st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+#st.write(f"Trip Duration: {duration:.2f} mins")
 
