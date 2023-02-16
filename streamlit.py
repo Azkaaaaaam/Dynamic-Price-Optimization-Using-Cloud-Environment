@@ -117,24 +117,24 @@ with col1:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
-if submitted:
-    # Access the form results if the form was submitted
-    pulocation = pickup_location
-    dolocation = dropoff_location
-    tpep_pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
-    
-    # Get the latitude and longitude of the pickup and dropoff locations
-    pickup_lat = df[df["Pickup location"] == pulocation]["Latitude"].iloc[0] 
-    pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
-    dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0] 
-    dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
-    # Calculate the distance between the pickup and dropoff locations
-    distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
-    # Estimate the duration of the trip based on the distance and average speed
-    speed = 60  # Average speed in kilometers per hour
-    duration = estimate_duration(distance, speed)
+    if submitted:
+        # Access the form results if the form was submitted
+        pulocation = pickup_location
+        dolocation = dropoff_location
+        tpep_pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
 
-    st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+        # Get the latitude and longitude of the pickup and dropoff locations
+        pickup_lat = df[df["Pickup location"] == pulocation]["Latitude"].iloc[0] 
+        pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
+        dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0] 
+        dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
+        # Calculate the distance between the pickup and dropoff locations
+        distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
+        # Estimate the duration of the trip based on the distance and average speed
+        speed = 60  # Average speed in kilometers per hour
+        duration = estimate_duration(distance, speed)
+
+        st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
 
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="500" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
