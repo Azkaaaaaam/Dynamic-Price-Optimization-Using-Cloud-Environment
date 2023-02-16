@@ -140,9 +140,10 @@ with col2:
 col1, col2 = st.columns(2)
 
 with col1:
-    st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+    st.markdown(f'<div style="color: green;">Distance between pickup and dropoff locations: {distance:.2f} km</div>', unsafe_allow_html=True)
+
 with col2:
-    st.success(f"Trip Duration: {duration:.2f} mins")
+    st.markdown(f'<div style="color: green;">Trip Duration: {duration:.2f} mins</div>', unsafe_allow_html=True)
 
 
 # Do something with the form results and calculated distance
