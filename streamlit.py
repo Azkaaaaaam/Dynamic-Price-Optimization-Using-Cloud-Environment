@@ -10,7 +10,7 @@ import pydeck as pdk
 from math import radians, cos, sin, asin, sqrt
 
 st.set_page_config(layout="wide")
-st.title('Uber pickups in NYC')
+st.title('Yellow Taxis pickups in NYC')
 
 # Set the API endpoint URL
 url = "https://data.cityofnewyork.us/resource/755u-8jsi.json"
