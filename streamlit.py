@@ -7,6 +7,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import requests
 from math import radians, cos, sin, asin, sqrt
+import pydeck as pdk
 
 st.title('Uber pickups in NYC')
 
@@ -79,25 +80,22 @@ data_dict = {
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
-def haversine(lon1, lat1, lon2, lat2):
+def haversine(lat1, lon1, lat2, lon2):
     """
     Calculate the great circle distance between two points
     on the earth (specified in decimal degrees)
     """
-    # Convert decimal degrees to radians
+    # convert decimal degrees to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-
-    # Haversine formula
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-    c = 2 * asin(sqrt(a))
-
-    # Radius of earth in kilometers. Use 3956 for miles
-    r = 6371
-
-    # Calculate the result
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    r = 6371 # Radius of earth in kilometers. Use 3956 for miles
     return c * r
+
+
 col1, col2 = st.columns(2)
 
 with col1:
