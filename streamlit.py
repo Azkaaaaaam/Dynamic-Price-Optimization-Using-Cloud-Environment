@@ -49,7 +49,7 @@ with col1:
                           help='The number of users need to be from 1 to 5'
                         )
                              # Every form must have a submit button.
-                         submitted = st.form_submit_button("Estimate my Fare")
+                        submitted = st.form_submit_button("Estimate my Fare")
              if submitted:
                         st.write("slider", slider_val, "checkbox", checkbox_val)
 
