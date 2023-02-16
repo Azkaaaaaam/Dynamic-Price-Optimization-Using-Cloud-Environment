@@ -44,8 +44,8 @@ else:
 
 # Create a dictionary to store the location_ids and zones
 data_dict = {
-    "Pickup location": location_ids,
-    "Dropoff location": location_ids
+    "Pickup location": zones,
+    "Dropoff location": zones
 }
 
 # Create a pandas DataFrame from the dictionary
@@ -58,11 +58,11 @@ with col1:
             with st.form("my_form"):
                 st.selectbox(
                     'Pickup location',
-                    df['Pickup location'].unique()
+                    df['zones'].unique()
                 )  
                 st.selectbox(
                     'Dropoff location',
-                    df['Dropoff location'].unique()
+                    df['zones'].unique()
                 )  
                 st.date_input(
                     'Date of pickup',
