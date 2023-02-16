@@ -12,9 +12,8 @@ st.title('Uber pickups in NYC')
 url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOWNLOAD"
 response = urllib.request.urlopen(url)
 xml_data = response.read()
+print(xml_data)
 
-root = ET.fromstring(xml_data)
-zones = [elem.find("zone").text for elem in root.iter("row")]
 
 
 col1, col2 = st.columns(2)
@@ -23,11 +22,11 @@ with col1:
             with st.form("my_form"):
                 st.selectbox(
                     'Pickup location',
-                    zones
+                    ('hu')
                 )  
                 st.selectbox(
                     'Dropoff location',
-                    zones
+                    ('hi')
                 )  
                 st.date_input(
                     'Date of pickup',
