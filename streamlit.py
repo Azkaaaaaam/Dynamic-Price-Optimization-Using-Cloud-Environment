@@ -42,8 +42,8 @@ with col1:
                     dt.time(0, 0),
                     help='Specify the time of pickup'
                 )
-               st.number_input(
-                   'Number of Users',
+                st.number_input(
+                    'Number of Users',
                     value=1,
                     min_value=1,
                     max_value=5,
