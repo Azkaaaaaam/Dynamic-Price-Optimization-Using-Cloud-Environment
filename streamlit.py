@@ -27,6 +27,7 @@ if response.status_code == 200:
     zones = []
     latitudes = []
     longitudes = []
+    coordinates = []    
 
     # Loop through the data to extract the desired information
     for item in data:
@@ -38,22 +39,14 @@ if response.status_code == 200:
             zone = item.get('zone')
             # Get the coordinates from the geometry
             geometry = item.get('the_geom')
-                if 'coordinates' in geometry:
-                    coordinates = geometry['coordinates']
-                    if len(coordinates) >= 2:
-                        # Extract the latitude and longitude from the coordinates
-                        latitude = coordinates[1]
-                        longitude = coordinates[0]
-                    else:
-                        latitude = None
-                        longitude = None
-                else:
-                    latitude = None
-                    longitude = None
-            else:
+            coordinates = geometry['coordinates']
+            if len(coordinates) >= 2:
+              # Extract the latitude and longitude from the coordinates
+                latitude = coordinates[1]
+                longitude = coordinates[0]
+             else:
                 latitude = None
                 longitude = None
-
 
             # Append the extracted information to the lists
             location_ids.append(location_id)
