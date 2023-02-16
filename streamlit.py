@@ -78,12 +78,6 @@ data_dict = {
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
-# Create a pandas DataFrame from the dictionary
-df = pd.DataFrame(data_dict)
-# Create a pandas DataFrame from the dictionary
-df = pd.DataFrame(data_dict)
-
-
 col1, col2 = st.columns(2)
 
 with col1:
@@ -124,7 +118,9 @@ if submitted:
     # Do something with the form results
     st.write(f"Pickup location: {pulocation}")
     st.write(f"Dropoff location: {dolocation}")
-    st.write(f"Pickup time: {tpep_pickup_datetime}")
+    st.write(f"Latitude: {Latitude}")
+    st.write(f"Longitude: {Longitude}")
+
 
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="600" height="600" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
