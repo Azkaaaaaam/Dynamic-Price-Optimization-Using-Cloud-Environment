@@ -130,8 +130,8 @@ with col1:
         dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
         # Calculate the distance between the pickup and dropoff locations
         distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
-        # Estimate the duration of the trip based on the distance and average speed
-        speed = 60  # Average speed in kilometers per hour
+        # Estimate the duration of the trip based on the distance and average speed of 50KM/H
+        speed = 50  # Average speed in kilometers per hour
         duration = estimate_duration(distance, speed)
 
 with col2:
