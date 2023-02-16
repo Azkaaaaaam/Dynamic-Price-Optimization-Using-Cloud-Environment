@@ -12,20 +12,16 @@ st.title('Uber pickups in NYC')
 url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOWNLOAD"
 response = urllib.request.urlopen(url)
 xml_data = response.read()
-
 # Parse the XML data
 root = ET.fromstring(xml_data)
 
-# Extract the data into a list of lists for the CSV data
-csv_data = [['location_id', 'borough', 'zone', 'service_zone']]
+# Extract the zones data
+zones = []
 for elem in root.iter("row"):
-    location_id = elem.find("location_id").text
-    borough = elem.find("borough").text
     zone = elem.find("zone").text
-    service_zone = elem.find("service_zone").text
-    csv_data.append([location_id, borough, zone, service_zone])
-
-print(csv_data)
+    location_id = elem.find("locationid").text
+    borough = elem.find("borough").text
+    zones.append([zone, location_id, borough])
 
 
 col1, col2 = st.columns(2)
