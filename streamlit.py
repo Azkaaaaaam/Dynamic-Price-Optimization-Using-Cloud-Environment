@@ -34,9 +34,6 @@ with col1:
                    st.write("slider", slider_val, "checkbox", checkbox_val)
             st.write("Outside the form")
 
-
-            # Now add a submit button to the form:
-            form.form_submit_button("Submit")
 with col2:
             st.subheader('Map of all pickups at %s:00' % hour_to_filter)
             st.map(filtered_data)
