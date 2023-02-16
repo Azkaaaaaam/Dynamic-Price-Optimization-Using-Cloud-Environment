@@ -10,24 +10,35 @@ st.title('Uber pickups in NYC')
 
 # Retrieve the XML file from the URL
 url = "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.xml?accessType=DOWNLOAD"
-response = urllib.request.urlopen(url)
-xml_data = response.read()
-# Parse the XML data
-root = ET.fromstring(xml_data)
+try:
+    with urllib.request.urlopen(url) as response:
+        xml_data = response.read()
+except urllib.error.URLError as e:
+    print(f"Error retrieving XML file: {e.reason}")
+    xml_data = None
 
-# Extract the zones data
-zones = []
-for elem in root.iter("row"):
-    zone_element = elem.find("zone")
-    zone = zone_element.text if zone_element is not None else ""
-    
-    location_id_element = elem.find("location_id")
-    location_id = location_id_element.text if location_id_element is not None else ""
-    
-    borough_element = elem.find("borough")
-    borough = borough_element.text if borough_element is not None else ""
-    
-    zones.append([zone, location_id, borough])
+if xml_data is not None:
+    # Parse the XML data
+    try:
+        root = ET.fromstring(xml_data)
+    except ET.ParseError as e:
+        print(f"Error parsing XML data: {e}")
+        root = None
+
+    if root is not None:
+        # Extract the zones data
+        zones = []
+        for elem in root.iter("row"):
+            zone_element = elem.find("zone")
+            zone = zone_element.text if zone_element is not None else ""
+
+            location_id_element = elem.find("location_id")
+            location_id = location_id_element.text if location_id_element is not None else ""
+
+            borough_element = elem.find("borough")
+            borough = borough_element.text if borough_element is not None else ""
+
+            zones.append([zone, location_id, borough])
 
 
 col1, col2 = st.columns(2)
