@@ -7,7 +7,6 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import requests
 import pydeck as pdk
-from geopy import distance
 from math import radians, cos, sin, asin, sqrt
 
 st.set_page_config(layout="wide")
