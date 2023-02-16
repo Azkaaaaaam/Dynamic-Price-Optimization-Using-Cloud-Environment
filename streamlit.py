@@ -139,7 +139,7 @@ with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="620" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
         
 with col3:
-      if pickup and dropoff:
+    if submitted:
           st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
           st.success(f"Trip Duration: {duration:.2f} mins")
 
