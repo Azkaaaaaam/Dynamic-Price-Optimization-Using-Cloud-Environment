@@ -20,34 +20,44 @@ if response.status_code == 200:
     # Convert the response to a JSON object
     data = response.json()
 
-    # Initialize empty lists to store location_ids and zones
+    # Initialize empty lists to store location_ids, zones, and coordinates
     location_ids = []
     zones = []
+    latitudes = []
+    longitudes = []
 
     # Loop through the data to extract the desired information
     for item in data:
         # Check if the object_id is within the desired range
         if int(item['objectid']) >= 1 and int(item['objectid']) <= 262:
-            # Extract the location_id, borough, and zone from the current item
+            # Extract the location_id, borough, zone, latitude, and longitude from the current item
             location_id = item.get('locationid')
             borough = item.get('borough')
             zone = item.get('zone')
+            latitude = item.get('the_geom')['coordinates'][1]
+            longitude = item.get('the_geom')['coordinates'][0]
 
             # Append the extracted information to the lists
             location_ids.append(location_id)
             zones.append(zone)
+            latitudes.append(latitude)
+            longitudes.append(longitude)
 
             # Print the extracted information
-            print(f"Location ID: {location_id}, Borough: {borough}, Zone: {zone}")
+            print(f"Location ID: {location_id}, Borough: {borough}, Zone: {zone}, Latitude: {latitude}, Longitude: {longitude}")
 else:
     print("Error: Failed to retrieve data from the API")
 
-# Create a dictionary to store the location_ids and zones
+# Create a dictionary to store the location_ids, zones, latitudes, and longitudes
 data_dict = {
     "Pickup location": zones,
-    "Dropoff location": zones
+    "Dropoff location": zones,
+    "Latitude": latitudes,
+    "Longitude": longitudes
 }
 
+# Create a pandas DataFrame from the dictionary
+df = pd.DataFrame(data_dict)
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
