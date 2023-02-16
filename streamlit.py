@@ -20,9 +20,13 @@ zones = []
 for elem in root.iter("row"):
     zone_element = elem.find("zone")
     zone = zone_element.text if zone_element is not None else ""
-
-    location_id = elem.find("locationid").text
-    borough = elem.find("borough").text
+    
+    location_id_element = elem.find("location_id")
+    location_id = location_id_element.text if location_id_element is not None else ""
+    
+    borough_element = elem.find("borough")
+    borough = borough_element.text if borough_element is not None else ""
+    
     zones.append([zone, location_id, borough])
 
 
