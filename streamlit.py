@@ -30,12 +30,19 @@ if response.status_code == 200:
     for item in data:
         # Check if the object_id is within the desired range
         if int(item['objectid']) >= 1 and int(item['objectid']) <= 262:
-            # Extract the location_id, borough, zone, latitude, and longitude from the current item
+            # Extract the location_id, borough, and zone from the current item
             location_id = item.get('locationid')
             borough = item.get('borough')
             zone = item.get('zone')
-            latitude = item.get('the_geom')['coordinates'][1]
-            longitude = item.get('the_geom')['coordinates'][0]
+            
+            # Check if the the_geom key exists in the current item
+            if 'the_geom' in item:
+                # Extract the latitude and longitude from the coordinates
+                latitude = item['the_geom']['coordinates'][1]
+                longitude = item['the_geom']['coordinates'][0]
+            else:
+                latitude = None
+                longitude = None
 
             # Append the extracted information to the lists
             location_ids.append(location_id)
@@ -55,6 +62,9 @@ data_dict = {
     "Latitude": latitudes,
     "Longitude": longitudes
 }
+
+# Create a pandas DataFrame from the dictionary
+df = pd.DataFrame(data_dict)
 
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
