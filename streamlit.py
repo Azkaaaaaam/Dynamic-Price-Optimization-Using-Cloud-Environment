@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
+import datetime as dt
 
 st.title('Uber pickups in NYC')
 
@@ -25,23 +26,32 @@ col1, col2 = st.columns(2)
 with col1:
 
             with st.form("my_form"):
-               st.write("Inside the form")
-               slider_val = st.slider("Form slider")
-               checkbox_val = st.checkbox("Form checkbox")
-               # Some number in the range 0-23
-               hour_to_filter = st.slider('hour', 0, 23, 17)
-               filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
-               # Every form must have a submit button.
-               submitted = st.form_submit_button("Submit")
-                        
-                        
-               pickup = st.text_input("Pickup location")
-               dropoff = st.text_input("Dropoff location")
-               date = st.date_input("Date of pickup")
-               time = st.time_input("Time of pickup")
-               if submitted:
-                   st.write("slider", slider_val, "checkbox", checkbox_val)
-            st.write("Outside the form")
+            st.selectbox(
+              'Pickup location',
+              ('NYC','NYC2','NYC4','NYC5'),
+            )  
+            st.selectbox(
+              'Dropoff location',
+              ('NYC','NYC2','NYC4','NYC5'),
+            )  
+            st.date_input(
+              'Date of pickup',
+              dt.date(2023, 25, 5)
+            )            
+            st.time_input(
+              'Label goes here',
+              dt.time(0, 0),
+              help='Help message goes here'
+            )
+            st.number_input(
+              'Number of Users',
+              1,
+              help='The number of users need to be from 1 to 5'
+            )
+                 # Every form must have a submit button.
+             submitted = st.form_submit_button("Estimate my Fare")
+             if submitted:
+                 st.write("slider", slider_val, "checkbox", checkbox_val)
 
 with col2:
             chart_data = pd.DataFrame(
