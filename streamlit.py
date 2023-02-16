@@ -36,11 +36,11 @@ with col1:
             with st.form("my_form"):
                 st.selectbox(
                     'Pickup location',
-                    ('hu')
+                    zone
                 )  
                 st.selectbox(
                     'Dropoff location',
-                    ('hi')
+                    zone
                 )  
                 st.date_input(
                     'Date of pickup',
