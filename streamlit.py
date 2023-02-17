@@ -16,15 +16,12 @@ st.title('Yellow Taxis pickups in NYC')
 url = "https://data.cityofnewyork.us/resource/755u-8jsi.json"
 # Make a GET request to the API endpoint and store the response
 response = requests.get(url)
-
-
-url2="https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
-response2 = requests.get(url2)
-
-# Check if the response was successful (status code 200)
 if response2.status_code == 200:
-    # Convert the response to a JSON object
     data2 = response2.json()
+    df = pd.json_normalize(data2)
+    print(df.head())
+else:
+    print("Error: Could not retrieve data from API.")
 
 
 # Check if the response was successful (status code 200)
