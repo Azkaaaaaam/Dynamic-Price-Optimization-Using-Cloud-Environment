@@ -11,7 +11,7 @@ from math import radians, cos, sin, asin, sqrt
 
 
 # Setup environment credentials 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS_PRICE"] = "thesis-380313-4a81186c4101.json" # change for your GCP key
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-4a81186c4101.json" # change for your GCP key
 PROJECT = "thesis-380313" # change for your GCP project
 REGION = "us-central1" # change for your GCP region (where your model is hosted)
 
