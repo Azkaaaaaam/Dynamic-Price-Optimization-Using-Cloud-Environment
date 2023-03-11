@@ -9,6 +9,12 @@ import requests
 import pydeck as pdk
 from math import radians, cos, sin, asin, sqrt
 
+
+# Setup environment credentials 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS_PRICE"] = "thesis-380313-4a81186c4101.json" # change for your GCP key
+PROJECT = "thesis-380313" # change for your GCP project
+REGION = "us-central1" # change for your GCP region (where your model is hosted)
+
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
 
@@ -163,3 +169,32 @@ with col3:
 #st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
 #st.write(f"Trip Duration: {duration:.2f} mins")
 
+
+# Get the user input
+pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
+passenger_count = num_users
+
+# Prepare the request data
+request_data = {
+    "pickup_datetime": pickup_datetime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+    "pickup_longitude": df.loc[df["Pickup location"]==pickup_location, "Longitude"].values[0],
+    "pickup_latitude": df.loc[df["Pickup location"]==pickup_location, "Latitude"].values[0],
+    "dropoff_longitude": df.loc[df["Dropoff location"]==dropoff_location, "Longitude"].values[0],
+    "dropoff_latitude": df.loc[df["Dropoff location"]==dropoff_location, "Latitude"].values[0],
+    "passenger_count": passenger_count
+}
+
+# Call the prediction API
+url = f"https://{REGION}-ml.googleapis.com/v1/projects/{PROJECT}/models/taxifare:predict"
+headers = {
+    "Authorization": "Bearer $(gcloud auth application-default print-access-token)",
+    "Content-Type": "application/json"
+}
+response = requests.post(url, headers=headers, json={"instances": [request_data]})
+
+# Parse the response
+if response.status_code == 200:
+    prediction = response.json()['predictions'][0]['fare_amount']
+    st.success(f"The predicted fare amount is {prediction:.2f}$")
+else:
+    st.error("Failed to get the prediction from the model.")
