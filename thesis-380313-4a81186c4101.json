@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "thesis-380313",
+  "private_key_id": "4a81186c4101756c2b9f32656fdb72eb98b15992",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDNeCfXyF0aGhei\nUENgRnscJrtc6igmaZVCMsSMf4T/ExvwIH6vZq8HmXnHgUrD093x+TmOYyLjUX9X\nOhJiU1cRpFYWnqplh5fWHtKcs1wD2vf1NeTSpYUqnRBB7IedNgFAr4Xs7V1b24ow\ndVvYs8nFIbzzGCTu0OvDM+C5szGSgCacyrNMJ8ITMAm3Y2OTaQs+TT1TAtfcQnJB\n/xEV91TMK9xz62SMBuFS2XjW6OS5ouv00fkTHGOqmm36YSUCnbJIt5Y1Cm4k2WTY\nIzOeN0+BRnE6AgtpvQ7Wpp4oRFkqHawNgxe0m7ivCHbIx4qG4kQqx810GOOf9kqE\niW7cmNKdAgMBAAECggEANhyERbBHUKX5fm4r6FF3f5j1tAkYzND2lYoAOE4nDPQP\n4gP0ySW+R76UE0YKFhuYcm7jyQtztzER27t39vwizIsefvOHRZjZlHLmnY0g2QUU\nUzg/zHf545icnPf5WR5NYyc2moiCkzv0n0FxEFd89lUlyVGc/GX6CR0C/HTkQ8PS\nWhqXI8jkmaeSMHCvoFQR7Io2fZJ9e2BQGHt1QZJYoGo8Bi1TDiyj73f/vFHqJPGd\nP5PWIeGGCqH1CNYdg4hGPQivkvKAUVkAl8Set6zRK20ZPiuPmEHpTOVU0bZvAdrf\n0ca2iFNW21EVFPbKpRPnhu1Lj+INK0i9/0Kw5acQYwKBgQDmIJXaERDEjfyqNZEe\n9Gq5LTDxtahDCfRGt8U829brWROi8/tcqw2qMvkHgMZmemULxwuNrc4VbCFe6185\nJhpyMXCwDXe8OapCXIxQqrHt5sa4isrgAG+vwf/dFeRDNRC+hjf115YB+mml1sop\nkx1FHS51k46v7By69M1FJB8dJwKBgQDkkeCgYzBRgC9NzAtqlZvpRE10+mAmbQSS\nc0O3/Fc2+JS6kLcfbsS4x8m7NF3Uq5D+YdXoqsOFGXGcR/ROsejkkgQqmqviSDGE\nJIy2Mo7p1APYlcBMd9K03eVFBS+BoPtuMKRd7TihcsmhpsThZTq0az795qve6l4g\n8t8/J9/0mwKBgBTP552EI5cTHEGsfIZnJmu+2YlSm3gMo2nt3smlPCems67uD9KO\nqbq1x23VSJwl/5N0GehjSpsHX3E9Kix59LRVIlLZtPVx5aMAybPV7CeO0nQIIVbm\n0zL7AY/WFgG5/9yrOM5kA+4D3qAf78KYynHgtL3vbV0dpm+GCjZxkNrLAoGAOLyt\nUaLNf62eEGWx/8cbaI/32i28aE1vcRsDmEwfKhoScS0zB65rTqLpRHr/P6dG2p5W\nhua8mfFy7iQ+VLp84SANwLWcLRNWl0KrWx65svlZ6w1hKpojx5m9K6DZ5geb4gJZ\nCqe0Av+HZYUMIhcKt3ZXsJbt2uu6adtf50FyqjkCgYAaHlgxLxP41goBbWYG3oyy\nBtGZfAZsLFMZ6ZUyY6zOn/DdC1QQ1d4fCLb8mm1xkagWNfIMqzA4kfF+XeTYJ2NB\nsYuNZPhx4LqEzE9qLKwYAztPBTnayFIuFPdEQ80v8Ed5tJVDKyhlmSBaL+XKLCnZ\nmWwnZRLS/2mDK+eJmY7NaQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "prediction-price@thesis-380313.iam.gserviceaccount.com",
+  "client_id": "112100221919587536340",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/prediction-price%40thesis-380313.iam.gserviceaccount.com"
+}
