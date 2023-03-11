@@ -170,31 +170,31 @@ with col3:
 #st.write(f"Trip Duration: {duration:.2f} mins")
 
 
-# Get the user input
-pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
-passenger_count = num_users
+    # Get the user input
+    pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
+    passenger_count = num_users
 
-# Prepare the request data
-request_data = {
-    "pickup_datetime": pickup_datetime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-    "pickup_longitude": df.loc[df["Pickup location"]==pickup_location, "Longitude"].values[0],
-    "pickup_latitude": df.loc[df["Pickup location"]==pickup_location, "Latitude"].values[0],
-    "dropoff_longitude": df.loc[df["Dropoff location"]==dropoff_location, "Longitude"].values[0],
-    "dropoff_latitude": df.loc[df["Dropoff location"]==dropoff_location, "Latitude"].values[0],
-    "passenger_count": passenger_count
-}
+    # Prepare the request data
+    request_data = {
+        "pickup_datetime": pickup_datetime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+        "pickup_longitude": df.loc[df["Pickup location"]==pickup_location, "Longitude"].values[0],
+        "pickup_latitude": df.loc[df["Pickup location"]==pickup_location, "Latitude"].values[0],
+        "dropoff_longitude": df.loc[df["Dropoff location"]==dropoff_location, "Longitude"].values[0],
+        "dropoff_latitude": df.loc[df["Dropoff location"]==dropoff_location, "Latitude"].values[0],
+        "passenger_count": passenger_count
+    }
 
-# Call the prediction API
-url = f"https://{REGION}-ml.googleapis.com/v1/projects/{PROJECT}/models/taxifare:predict"
-headers = {
-    "Authorization": "Bearer $(gcloud auth application-default print-access-token)",
-    "Content-Type": "application/json"
-}
-response = requests.post(url, headers=headers, json={"instances": [request_data]})
+    # Call the prediction API
+    url = f"https://{REGION}-ml.googleapis.com/v1/projects/{PROJECT}/models/taxifare:predict"
+    headers = {
+        "Authorization": "Bearer $(gcloud auth application-default print-access-token)",
+        "Content-Type": "application/json"
+    }
+    response = requests.post(url, headers=headers, json={"instances": [request_data]})
 
-# Parse the response
-if response.status_code == 200:
-    prediction = response.json()['predictions'][0]['fare_amount']
-    st.success(f"The predicted fare amount is {prediction:.2f}$")
-else:
-    st.error("Failed to get the prediction from the model.")
+    # Parse the response
+    if response.status_code == 200:
+        prediction = response.json()['predictions'][0]['fare_amount']
+        st.success(f"The predicted fare amount is {prediction:.2f}$")
+    else:
+        st.error("Failed to get the prediction from the model.")
