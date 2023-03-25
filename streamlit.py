@@ -255,8 +255,11 @@ def predict_json(project, region, model, instances, version=None):
 
     return response['predictions']
 
-predictions = predict_json(project, region, model, instances, version)
-print(predictions)
-print(response)
-print(predict_json(project, region, model, instances, version))
+prediction_results = predict_json(project, region, model, instances, version)
+
+prediction_value_1 = prediction_results['predictions'][0][0]
+prediction_value_2 = prediction_results['predictions'][1][0]
+
+print(prediction_value_1)
+print(prediction_value_2)
 
