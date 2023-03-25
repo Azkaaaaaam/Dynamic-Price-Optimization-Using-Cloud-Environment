@@ -254,9 +254,5 @@ with col3:
             raise RuntimeError(response['error'])
 
         return response['predictions']
-
-    try:
-        predictions = predict_json(project, region, model, instances, version)
-        print(predictions)
-    except RuntimeError as e:
-        st.error(f"Error: {e}")
+    predictions = predict_json(project, region, model, instances, version)
+    print(predictions)
