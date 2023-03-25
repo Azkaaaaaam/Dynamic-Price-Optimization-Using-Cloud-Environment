@@ -9,7 +9,8 @@ import requests
 import pydeck as pdk
 from math import radians, cos, sin, asin, sqrt
 import os
-from googleapiclient.discovery import build
+# from googleapiclient.discovery import build
+import googleapiclient.discovery
 
 # Setup environment credentials 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-4a81186c4101.json" # change for your GCP key
@@ -208,7 +209,6 @@ region = "us-central1"
 model = "surge"
 version = "V2"  # or specify a version if applicable
 
-import googleapiclient.discovery
 
 def predict_json(project, region, model, instances, version=None):
     """Send json data to a deployed model for prediction.
