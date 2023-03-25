@@ -259,4 +259,7 @@ def predict_json(project, region, model, instances, version=None):
 
     return response['predictions']
 
-print(predict_json(project, region, model, instances, version))
+try:
+    print(predict_json(project, region, model, instances, version))
+except RuntimeError as e:
+    st.error(f"Error: {e}")
