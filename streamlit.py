@@ -211,11 +211,13 @@ project = "thesis-380313"
 region = "us-central1"
 model = "surge"
 version = "V2"  # or specify a version if applicable
-instances= {
-"instances": [
-[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]
-]
+instances = {
+    "instances": [
+        [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882],
+        [0, 0, 1, 0.876126027, 3.673346614, 15.90288087, 3.5, 0.5, 0, 24.6, 32.7, 31.8]
+    ]
 }
+
 import googleapiclient.discovery
 
 def predict_json(project, region, model, instances, version=None):
