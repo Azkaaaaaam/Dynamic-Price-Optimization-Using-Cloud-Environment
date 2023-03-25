@@ -12,7 +12,6 @@ import os
 # from googleapiclient.discovery import build
 import googleapiclient.discovery
 from google.api_core.client_options import ClientOptions
-from google.cloud import aiplatform
 from google.protobuf import json_format
 
 
