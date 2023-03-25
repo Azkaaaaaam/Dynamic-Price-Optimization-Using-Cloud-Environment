@@ -210,35 +210,46 @@ region = "us-central1"
 model = "surge"
 version = "V2"  # or specify a version if applicable
 
-def predict_json(project, region, model, input_data, version=None):
+import googleapiclient.discovery
+
+def predict_json(project, region, model, instances, version=None):
+    """Send json data to a deployed model for prediction.
+
+    Args:
+        project (str): project where the Cloud ML Engine Model is deployed.
+        region (str): regional endpoint to use; set to None for ml.googleapis.com
+        model (str): model name.
+        instances ([Mapping[str: Any]]): Keys should be the names of Tensors
+            your deployed model expects as inputs. Values should be datatypes
+            convertible to Tensors, or (potentially nested) lists of datatypes
+            convertible to tensors.
+        version: str, version of the model to target.
+    Returns:
+        Mapping[str: any]: dictionary of prediction results defined by the
+            model.
     """
-    Send a JSON request to a deployed model for prediction.
-    """
-    # Create the URL for the prediction request
-    api_endpoint = f"https://{region}-ml.googleapis.com/v1/projects/{project}/models/{model}"
+    # Create the ML Engine service object.
+    # To authenticate set the environment variable
+    # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
+    prefix = "{}-ml".format(region) if region else "ml"
+    api_endpoint = "https://{}.googleapis.com".format(prefix)
+    client_options = ClientOptions(api_endpoint=api_endpoint)
+    service = googleapiclient.discovery.build(
+        'ml', 'v1', client_options=client_options)
+    name = 'projects/{}/models/{}'.format(project, model)
+
     if version is not None:
-        api_endpoint += f"/versions/{version}"
-    api_endpoint += ":predict"
-    
-    # Create the JSON request body
-    request_data = {"instances": input_data}
-    
-    # Send the prediction request
-    response = requests.post(
-        url=api_endpoint,
-        json=request_data,
-        headers={"Authorization": f"Bearer {get_token()}"}
-    )
-    
-    # Check if the response was successful
-    if response.status_code != 200:
-        raise RuntimeError(response.text)
+        name += '/versions/{}'.format(version)
 
-    # Extract the predictions from the response
-    predictions = response.json()["predictions"]
+    response = service.projects().predict(
+        name=name,
+        body={'instances': instances}
+    ).execute()
 
-    return predictions
+    if 'error' in response:
+        raise RuntimeError(response['error'])
 
+    return response['predictions']
 # Create a sample input JSON request
 input_data = {
     "instances": [
