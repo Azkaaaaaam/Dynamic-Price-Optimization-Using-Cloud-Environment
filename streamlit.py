@@ -11,6 +11,7 @@ from math import radians, cos, sin, asin, sqrt
 import os
 # from googleapiclient.discovery import build
 import googleapiclient.discovery
+from google.api_core.client_options import ClientOptions
 
 # Setup environment credentials 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-4a81186c4101.json" # change for your GCP key
@@ -231,7 +232,7 @@ def predict_json(project, region, model, instances, version=None):
     # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
     prefix = "{}-ml".format(region) if region else "ml"
     api_endpoint = "https://{}.googleapis.com".format(prefix)
-    client_options = ClientOptions(api_endpoint=api_endpoint)
+    client_options = ClientOptions(api_endpoint=api_endpoint, client_cert_source=None)
     service = googleapiclient.discovery.build(
         'ml', 'v1', client_options=client_options)
     name = 'projects/{}/models/{}'.format(project, model)
