@@ -15,6 +15,9 @@ from google.api_core.client_options import ClientOptions
 from google.protobuf import json_format
 import json
 import googleapiclient.discovery
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-8fd9042da489.json" # change for your GCP key
+PROJECT = "thesis-380313" # change for your GCP project
+REGION = "us-central1" # change for your GCP region (where your model is hosted)
 
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
@@ -200,11 +203,7 @@ with col3:
     else:
         st.error("Failed to get the prediction from the model.")
         # Setup environment credentials 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-8fd9042da489.json" # change for your GCP key
-PROJECT = "thesis-380313" # change for your GCP project
-REGION = "us-central1" # change for your GCP region (where your model is hosted)
 
-# Set up the required arguments
 project = "thesis-380313"
 region = "us-central1"
 model = "surge"
