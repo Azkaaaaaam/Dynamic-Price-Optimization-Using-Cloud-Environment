@@ -1,4 +1,3 @@
-pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
 import streamlit as st
 import pandas as pd
 import numpy as np
