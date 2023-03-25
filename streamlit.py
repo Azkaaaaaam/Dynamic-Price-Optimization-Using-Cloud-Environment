@@ -259,7 +259,12 @@ input_data = {
 input_json = json.dumps(input_data)
 
 # Call the predict_json() function
-predictions = predict_json(project, region, model, input_data, version)
+try:
+    predictions = predict_json(project, region, model, input_data, version)
+except RuntimeError as e:
+    st.error("An error occurred while making predictions. Please try again later.")
+    st.write(f"Error details: {str(e)}")
+    predictions = None
 
 # Print the output
 print(predictions)
