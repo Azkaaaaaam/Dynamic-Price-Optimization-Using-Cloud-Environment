@@ -253,7 +253,7 @@ def predict_json(project, region, model, instances, version=None):
 # Create a sample input JSON request
 input_data = {
     "instances": [
-        [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]
+        [1, 1, 0, 1, 2, 15, 3, 2, 0, 25, 37, 36]
     ]
 }
 input_json = json.dumps(input_data)
