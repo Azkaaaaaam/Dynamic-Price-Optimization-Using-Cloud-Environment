@@ -254,29 +254,7 @@ def predict_json(project, region, model, instances, version=None):
     return response['predictions']
 # Create a sample input JSON request
 
-input_data = { "instances": [[float(x) for x in [1, 1, 0, 1, 2, 15, 3, 2, 0, 25, 37, 36]]] }
-
-input_json = json.dumps(input_data)
-
-# Call the predict_json() function
-try:
-    predictions = predict_json(project, region, model, input_data, version)
-except RuntimeError as e:
-    st.error("An error occurred while making predictions. Please try again later.")
-    st.write(f"Error details: {str(e)}")
-    predictions = None
-    
-    # Set up the required arguments
-project_id = "thesis-380313"
-region = "us-central1"
-model_name = "surge"
-model_endpoint = f"{model_name}-endpoint"
 instance = [[1, 1, 0, 1, 2, 15, 3, 2, 0, 25, 37, 36]]  # modify this according to your input format
-
-# Create an endpoint client
-endpoint = aiplatform.Endpoint(
-    endpoint_name=f"projects/{project_id}/locations/{region}/endpoints/{model_endpoint}"
-)
 
 # Prepare the input instance
 input_instance = json_format.ParseDict({"instances": instance}, value_typing=json_format.TYPE_INT64)
