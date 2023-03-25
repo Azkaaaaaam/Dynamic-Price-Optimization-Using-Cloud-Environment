@@ -13,7 +13,8 @@ import os
 import googleapiclient.discovery
 from google.api_core.client_options import ClientOptions
 from google.protobuf import json_format
-
+import json
+import googleapiclient.discovery
 
 # Setup environment credentials 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-4a81186c4101.json" # change for your GCP key
@@ -204,8 +205,6 @@ with col3:
     else:
         st.error("Failed to get the prediction from the model.")
         
-     import json
-
     # Set up the required arguments
     project = "thesis-380313"
     region = "us-central1"
@@ -216,7 +215,6 @@ with col3:
         [0, 0, 1, 0.876126027, 3.673346614, 15.90288087, 3.5, 0.5, 0, 24.6, 32.7, 31.8]
     ])
 
-    import googleapiclient.discovery
     def predict_json(project, region, model, instances, version=None):
         """Send json data to a deployed model for prediction.
         Args:
