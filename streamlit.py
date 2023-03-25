@@ -256,6 +256,7 @@ with col3:
         return response['predictions']
 
     try:
-        print(predict_json(project, region, model, instances, version))
+        predictions = predict_json(project, region, model, instances, version)
+        print(predictions)
     except RuntimeError as e:
         st.error(f"Error: {e}")
