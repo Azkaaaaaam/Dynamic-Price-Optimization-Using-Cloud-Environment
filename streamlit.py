@@ -15,6 +15,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-4a81186c4101.json"
 PROJECT = "thesis-380313" # change for your GCP project
 REGION = "us-central1" # change for your GCP region (where your model is hosted)
 
+file_uri = 'gs://preprocessed_datasets/preprocessed_surge.csv'
+merged_df = pd.read_csv(file_uri)
+print(merged_df.head())
+
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
 
