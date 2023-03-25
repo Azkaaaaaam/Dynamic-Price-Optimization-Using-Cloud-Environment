@@ -217,17 +217,15 @@ instances = np.array([
 ])
 
 import googleapiclient.discovery
-
 def predict_json(project, region, model, instances, version=None):
     """Send json data to a deployed model for prediction.
     Args:
         project (str): project where the Cloud ML Engine Model is deployed.
         region (str): regional endpoint to use; set to None for ml.googleapis.com
         model (str): model name.
-        instances ([Mapping[str: Any]]): Keys should be the names of Tensors
-            your deployed model expects as inputs. Values should be datatypes
-            convertible to Tensors, or (potentially nested) lists of datatypes
-            convertible to tensors.
+        instances (numpy.ndarray): Input instances to predict on. The shape of
+            the array should be `(n, d)` where `n` is the number of instances
+            and `d` is the number of features.
         version: str, version of the model to target.
     Returns:
         Mapping[str: any]: dictionary of prediction results defined by the
@@ -246,13 +244,12 @@ def predict_json(project, region, model, instances, version=None):
     if version is not None:
         name += '/versions/{}'.format(version)
 
-    # Convert the lists in instances to tensors
-    for key in instances['instances'][0]:
-        instances['instances'] = [[np.array(lst, dtype=np.float64).tolist()] for lst in instances['instances']]
-        
+    # Convert input features to list before sending to deployed model
+    instances_list = instances.tolist()
+
     response = service.projects().predict(
         name=name,
-        body={'instances': instances}
+        body={'instances': instances_list}
     ).execute()
 
     if 'error' in response:
