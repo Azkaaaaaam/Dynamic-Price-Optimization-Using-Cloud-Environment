@@ -251,8 +251,8 @@ def predict_json(project, region, model, instances, version=None):
 
     return response['predictions']
 # Create a sample input JSON request
-input_data = {    "instances": [[1, 1, 0, 1, 2, 15, 3, 2, 0, 25, 37, 36]]
-}
+
+input_data = { "instances": [[float(x) for x in [1, 1, 0, 1, 2, 15, 3, 2, 0, 25, 37, 36]]] }
 
 input_json = json.dumps(input_data)
 
