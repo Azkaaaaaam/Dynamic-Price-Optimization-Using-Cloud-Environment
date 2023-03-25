@@ -256,4 +256,7 @@ def predict_json(project, region, model, instances, version=None):
     return response['predictions']
 
 predictions = predict_json(project, region, model, instances, version)
-st.success(f"predictions: {predictions:.2f}")
+print(predictions)
+print(response)
+print(response['predictions'])
+
