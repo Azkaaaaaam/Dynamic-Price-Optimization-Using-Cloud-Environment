@@ -198,3 +198,26 @@ with col3:
         st.success(f"The predicted fare amount is {prediction:.2f}$")
     else:
         st.error("Failed to get the prediction from the model.")
+        
+        import json
+
+# Set up the required arguments
+project = "thesis-380313"
+region = "us-central1"
+model = "surge"
+version = "V2"  # or specify a version if applicable
+
+# Create a sample input JSON request
+input_data = {
+    "instances": [
+        [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]
+    ]
+}
+input_json = json.dumps(input_data)
+
+# Call the predict_json() function
+predictions = predict_json(project, region, model, input_data, version)
+
+# Print the output
+print(predictions)
+
