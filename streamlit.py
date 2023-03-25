@@ -212,63 +212,62 @@ region = "us-central1"
 model = "surge"
 version = "V2"  # or specify a version if applicable
 
-import googleapiclient.discovery
 
-def predict_json(project, region, model, instances, version=None):
-    """Send json data to a deployed model for prediction.
 
-    Args:
-        project (str): project where the Cloud ML Engine Model is deployed.
-        region (str): regional endpoint to use; set to None for ml.googleapis.com
-        model (str): model name.
-        instances ([Mapping[str: Any]]): Keys should be the names of Tensors
-            your deployed model expects as inputs. Values should be datatypes
-            convertible to Tensors, or (potentially nested) lists of datatypes
-            convertible to tensors.
-        version: str, version of the model to target.
-    Returns:
-        Mapping[str: any]: dictionary of prediction results defined by the
-            model.
-    """
-    # Create the ML Engine service object.
-    # To authenticate set the environment variable
-    # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
-    prefix = "{}-ml".format(region) if region else "ml"
-    api_endpoint = "https://{}.googleapis.com".format(prefix)
-    client_options = ClientOptions(api_endpoint=api_endpoint)
-    service = googleapiclient.discovery.build(
-        'ml', 'v1', client_options=client_options)
-    name = 'projects/{}/models/{}'.format(project, model)
 
-    if version is not None:
-        name += '/versions/{}'.format(version)
 
-    response = service.projects().predict(
-        name=name,
-        body={'instances': instances}
-    ).execute()
+import json
+from google.protobuf import json_format
+import grpc
+from google.protobuf.struct_pb2 import Value
+from google.protobuf.struct_pb2 import Struct
+from google.protobuf import field_mask_pb2
+from google.rpc import error_details_pb2
+from google.cloud import aiplatform
+from google.cloud.aiplatform.gapic.schema import predict_request
+from google.cloud.aiplatform.gapic.schema import predict_response
+from google.cloud.aiplatform.gapic import prediction_service_client
 
-    if 'error' in response:
-        raise RuntimeError(response['error'])
+# Set up the required arguments
+project_id = "your_project_id"
+model_id = "your_model_id"
+location = "us-central1"
+endpoint_id = "your_endpoint_id"
 
-    return response['predictions']
-# Create a sample input JSON request
+# Create the prediction client
+client_options = {"api_endpoint": f"{location}-aiplatform.googleapis.com"}
+prediction_client = prediction_service_client.PredictionServiceClient(
+    client_options=client_options
+)
 
+# Create the endpoint name
+endpoint = prediction_client.endpoint_path(project=project_id, location=location, endpoint=endpoint_id)
+
+# Create the instance to predict
 instance = [[1, 1, 0, 1, 2, 15, 3, 2, 0, 25, 37, 36]]  # modify this according to your input format
 
 # Prepare the input instance
 input_instance = json_format.ParseDict({"instances": instance}, value_typing=json_format.TYPE_INT64)
 
+# Create the predict request
+request = predict_request.PredictRequest()
+request.endpoint = endpoint
+request.instances.append(input_instance)
+
 # Call the endpoint to make predictions
 try:
-    response = endpoint.predict(instances=input_instance)
+    response = prediction_client.predict(request=request)
     predictions = response.predictions
-except Exception as e:
+except grpc.RpcError as e:
     st.error("An error occurred while making predictions. Please try again later.")
-    st.write(f"Error details: {str(e)}")
+    error_message = e.details()
+    if error_message.startswith("Error for "):
+        error_message = error_message.split(" : ", 1)[1]
+    error_details = error_details_pb2.ErrorDetails.FromString(e.details())
+    if error_details.error_message:
+        error_message = error_details.error_message
+    st.write(f"Error details: {error_message}")
     predictions = None
-
 
 # Print the output
 print(predictions)
-
