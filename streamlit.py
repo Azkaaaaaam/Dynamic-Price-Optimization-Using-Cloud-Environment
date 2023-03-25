@@ -222,7 +222,6 @@ import googleapiclient.discovery
 
 def predict_json(project, region, model, instances, version=None):
     """Send json data to a deployed model for prediction.
-
     Args:
         project (str): project where the Cloud ML Engine Model is deployed.
         region (str): regional endpoint to use; set to None for ml.googleapis.com
@@ -249,6 +248,10 @@ def predict_json(project, region, model, instances, version=None):
     if version is not None:
         name += '/versions/{}'.format(version)
 
+    # Convert the lists in instances to tensors
+    for key in instances['instances'][0]:
+        instances['instances'] = [[np.array(lst, dtype=np.float64).tolist()] for lst in instances['instances']]
+        
     response = service.projects().predict(
         name=name,
         body={'instances': instances}
