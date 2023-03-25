@@ -16,11 +16,6 @@ from google.protobuf import json_format
 import json
 import googleapiclient.discovery
 
-# Setup environment credentials 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-8fd9042da489.json" # change for your GCP key
-PROJECT = "thesis-380313" # change for your GCP project
-REGION = "us-central1" # change for your GCP region (where your model is hosted)
-
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
 
@@ -204,55 +199,60 @@ with col3:
         st.success(f"The predicted fare amount is {prediction:.2f}$")
     else:
         st.error("Failed to get the prediction from the model.")
-        
-    # Set up the required arguments
-    project = "thesis-380313"
-    region = "us-central1"
-    model = "surge"
-    version = "V2"  # or specify a version if applicable
-    instances = np.array([
-        [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882],
-        [0, 0, 1, 0.876126027, 3.673346614, 15.90288087, 3.5, 0.5, 0, 24.6, 32.7, 31.8]
-    ])
+        # Setup environment credentials 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-8fd9042da489.json" # change for your GCP key
+PROJECT = "thesis-380313" # change for your GCP project
+REGION = "us-central1" # change for your GCP region (where your model is hosted)
 
-    def predict_json(project, region, model, instances, version=None):
-        """Send json data to a deployed model for prediction.
-        Args:
-            project (str): project where the Cloud ML Engine Model is deployed.
-            region (str): regional endpoint to use; set to None for ml.googleapis.com
-            model (str): model name.
-            instances (numpy.ndarray): Input instances to predict on. The shape of
-                the array should be `(n, d)` where `n` is the number of instances
-                and `d` is the number of features.
-            version: str, version of the model to target.
-        Returns:
-            Mapping[str: any]: dictionary of prediction results defined by the
-                model.
-        """
-        # Create the ML Engine service object.
-        # To authenticate set the environment variable
-        # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
-        prefix = "{}-ml".format(region) if region else "ml"
-        api_endpoint = "https://{}.googleapis.com".format(prefix)
-        client_options = ClientOptions(api_endpoint=api_endpoint)
-        service = googleapiclient.discovery.build(
-            'ml', 'v1', client_options=client_options)
-        name = 'projects/{}/models/{}'.format(project, model)
+# Set up the required arguments
+project = "thesis-380313"
+region = "us-central1"
+model = "surge"
+version = "V2"  # or specify a version if applicable
+instances = np.array([
+    [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882],
+    [0, 0, 1, 0.876126027, 3.673346614, 15.90288087, 3.5, 0.5, 0, 24.6, 32.7, 31.8]
+])
 
-        if version is not None:
-            name += '/versions/{}'.format(version)
+def predict_json(project, region, model, instances, version=None):
+    """Send json data to a deployed model for prediction.
+    Args:
+        project (str): project where the Cloud ML Engine Model is deployed.
+        region (str): regional endpoint to use; set to None for ml.googleapis.com
+        model (str): model name.
+        instances (numpy.ndarray): Input instances to predict on. The shape of
+            the array should be `(n, d)` where `n` is the number of instances
+            and `d` is the number of features.
+        version: str, version of the model to target.
+    Returns:
+        Mapping[str: any]: dictionary of prediction results defined by the
+            model.
+    """
+    # Create the ML Engine service object.
+    # To authenticate set the environment variable
+    # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
+    prefix = "{}-ml".format(region) if region else "ml"
+    api_endpoint = "https://{}.googleapis.com".format(prefix)
+    client_options = ClientOptions(api_endpoint=api_endpoint)
+    service = googleapiclient.discovery.build(
+        'ml', 'v1', client_options=client_options)
+    name = 'projects/{}/models/{}'.format(project, model)
 
-        # Convert input features to list before sending to deployed model
-        instances_list = instances.tolist()
+    if version is not None:
+        name += '/versions/{}'.format(version)
 
-        response = service.projects().predict(
-            name=name,
-            body={'instances': instances_list}
-        ).execute()
+    # Convert input features to list before sending to deployed model
+    instances_list = instances.tolist()
 
-        if 'error' in response:
-            raise RuntimeError(response['error'])
+    response = service.projects().predict(
+        name=name,
+        body={'instances': instances_list}
+    ).execute()
 
-        return response['predictions']
-    predictions = predict_json(project, region, model, instances, version)
-    print(predictions)
+    if 'error' in response:
+        raise RuntimeError(response['error'])
+
+    return response['predictions']
+
+predictions = predict_json(project, region, model, instances, version)
+print(predictions)
