@@ -218,7 +218,7 @@ version = "V2"  # or specify a version if applicable
 
 import json
 from google.protobuf import json_format
-import grpc
+import grpcio
 from google.protobuf.struct_pb2 import Value
 from google.protobuf.struct_pb2 import Struct
 from google.protobuf import field_mask_pb2
