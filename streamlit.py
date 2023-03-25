@@ -204,60 +204,60 @@ with col3:
     else:
         st.error("Failed to get the prediction from the model.")
         
-        import json
+     import json
 
-# Set up the required arguments
-project = "thesis-380313"
-region = "us-central1"
-model = "surge"
-version = "V2"  # or specify a version if applicable
-instances = np.array([
-    [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882],
-    [0, 0, 1, 0.876126027, 3.673346614, 15.90288087, 3.5, 0.5, 0, 24.6, 32.7, 31.8]
-])
+    # Set up the required arguments
+    project = "thesis-380313"
+    region = "us-central1"
+    model = "surge"
+    version = "V2"  # or specify a version if applicable
+    instances = np.array([
+        [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882],
+        [0, 0, 1, 0.876126027, 3.673346614, 15.90288087, 3.5, 0.5, 0, 24.6, 32.7, 31.8]
+    ])
 
-import googleapiclient.discovery
-def predict_json(project, region, model, instances, version=None):
-    """Send json data to a deployed model for prediction.
-    Args:
-        project (str): project where the Cloud ML Engine Model is deployed.
-        region (str): regional endpoint to use; set to None for ml.googleapis.com
-        model (str): model name.
-        instances (numpy.ndarray): Input instances to predict on. The shape of
-            the array should be `(n, d)` where `n` is the number of instances
-            and `d` is the number of features.
-        version: str, version of the model to target.
-    Returns:
-        Mapping[str: any]: dictionary of prediction results defined by the
-            model.
-    """
-    # Create the ML Engine service object.
-    # To authenticate set the environment variable
-    # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
-    prefix = "{}-ml".format(region) if region else "ml"
-    api_endpoint = "https://{}.googleapis.com".format(prefix)
-    client_options = ClientOptions(api_endpoint=api_endpoint)
-    service = googleapiclient.discovery.build(
-        'ml', 'v1', client_options=client_options)
-    name = 'projects/{}/models/{}'.format(project, model)
+    import googleapiclient.discovery
+    def predict_json(project, region, model, instances, version=None):
+        """Send json data to a deployed model for prediction.
+        Args:
+            project (str): project where the Cloud ML Engine Model is deployed.
+            region (str): regional endpoint to use; set to None for ml.googleapis.com
+            model (str): model name.
+            instances (numpy.ndarray): Input instances to predict on. The shape of
+                the array should be `(n, d)` where `n` is the number of instances
+                and `d` is the number of features.
+            version: str, version of the model to target.
+        Returns:
+            Mapping[str: any]: dictionary of prediction results defined by the
+                model.
+        """
+        # Create the ML Engine service object.
+        # To authenticate set the environment variable
+        # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
+        prefix = "{}-ml".format(region) if region else "ml"
+        api_endpoint = "https://{}.googleapis.com".format(prefix)
+        client_options = ClientOptions(api_endpoint=api_endpoint)
+        service = googleapiclient.discovery.build(
+            'ml', 'v1', client_options=client_options)
+        name = 'projects/{}/models/{}'.format(project, model)
 
-    if version is not None:
-        name += '/versions/{}'.format(version)
+        if version is not None:
+            name += '/versions/{}'.format(version)
 
-    # Convert input features to list before sending to deployed model
-    instances_list = instances.tolist()
+        # Convert input features to list before sending to deployed model
+        instances_list = instances.tolist()
 
-    response = service.projects().predict(
-        name=name,
-        body={'instances': instances_list}
-    ).execute()
+        response = service.projects().predict(
+            name=name,
+            body={'instances': instances_list}
+        ).execute()
 
-    if 'error' in response:
-        raise RuntimeError(response['error'])
+        if 'error' in response:
+            raise RuntimeError(response['error'])
 
-    return response['predictions']
+        return response['predictions']
 
-try:
-    print(predict_json(project, region, model, instances, version))
-except RuntimeError as e:
-    st.error(f"Error: {e}")
+    try:
+        print(predict_json(project, region, model, instances, version))
+    except RuntimeError as e:
+        st.error(f"Error: {e}")
