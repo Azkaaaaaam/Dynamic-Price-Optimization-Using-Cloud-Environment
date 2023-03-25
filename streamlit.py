@@ -257,3 +257,4 @@ def predict_json(project, region, model, instances, version=None):
 
     return response['predictions']
 
+print(predict_json(project, region, model, instances, version))
