@@ -14,7 +14,7 @@ import googleapiclient.discovery
 from google.api_core.client_options import ClientOptions
 from google.protobuf import json_format
 import json
-import googleapiclient.discovery
+# import googleapiclient.discovery
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "thesis-380313-8fd9042da489.json" 
 print(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 
