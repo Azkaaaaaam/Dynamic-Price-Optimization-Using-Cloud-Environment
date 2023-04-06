@@ -187,6 +187,7 @@ import json
 
 runtime = boto3.client("sagemaker-runtime")
 s3 = boto3.client('s3', region_name='eu-north-1')
+s3.list_buckets()
 endpoint_name = "rf-scikit-2023-04-06-15-32-22-591"
 content_type = "application/json"
 payload = {
