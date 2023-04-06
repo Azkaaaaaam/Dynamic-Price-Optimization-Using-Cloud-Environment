@@ -9,10 +9,6 @@ import requests
 import pydeck as pdk
 from math import radians, cos, sin, asin, sqrt
 import os
-# from googleapiclient.discovery import build
-import googleapiclient.discovery
-from google.api_core.client_options import ClientOptions
-from google.protobuf import json_format
 import json
 
 st.set_page_config(layout="wide")
