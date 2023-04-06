@@ -184,7 +184,7 @@ with col3:
 
 import boto3
 import json
-
+os.environ['AWS_REGION'] = 'eu-north-1'
 runtime = boto3.client("sagemaker-runtime")
 s3 = boto3.client('s3', region_name='eu-north-1')
 s3.list_buckets()
