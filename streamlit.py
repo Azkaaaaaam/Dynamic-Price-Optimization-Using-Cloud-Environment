@@ -207,5 +207,8 @@ response = requests.post(url, data=input_data_json, headers=headers)
 # Print the response from your endpoint
 print(response.json())
 
+response_json = json.loads(response.content)
+print(json.dumps(response_json, indent=4))
+
     
  
