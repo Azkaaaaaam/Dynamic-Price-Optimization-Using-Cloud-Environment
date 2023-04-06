@@ -181,26 +181,31 @@ with col3:
     }
 
 
-import boto3
+import requests
 import json
-
-# Set AWS region (replace with your region)
-import os
-os.environ['AWS_REGION'] = 'eu-north-1'
 
 runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
 
 # Set the endpoint name and payload
 endpoint_name ="rf-scikit-2023-04-06-15-32-22-591"
-payload =  {
-    "input": [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]
-}
 
-# Invoke the endpoint and get the response
-response = runtime.invoke_endpoint(EndpointName=endpoint_name, ContentType='application/json', Body=json.dumps(payload))
+# Define the URL of your endpoint
+url = "https://runtime.sagemaker.eu-north-1.amazonaws.com/endpoints/rf-scikit-2023-04-06-15-32-03-129/invocations"
 
-# Parse the response
-result = json.loads(response['Body'].read().decode())
+# Define the input data for your model as a dictionary
+input_data = {"data": [ [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]]}
 
-# Print the result
-print(result)
+# Convert the input data to a JSON string
+input_data_json = json.dumps(input_data)
+
+# Set the content type of your request to application/json
+headers = {"Content-Type": "application/json"}
+
+# Send a POST request to your endpoint with the input data and headers
+response = requests.post(url, data=input_data_json, headers=headers)
+
+# Print the response from your endpoint
+print(response.json())
+
+    
+ 
