@@ -22,12 +22,20 @@ st.title('Yellow Taxis pickups in NYC')
 model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
 #model = pickle.load(open(model_path, 'rb'))
 model = joblib.load('model.pkl')
+cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
 
-cols = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
 final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
 prediction = model.predict(final_features)
 st.write(prediction)
 
+
+model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+#model = pickle.load(open(model_path, 'rb'))
+model2 = joblib.load('modelprice.pkl')
+cols2 = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
+final_features2=np.array([[2.1,43,11.8,1,3.5,0.5,0,25.2,37.9,1,0,4,36.2]])
+prediction2 = model2.predict(final_features2)
+st.write(prediction2)
 url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
 
 response2 = requests.get(url2)
@@ -217,36 +225,3 @@ headers = {"Content-Type": "application/json"}
 
 # Send a POST request to your endpoint with the input data and headers
 response = requests.post(url, data=input_data_json, headers=headers)
-
-
-# Print the result
-st.write(response)
-
-import boto3
-import json
-
-# Set AWS region (replace with your region)
-import os
-os.environ['AWS_REGION'] = 'eu-north-1'
-
-# Create a Boto3 client for SageMaker runtime
-sagemaker = boto3.client('sagemaker-runtime')
-
-# Define the input data for your model as a dictionary
-input_data = {"data": [[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]]}
-
-# Convert the input data to a JSON string
-input_data_json = json.dumps(input_data)
-
-# Set the content type of your request to application/json
-headers = {"Content-Type": "application/json"}
-
-# Send a POST request to your endpoint with the input data and headers
-response = sagemaker.invoke_endpoint(
-    EndpointName='rf-scikit-2023-04-06-15-32-03-129', # Replace with your endpoint name
-    Body=input_data_json,
-    ContentType='application/json')
-
-# Print the result
-st.write(response['Body'].read().decode('utf-8'))
-
