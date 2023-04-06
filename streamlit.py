@@ -184,7 +184,7 @@ with col3:
 import requests
 import json
 
-runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
+#runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
 
 # Set the endpoint name and payload
 endpoint_name ="rf-scikit-2023-04-06-15-32-22-591"
