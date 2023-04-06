@@ -188,6 +188,8 @@ import json
 import os
 os.environ['AWS_REGION'] = 'eu-north-1'
 
+runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
+
 # Create a SageMaker runtime client
 runtime = boto3.client('sagemaker-runtime')
 
