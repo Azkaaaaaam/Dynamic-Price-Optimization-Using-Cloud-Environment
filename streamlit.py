@@ -180,21 +180,7 @@ with col3:
         "passenger_count": passenger_count
     }
 
-    # Call the prediction API
-    url = f"https://{REGION}-ml.googleapis.com/v1/projects/{PROJECT}/models/taxifare:predict"
-    headers = {
-        "Authorization": "Bearer $(gcloud auth application-default print-access-token)",
-        "Content-Type": "application/json"
-    }
-    response = requests.post(url, headers=headers, json={"instances": [request_data]})
 
-    # Parse the response
-    if response.status_code == 200:
-        prediction = response.json()['predictions'][0]['fare_amount']
-        st.success(f"The predicted fare amount is {prediction:.2f}$")
-    else:
-        st.error("Failed to get the prediction from the model.")
-        # Setup environment credentials 
 
 import boto3
 import json
