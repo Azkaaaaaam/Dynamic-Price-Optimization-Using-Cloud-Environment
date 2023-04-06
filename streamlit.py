@@ -19,7 +19,7 @@ cols = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'w
 final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
 prediction = model.predict(final_features)
 output = int(prediction[0])
-
+print(output)
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
 
@@ -194,29 +194,3 @@ with col3:
 #import json
 
 #runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
-import requests
-import json
-
-# Set the endpoint name and payload
-endpoint_name ="rf-scikit-2023-04-06-15-32-22-591"
-
-# Define the URL of your endpoint
-url = f"https://{endpoint_name}.predictor.eu-north-1.amazonaws.com/invocations"
-
-# Define the input data for your model as a dictionary
-input_data = {"data": [ [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]]}
-
-# Convert the input data to a JSON string
-input_data_json = json.dumps(input_data)
-
-# Set the content type of your request to application/json
-headers = {"Content-Type": "application/json"}
-
-# Send a POST request to your endpoint with the input data and headers
-response = requests.post(url, data=input_data_json, headers=headers)
-
-# Print the response status code
-print("Response status code:", response.status_code)
-
-# Print the response content
-print("Response content:", response.content)
