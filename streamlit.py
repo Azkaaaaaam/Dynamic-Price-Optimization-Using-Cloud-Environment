@@ -10,6 +10,13 @@ import pydeck as pdk
 from math import radians, cos, sin, asin, sqrt
 import os
 import json
+import pickle
+
+model = pickle.load(open('model.pkl', 'rb'))
+cols = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
+final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
+prediction = model.predict(final_features)
+output = int(prediction[0])
 
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
