@@ -12,7 +12,9 @@ import os
 import json
 import pickle
 
-model = pickle.load(open('model.pkl', 'rb'))
+
+model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+model = pickle.load(open(model_path, 'rb'))
 cols = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
 final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
 prediction = model.predict(final_features)
