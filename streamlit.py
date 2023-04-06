@@ -194,7 +194,28 @@ with col3:
     }
 
 
-#import requests
+import requests
 #import json
 
-#runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
+
+import boto3
+import json
+
+# Set AWS region (replace with your region)
+import os
+os.environ['AWS_REGION'] = 'eu-north-1'
+
+# Create a SageMaker runtime client
+runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
+# Set the endpoint name and payload
+endpoint_name = 'rf-scikit-2023-04-06-15-32-22-591'
+payload = {'input': [1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]}
+
+# Invoke the endpoint and get the response
+response = runtime.invoke_endpoint(EndpointName=endpoint_name, ContentType='application/json', Body=json.dumps(payload))
+
+# Parse the response
+result = json.loads(response['Body'].read().decode())
+
+# Print the result
+st.write(result)
