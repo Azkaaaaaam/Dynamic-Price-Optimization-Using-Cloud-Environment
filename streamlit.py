@@ -221,3 +221,32 @@ response = requests.post(url, data=input_data_json, headers=headers)
 
 # Print the result
 st.write(response)
+
+import boto3
+import json
+
+# Set AWS region (replace with your region)
+import os
+os.environ['AWS_REGION'] = 'eu-north-1'
+
+# Create a Boto3 client for SageMaker runtime
+sagemaker = boto3.client('sagemaker-runtime')
+
+# Define the input data for your model as a dictionary
+input_data = {"data": [[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]]}
+
+# Convert the input data to a JSON string
+input_data_json = json.dumps(input_data)
+
+# Set the content type of your request to application/json
+headers = {"Content-Type": "application/json"}
+
+# Send a POST request to your endpoint with the input data and headers
+response = sagemaker.invoke_endpoint(
+    EndpointName='rf-scikit-2023-04-06-15-32-03-129', # Replace with your endpoint name
+    Body=input_data_json,
+    ContentType='application/json')
+
+# Print the result
+st.write(response['Body'].read().decode('utf-8'))
+
