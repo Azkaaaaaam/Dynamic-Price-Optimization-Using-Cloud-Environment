@@ -190,9 +190,6 @@ os.environ['AWS_REGION'] = 'eu-north-1'
 
 runtime = boto3.client('sagemaker-runtime', region_name='eu-north-1') # Change the region to your desired region.
 
-# Create a SageMaker runtime client
-runtime = boto3.client('sagemaker-runtime')
-
 # Set the endpoint name and payload
 endpoint_name ="rf-scikit-2023-04-06-15-32-22-591"
 payload =  {
