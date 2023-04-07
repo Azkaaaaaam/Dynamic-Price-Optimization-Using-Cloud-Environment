@@ -217,9 +217,9 @@ with col3:
           model2 = joblib.load('modelprice.pkl')
           cols2 = ['trip_distance', 'dolocationid','total_amount','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
           final_features2=np.array([[distance,43,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
-      #    final_features2=np.array([[2.5, 35, 5, 20.0, 18.5, 0, 5.0, 60, 7, 14, 2, 600]])
           prediction2 = model2.predict(final_features2)
           st.write(prediction2)
+          Static_price = float(prediction2)
 
           ################# Surge Model
 
@@ -227,7 +227,7 @@ with col3:
           #model = pickle.load(open(model_path, 'rb'))
           model = joblib.load('model.pkl')
           cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
-          final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,21, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
+          final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,Static_price, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
           prediction = model.predict(final_features)
           st.write(prediction)
 
