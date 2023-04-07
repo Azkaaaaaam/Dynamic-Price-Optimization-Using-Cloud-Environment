@@ -18,27 +18,6 @@ import joblib
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
 
-############################################################################# Models Unpickeling
-
-################# Surge Model
-
-model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
-#model = pickle.load(open(model_path, 'rb'))
-model = joblib.load('model.pkl')
-cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
-final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
-prediction = model.predict(final_features)
-st.write(prediction)
-
-################# Price Model
-model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
-#model = pickle.load(open(model_path, 'rb'))
-model2 = joblib.load('modelprice.pkl')
-cols2 = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
-final_features2=np.array([[2.1,43,11.8,1,3.5,0.5,0,25.2,37.9,1,0,4,36.2]])
-prediction2 = model2.predict(final_features2)
-st.write(prediction2)
-
 ############################################################################# Datasets
 url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
 response2 = requests.get(url2)
@@ -216,7 +195,40 @@ with col3:
           matching_data = df_filtered[['temp', 'feelslike', 'snow', 'windspeed', 'cloudcover']].iloc[0]
           st.write(matching_data)
 
-        
+          # Get the user input for date
+          user_datetime = pd.to_datetime(str(pickup_date), format='%Y-%m-%d %H:%M:%S')
+          user_day = user_datetime.day
+          user_month = user_datetime.month
+          user_hour = user_datetime.hour
+
+          # Filter the weather data based on the user input date
+          df_filtered = df_weather[(df_weather['datetime'].dt.day == user_day) & 
+                                   (df_weather['datetime'].dt.month == user_month) & 
+                                   (df_weather['datetime'].dt.hour == user_hour)]
+          st.write(f"Day: {user_day}")
+          st.write(f"Month: {user_month}")
+          st.write(f"Hour: {user_hour}")
+          ############################################################################# Models Unpickeling
+
+          ################# Surge Model
+
+          model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+          #model = pickle.load(open(model_path, 'rb'))
+          model = joblib.load('model.pkl')
+          cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
+          final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
+          prediction = model.predict(final_features)
+          st.write(prediction)
+
+          ################# Price Model
+          model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+          #model = pickle.load(open(model_path, 'rb'))
+          model2 = joblib.load('modelprice.pkl')
+          cols2 = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
+          final_features2=np.array([[2.1,43,11.8,1,3.5,0.5,0,25.2,37.9,1,0,4,36.2]])
+          prediction2 = model2.predict(final_features2)
+          st.write(prediction2)
+
         
         
 # Do something with the form results and calculated distance
