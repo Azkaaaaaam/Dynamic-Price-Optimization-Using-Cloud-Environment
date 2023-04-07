@@ -231,9 +231,9 @@ with col3:
           #st.write(prediction)
           surge = float(prediction)
           fare_price = Static_price * surge
-          st.success(f"Final Fare Price: {fare_price} $")
-          st.write(f"Static Price: {Static_price}")
-          st.write(f"Surge Multiplier: {Static_price}")
+          st.success(f"Final Fare Price: {fare_price:.2f} $")
+          st.write(f"Static Price: {Static_price:.2f}")
+          st.write(f"Surge Multiplier: {surge:.2f}")
           st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
           st.success(f"Trip Duration: {duration:.2f} mins")
 
