@@ -196,7 +196,7 @@ with col3:
           st.write(matching_data)
 
           # Get the user input for date
-          user_datetime = pd.to_datetime(str(pickup_date), format='%Y-%m-%d %H:%M:%S')
+          user_datetime = pd.to_datetime(str(pickup_date), format='%Y-%m-%d')
           user_day = user_datetime.day
           user_month = user_datetime.month
           user_hour = user_datetime.hour
