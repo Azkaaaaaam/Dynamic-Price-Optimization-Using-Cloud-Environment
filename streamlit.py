@@ -231,8 +231,10 @@ with col3:
           prediction = model.predict(final_features)
           st.write(prediction)
           surge = float(prediction)
-          fare_price = static_price * surge
-          st.write(fare_price)
+          st.write(surge)
+          st.write(Static_price)
+          #fare_price = static_price * surge
+          #st.write(fare_price)
 # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
 #st.write(f"Pickup lat: {pickup_lat}")
