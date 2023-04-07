@@ -202,6 +202,31 @@ with col3:
     }
 
 
+# Read the csv file
+df_weather = pd.read_csv("Thesis/Weather2021_2022.csv")
+
+# Convert the 'datetime' column to datetime format
+df_weather['datetime'] = pd.to_datetime(df_weather['datetime'])
+
+# Create a new column 'month_day' to store the month and day information
+df_weather['month_day'] = df_weather['datetime'].dt.strftime('%m%d')
+
+# Get the user input for date
+user_date = pd.to_datetime(str(pickup_date)).strftime('%m%d')
+
+# Filter the weather data based on the user input date
+df_filtered = df_weather[df_weather['month_day'] == user_date]
+
+# Get the matching weather data for the user input date
+matching_data = df_filtered[['temp', 'feelslike', 'snow', 'windspeed', 'cloudcover']].iloc[0]
+
+    
+    
+    
+    
+    
+    
+    
 import requests
 #import json
 
