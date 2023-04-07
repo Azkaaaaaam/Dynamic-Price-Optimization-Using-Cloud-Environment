@@ -230,8 +230,9 @@ with col3:
           final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,Static_price, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
           prediction = model.predict(final_features)
           st.write(prediction)
-
-        
+          surge = float(prediction)
+          fare_price = static_price * surge
+          st.write(fare_price)
 # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
 #st.write(f"Pickup lat: {pickup_lat}")
