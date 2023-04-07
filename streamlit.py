@@ -220,7 +220,7 @@ df_filtered = df_weather[df_weather['month_day'] == user_date]
 # Get the matching weather data for the user input date
 matching_data = df_filtered[['temp', 'feelslike', 'snow', 'windspeed', 'cloudcover']].iloc[0]
 
-    
+st.write(matching_data)
     
     
     
