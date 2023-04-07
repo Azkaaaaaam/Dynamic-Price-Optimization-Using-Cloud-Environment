@@ -226,7 +226,7 @@ with col3:
           #model = pickle.load(open(model_path, 'rb'))
           model = joblib.load('model.pkl')
           cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
-          final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,prediction2, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
+          final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,21, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
           prediction = model.predict(final_features)
           st.write(prediction)
 
