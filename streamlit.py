@@ -169,8 +169,6 @@ with col2:
 with col3:
     if submitted:
           ############################################################################# Distance & Duration
-          st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
-          st.success(f"Trip Duration: {duration:.2f} mins")
           # Get the user input
           pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
           passenger_count = num_users
@@ -198,7 +196,6 @@ with col3:
           df_filtered = df_weather[df_weather['month_day'] == user_date]
           # Get the matching weather data for the user input date
           matching_data = df_filtered[['temp', 'feelslike', 'snow', 'windspeed', 'cloudcover']].iloc[0]
-          st.write(matching_data)
 
           # Get the user input for date
           user_datetime = pd.to_datetime(str(pickup_date), format='%Y-%m-%d')
@@ -210,12 +207,9 @@ with col3:
           df_filtered = df_weather[(df_weather['datetime'].dt.day == user_day) & 
                                    (df_weather['datetime'].dt.month == user_month) & 
                                    (df_weather['datetime'].dt.hour == user_hour)]
-          st.write(f"Day: {user_day}")
-          st.write(f"Month: {user_month}")
-          st.write(f"Hour: {user_hour}")
+
           ############################################################################# Models Unpickeling
 
-          st.write(location_id_dropoff)
           ################# Price Model
           model_path = os.path.join(os.path.dirname(__file__), 'modelprice.pkl')
           #model = pickle.load(open(model_path, 'rb'))
@@ -223,7 +217,7 @@ with col3:
           cols2 = ['trip_distance', 'dolocationid','total_amount','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
           final_features2=np.array([[distance,location_id_dropoff,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
           prediction2 = model2.predict(final_features2)
-          st.write(prediction2)
+          #st.write(prediction2)
           Static_price = float(prediction2)
 
           ################# Surge Model
@@ -234,13 +228,16 @@ with col3:
           cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
           final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,Static_price, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
           prediction = model.predict(final_features)
-          st.write(prediction)
+          #st.write(prediction)
           surge = float(prediction)
-          st.write(surge)
-          st.write(Static_price)
           fare_price = Static_price * surge
-          st.write(fare_price)
-# Do something with the form results and calculated distance
+          st.success(f"Final Fare Price: {fare_price} $")
+          st.write(f"Static Price: {Static_price}")
+          st.write(f"Surge Multiplier: {Static_price}")
+          st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
+          st.success(f"Trip Duration: {duration:.2f} mins")
+
+        # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
 #st.write(f"Pickup lat: {pickup_lat}")
 #st.write(f"Pickup lon: {pickup_lon}")
@@ -252,9 +249,11 @@ with col3:
 #st.write(f"Trip Duration: {duration:.2f} mins")
 
 
+st.write(f"Day: {user_day}")
+st.write(f"Month: {user_month}")
+st.write(f"Hour: {user_hour}")
+st.write(matching_data)
 
-    
-    
     
     
     
