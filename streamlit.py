@@ -221,7 +221,7 @@ with col3:
           #model = pickle.load(open(model_path, 'rb'))
           model2 = joblib.load('modelprice.pkl')
           cols2 = ['trip_distance', 'dolocationid','total_amount','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
-          final_features2=np.array([[distance,42,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
+          final_features2=np.array([[distance,location_id_dropoff,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
           prediction2 = model2.predict(final_features2)
           st.write(prediction2)
           Static_price = float(prediction2)
@@ -247,7 +247,7 @@ with col3:
 
 #st.write(f"Dropoff location: {dolocation}")
 #st.write(f"Dropoff lat: {dropoff_lat}")
-st.write(f"Dropoff id: {location_ids}")
+#st.write(f"Dropoff id: {location_ids}")
 #st.write(f"Distance between pickup and dropoff locations: {distance:.2f} km")
 #st.write(f"Trip Duration: {duration:.2f} mins")
 
