@@ -203,7 +203,7 @@ with col3:
 
 
 # Read the csv file
-df_weather = pd.read_csv("Thesis/Weather2021_2022.csv")
+df_weather = pd.read_csv("Weather2021_2022.csv")
 
 # Convert the 'datetime' column to datetime format
 df_weather['datetime'] = pd.to_datetime(df_weather['datetime'])
