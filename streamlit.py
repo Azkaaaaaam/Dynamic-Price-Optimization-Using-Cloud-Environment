@@ -249,10 +249,10 @@ with col3:
 #st.write(f"Trip Duration: {duration:.2f} mins")
 
 
-st.write(f"Day: {user_day}")
-st.write(f"Month: {user_month}")
-st.write(f"Hour: {user_hour}")
-st.write(matching_data)
+#st.write(f"Day: {user_day}")
+#st.write(f"Month: {user_month}")
+#st.write(f"Hour: {user_hour}")
+#st.write(matching_data)
 
     
     
