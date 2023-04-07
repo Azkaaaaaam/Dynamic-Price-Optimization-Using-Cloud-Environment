@@ -210,26 +210,26 @@ with col3:
           st.write(f"Hour: {user_hour}")
           ############################################################################# Models Unpickeling
 
-          ################# Surge Model
-
-          model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
-          #model = pickle.load(open(model_path, 'rb'))
-          model = joblib.load('model.pkl')
-          cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
-          final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
-          prediction = model.predict(final_features)
-          st.write(prediction)
 
           ################# Price Model
           model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
           #model = pickle.load(open(model_path, 'rb'))
           model2 = joblib.load('modelprice.pkl')
           cols2 = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
-          final_features2=np.array([[2.1,43,11.8,1,3.5,0.5,0,25.2,37.9,1,0,4,36.2]])
+          final_features2=np.array([[distance,43,user_month,1matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
           prediction2 = model2.predict(final_features2)
           st.write(prediction2)
 
-        
+          ################# Surge Model
+
+          model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+          #model = pickle.load(open(model_path, 'rb'))
+          model = joblib.load('model.pkl')
+          cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
+          final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,prediction2, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
+          prediction = model.predict(final_features)
+          st.write(prediction)
+
         
 # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
