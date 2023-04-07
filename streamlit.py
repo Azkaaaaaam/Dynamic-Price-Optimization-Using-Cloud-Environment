@@ -214,8 +214,8 @@ with col3:
           model_path = os.path.join(os.path.dirname(__file__), 'modelprice.pkl')
           #model = pickle.load(open(model_path, 'rb'))
           model2 = joblib.load('modelprice.pkl')
-          cols2 = ['trip_distance', 'dolocationid','total_amount','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
-          final_features2=np.array([[distance,location_id_dropoff,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
+          cols2 = ['trip_distance', 'dolocationid','total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
+          final_features2=np.array([[distance,location_id_dropoff,0,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
           prediction2 = model2.predict(final_features2)
           #st.write(prediction2)
           Static_price = float(prediction2)
@@ -225,8 +225,8 @@ with col3:
           model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
           #model = pickle.load(open(model_path, 'rb'))
           model = joblib.load('model.pkl')
-          cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
-          final_features=np.array([[user_day, user_month, user_hour, passenger_count,distance,Static_price, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
+          cols = ['Day','Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
+          final_features=np.array([[user_day,  user_hour, passenger_count,distance,Static_price, matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'], duration]])
           prediction = model.predict(final_features)
           #st.write(prediction)
           surge = float(prediction)
