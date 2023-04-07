@@ -76,7 +76,8 @@ data_dict = {
     "Pickup location": zones,
     "Dropoff location": zones,
     "Latitude": latitudes,
-    "Longitude": longitudes
+    "Longitude": longitudes,
+    "location_ids": location_ids
 }
 
 # Create a pandas DataFrame from the dictionary
@@ -148,6 +149,10 @@ with col1:
         pickup_lon = df[df["Pickup location"] == pulocation]["Longitude"].iloc[0]
         dropoff_lat = df[df["Dropoff location"] == dolocation]["Latitude"].iloc[0] 
         dropoff_lon = df[df["Dropoff location"] == dolocation]["Longitude"].iloc[0]  
+ 
+        location_id_pickup = df[df["Pickup location"] == pulocation]["location_ids"].iloc[0]  
+        location_id_dropoff = df[df["Dropoff location"] == dolocation]["location_ids"].iloc[0]  
+
         # Calculate the distance between the pickup and dropoff locations
         distance =haversine(pickup_lat, pickup_lon, dropoff_lat, dropoff_lon)
         # Estimate the duration of the trip based on the distance and average speed of 50KM/H
@@ -216,7 +221,7 @@ with col3:
           #model = pickle.load(open(model_path, 'rb'))
           model2 = joblib.load('modelprice.pkl')
           cols2 = ['trip_distance', 'dolocationid','total_amount','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
-          final_features2=np.array([[distance,43,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
+          final_features2=np.array([[distance,location_id_dropoff,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
           prediction2 = model2.predict(final_features2)
           st.write(prediction2)
           Static_price = float(prediction2)
