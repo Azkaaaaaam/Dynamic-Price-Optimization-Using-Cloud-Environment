@@ -11,24 +11,26 @@ from math import radians, cos, sin, asin, sqrt
 import os
 import json
 import pickle
-
 import joblib
 
-
+############################################################################# Layout
 
 st.set_page_config(layout="wide")
 st.title('Yellow Taxis pickups in NYC')
+
+############################################################################# Models Unpickeling
+
+################# Surge Model
 
 model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
 #model = pickle.load(open(model_path, 'rb'))
 model = joblib.load('model.pkl')
 cols = ['Day', 'Month', 'Hour', 'passenger_count', 'trip_distance', 'total_amount', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'duration']
-
 final_features=np.array([[1, 1, 0, 1.495619524, 2.704968711, 15.95906133, 3.5, 0.5, 0, 25.2, 37.9, 36.94705882]])
 prediction = model.predict(final_features)
 st.write(prediction)
 
-
+################# Price Model
 model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
 #model = pickle.load(open(model_path, 'rb'))
 model2 = joblib.load('modelprice.pkl')
@@ -36,8 +38,9 @@ cols2 = ['trip_distance', 'dolocationid','month', 'temp', 'feelslike', 'snow', '
 final_features2=np.array([[2.1,43,11.8,1,3.5,0.5,0,25.2,37.9,1,0,4,36.2]])
 prediction2 = model2.predict(final_features2)
 st.write(prediction2)
-url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
 
+############################################################################# Datasets
+url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
 response2 = requests.get(url2)
 if response2.status_code == 200:
     data2 = response2.json()
@@ -46,6 +49,7 @@ if response2.status_code == 200:
 else:
     print("Error: Could not retrieve data from API.")
 
+############################################################################# Locations Ids and Coordinates
 # Set the API endpoint URL
 url = "https://data.cityofnewyork.us/resource/755u-8jsi.json"
 # Make a GET request to the API endpoint and store the response
@@ -99,6 +103,7 @@ data_dict = {
 # Create a pandas DataFrame from the dictionary
 df = pd.DataFrame(data_dict)
 
+############################################################################# Calculate the distance
 def haversine(lon1, lat1, lon2, lat2):
     # Convert latitude and longitude values to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
@@ -110,6 +115,7 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a))
     r = 6371  # Radius of earth in kilometers
     return c * r
+############################################################################# Estimate duration
 
 # Estimate the duration of a trip based on the distance and assuming that the speed average that we define later ( 60 km/h) 
 def estimate_duration(distance, speed):
@@ -120,6 +126,8 @@ def estimate_duration(distance, speed):
 
 col1, col2, col3 = st.columns([0.25, 0.5, 0.25])
 
+
+############################################################################# Creating form to submit 
 with col1:
     with st.form("my_form"):
         pickup_location = st.selectbox(
@@ -166,15 +174,51 @@ with col1:
         # Estimate the duration of the trip based on the distance and average speed of 50KM/H
         speed = 50  # Average speed in kilometers per hour
         duration = estimate_duration(distance, speed)
-
+        
+############################################################################# Map Integration
 with col2:
       st.markdown('<iframe src="https://data.cityofnewyork.us/w/d3c5-ddgc/25te-f2tw?cur=cLNQRsEjlFe&from=root" width="620" height="500" frameborder="0" scrolling="no"></iframe>', unsafe_allow_html=True)
         
+        
+        
+############################################################################# Results 
 with col3:
     if submitted:
+          ############################################################################# Distance & Duration
           st.success(f"Distance between pickup and dropoff locations: {distance:.2f} km")
           st.success(f"Trip Duration: {duration:.2f} mins")
+          # Get the user input
+          pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
+          passenger_count = num_users
 
+          # Prepare the request data
+          request_data = {
+              "pickup_datetime": pickup_datetime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+              "pickup_longitude": df.loc[df["Pickup location"]==pickup_location, "Longitude"].values[0],
+              "pickup_latitude": df.loc[df["Pickup location"]==pickup_location, "Latitude"].values[0],
+              "dropoff_longitude": df.loc[df["Dropoff location"]==dropoff_location, "Longitude"].values[0],
+              "dropoff_latitude": df.loc[df["Dropoff location"]==dropoff_location, "Latitude"].values[0],
+              "passenger_count": passenger_count
+          }
+       
+          ############################################################################# Weather features
+          # Read the csv file
+          df_weather = pd.read_csv("Weather2021_2022.csv")
+          # Convert the 'datetime' column to datetime format
+          df_weather['datetime'] = pd.to_datetime(df_weather['datetime'])
+          # Create a new column 'month_day' to store the month and day information
+          df_weather['month_day'] = df_weather['datetime'].dt.strftime('%m%d')
+          # Get the user input for date
+          user_date = pd.to_datetime(str(pickup_date)).strftime('%m%d')
+          # Filter the weather data based on the user input date
+          df_filtered = df_weather[df_weather['month_day'] == user_date]
+          # Get the matching weather data for the user input date
+          matching_data = df_filtered[['temp', 'feelslike', 'snow', 'windspeed', 'cloudcover']].iloc[0]
+          st.write(matching_data)
+
+        
+        
+        
 # Do something with the form results and calculated distance
 #st.write(f"Pickup location: {pulocation}")
 #st.write(f"Pickup lat: {pickup_lat}")
@@ -187,41 +231,7 @@ with col3:
 #st.write(f"Trip Duration: {duration:.2f} mins")
 
 
-    # Get the user input
-    pickup_datetime = pd.to_datetime(str(pickup_date) + ' ' + str(pickup_time))
-    passenger_count = num_users
 
-    # Prepare the request data
-    request_data = {
-        "pickup_datetime": pickup_datetime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-        "pickup_longitude": df.loc[df["Pickup location"]==pickup_location, "Longitude"].values[0],
-        "pickup_latitude": df.loc[df["Pickup location"]==pickup_location, "Latitude"].values[0],
-        "dropoff_longitude": df.loc[df["Dropoff location"]==dropoff_location, "Longitude"].values[0],
-        "dropoff_latitude": df.loc[df["Dropoff location"]==dropoff_location, "Latitude"].values[0],
-        "passenger_count": passenger_count
-    }
-
-
-# Read the csv file
-df_weather = pd.read_csv("Weather2021_2022.csv")
-
-# Convert the 'datetime' column to datetime format
-df_weather['datetime'] = pd.to_datetime(df_weather['datetime'])
-
-# Create a new column 'month_day' to store the month and day information
-df_weather['month_day'] = df_weather['datetime'].dt.strftime('%m%d')
-
-# Get the user input for date
-user_date = pd.to_datetime(str(pickup_date)).strftime('%m%d')
-
-# Filter the weather data based on the user input date
-df_filtered = df_weather[df_weather['month_day'] == user_date]
-
-# Get the matching weather data for the user input date
-matching_data = df_filtered[['temp', 'feelslike', 'snow', 'windspeed', 'cloudcover']].iloc[0]
-
-st.write(matching_data)
-    
     
     
     
