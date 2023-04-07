@@ -50,7 +50,7 @@ if response.status_code == 200:
         # Check if the object_id is within the desired range
         if int(item['objectid']) >= 1 and int(item['objectid']) <= 262:
             # Extract the location_id, borough, and zone from the current item
-            location_id = item.get('locationid')
+            location_id = item.get('objectid')
             borough = item.get('borough')
             zone = item.get('zone')
             # Get the coordinates from the geometry
