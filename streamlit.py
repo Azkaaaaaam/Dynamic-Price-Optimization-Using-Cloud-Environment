@@ -215,13 +215,13 @@ with col3:
           st.write(f"Hour: {user_hour}")
           ############################################################################# Models Unpickeling
 
-
+          st.write(location_id_dropoff)
           ################# Price Model
           model_path = os.path.join(os.path.dirname(__file__), 'modelprice.pkl')
           #model = pickle.load(open(model_path, 'rb'))
           model2 = joblib.load('modelprice.pkl')
           cols2 = ['trip_distance', 'dolocationid','total_amount','month', 'temp', 'feelslike', 'snow', 'windspeed', 'cloudcover', 'Day', 'Hour', 'Weekday', 'duration']
-          final_features2=np.array([[distance,location_id_dropoff,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
+          final_features2=np.array([[distance,42,0,user_month,matching_data['temp'], matching_data['feelslike'], matching_data['snow'], matching_data['windspeed'], matching_data['cloudcover'],user_day, user_hour,2,duration]])
           prediction2 = model2.predict(final_features2)
           st.write(prediction2)
           Static_price = float(prediction2)
