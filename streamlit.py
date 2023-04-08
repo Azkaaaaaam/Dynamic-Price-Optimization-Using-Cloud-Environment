@@ -27,7 +27,6 @@ if page == "Price algorithm":
     
 elif page == "Surge Multiplier Algorithm":
     st.write("This page is under construction.")
-
     data = {
         "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
                      "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
@@ -35,19 +34,23 @@ elif page == "Surge Multiplier Algorithm":
                      "winddir", "Day"],
         "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
                         0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
-                        0.064, 0.063, 0.048, 0.028]
+                        0.064, 0.063, 0.048, 0.028],
+        "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
+                  'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
     }
 
     df = pd.DataFrame(data)
-    chart_data['color'] = 'green'
-    chart_data.loc[chart_data.index == 'num_trips', 'color'] = 'red'
-    chart_data.loc[chart_data.index.isin(['improvement_surcharge', 'extra', 'congestion_surcharge', 'Month']), 'color'] = 'orange'
 
-    chart = st.bar_chart(df.set_index('Variable'), color=df['color'])
+    bars = alt.Chart(df).mark_bar().encode(
+        x='Variable',
+        y='Correlation',
+        color=alt.Color('Color', scale=None)
+    ).properties(
+        width=700,
+        height=400
+    )
 
-    for i, bar in enumerate(chart._container.select(".plotly .trace:first-of-type .points:first-of-type .point")):
-        bar.title = f"Correlation: {data['Correlation'][i]:.3f}"
-
+    st.altair_chart(bars)
 
 else:
     st.title('Yellow Taxis pickups in NYC')
