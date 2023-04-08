@@ -58,10 +58,10 @@ elif page == "Surge Multiplier Algorithm":
         st.image(image, caption="Output Image")
 
     with col2:
-        st.write("Enter text here:")
-        text_input = st.text_input(label="", value="")
+        image = Image.open("image/Screenshot 2023-04-08 165433.png").resize((450, 450))
+        st.image(image, caption="Lime")
         
-    image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((900, 300))
+    image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((500, 500))
     st.image(image, caption="Lime")
 else:
     st.title('Yellow Taxis pickups in NYC')
