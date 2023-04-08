@@ -51,12 +51,13 @@ elif page == "Surge Multiplier Algorithm":
             color=alt.Color('Color', scale=None)
         ).properties(
             width=900,
-            height=300
+            height=500  # adjust height here
         )
         st.altair_chart(bars, use_container_width=True)
     with col2:
-        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((400 , 400))
+        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((350, 400))
         st.image(image2, caption="Lime")
+
         
     col1, col2 = st.columns(2)
     with col1:
