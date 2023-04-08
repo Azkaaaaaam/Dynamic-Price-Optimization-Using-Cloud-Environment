@@ -26,7 +26,21 @@ if page == "Price algorithm":
     
 elif page == "Surge Multiplier Algorithm":
     st.write("This page is under construction.")
-    
+
+    data = {
+        "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
+                     "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
+                     "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
+                     "winddir", "Day"],
+        "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
+                        0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
+                        0.064, 0.063, 0.048, 0.028]
+    }
+
+    df = pd.DataFrame(data)
+
+    st.bar_chart(df.set_index('Variable'))
+
 else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
