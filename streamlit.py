@@ -55,7 +55,7 @@ elif page == "Surge Multiplier Algorithm":
         )
         st.altair_chart(bars, use_container_width=True)
     with col2:
-        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((200, 200))
+        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((400 , 400))
         st.image(image2, caption="Lime")
         
     col1, col2 = st.columns(2)
