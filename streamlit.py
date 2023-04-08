@@ -13,6 +13,7 @@ import json
 import pickle
 import joblib
 import altair as alt
+from PIL import Image
 
 ############################################################################# Layout
 
