@@ -27,32 +27,37 @@ if page == "Price algorithm":
     st.write("This page is under construction.")
     
 elif page == "Surge Multiplier Algorithm":
-    st.write("This page is under construction.")
-    data = {
-        "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
-                     "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
-                     "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
-                     "winddir", "Day"],
-        "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
-                        0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
-                        0.064, 0.063, 0.048, 0.028],
-        "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
-                  'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
-    }
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("This page is under construction.")
+        data = {
+            "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
+                         "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
+                         "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
+                         "winddir", "Day"],
+            "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
+                            0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
+                            0.064, 0.063, 0.048, 0.028],
+            "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
+                      'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
+        }
 
-    df = pd.DataFrame(data)
+        df = pd.DataFrame(data)
 
-    bars = alt.Chart(df).mark_bar().encode(
-        x='Variable',
-        y='Correlation',
-        color=alt.Color('Color', scale=None)
-    ).properties(
-        width=700,
-        height=300
-    )
-    st.altair_chart(bars, use_container_width=True)
-
-    col1, col2 = st.beta_columns(2)
+        bars = alt.Chart(df).mark_bar().encode(
+            x='Variable',
+            y='Correlation',
+            color=alt.Color('Color', scale=None)
+        ).properties(
+            width=700,
+            height=300
+        )
+        st.altair_chart(bars, use_container_width=True)
+    with col2:
+        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((250, 250))
+        st.image(image2, caption="Lime")
+    col1, col2 = st.columns(2)
     with col1:
         image = Image.open("image/output.png").resize((450, 450))
         st.image(image, caption="Output Image")
@@ -61,8 +66,6 @@ elif page == "Surge Multiplier Algorithm":
         image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((450, 300))
         st.image(image, caption="Lime")
         
-    image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((250, 250))
-    st.image(image2, caption="Lime")
 else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
