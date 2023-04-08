@@ -52,8 +52,15 @@ elif page == "Surge Multiplier Algorithm":
     )
 
     st.altair_chart(bars)
-    image = Image.open("image/output.png")
-    st.image(image, caption="Output Image")
+    image = Image.open("image/output.png").resize((300, 300))
+    col1, col2 = st.beta_columns([1, 1])
+
+    with col1:
+        st.image(image, caption="Output Image")
+
+    with col2:
+        st.write("Enter text here:")
+        text_input = st.text_input(label="", value="")
 
 else:
     st.title('Yellow Taxis pickups in NYC')
