@@ -60,7 +60,7 @@ elif page == "Surge Multiplier Algorithm":
         st.image(image, caption="Output Image")
 
     with col2:
-        image = Image.open("image/Untitled design.png").resize((450, 350))
+        image = Image.open("image/Untitled design.png").resize((450, 300))
         st.image(image, caption="Lime")
 
 else:
