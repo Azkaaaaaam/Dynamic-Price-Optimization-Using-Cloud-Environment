@@ -61,8 +61,8 @@ elif page == "Surge Multiplier Algorithm":
         image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((450, 400
         st.image(image, caption="Lime")
         
-    image = Image.open("image/Screenshot 2023-04-08 165433.png").resize((300, 30))
-    st.image(image, caption="Lime")
+    image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((300, 300))
+    st.image(image2, caption="Lime")
 else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
