@@ -50,7 +50,6 @@ elif page == "Surge Multiplier Algorithm":
         width=900,
         height=500
     )
-    st.altair_chart(chart, use_container_width=True)
 
     col1, col2 = st.beta_columns(2)
     with col1:
@@ -60,6 +59,8 @@ elif page == "Surge Multiplier Algorithm":
     with col2:
         st.write("Enter text here:")
         text_input = st.text_input(label="", value="")
+        
+    st.altair_chart(bars, use_container_width=True)
     image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((900, 200))
     st.image(image, caption="Lime")
 else:
