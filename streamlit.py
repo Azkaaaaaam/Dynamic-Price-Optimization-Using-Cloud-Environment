@@ -49,7 +49,7 @@ elif page == "Surge Multiplier Algorithm":
         color=alt.Color('Color', scale=None)
     ).properties(
         width=900,
-        height=500  # adjust height here
+        height=300  # adjust height here
     )
     st.altair_chart(bars, use_container_width=True)
 
