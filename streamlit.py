@@ -47,8 +47,8 @@ elif page == "Surge Multiplier Algorithm":
         y='Correlation',
         color=alt.Color('Color', scale=None)
     ).properties(
-        width=900,
-        height=500
+        width=700,
+        height=300
     )
     st.altair_chart(bars, use_container_width=True)
 
