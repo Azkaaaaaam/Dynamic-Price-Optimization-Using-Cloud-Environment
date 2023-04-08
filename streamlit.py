@@ -54,7 +54,7 @@ elif page == "Surge Multiplier Algorithm":
 
     col1, col2 = st.beta_columns(2)
     with col1:
-        image = Image.open("image/output.png").resize((450, 45))
+        image = Image.open("image/output.png").resize((450, 450))
         st.image(image, caption="Output Image")
 
     with col2:
