@@ -28,7 +28,7 @@ if page == "Price algorithm":
     
 elif page == "Surge Multiplier Algorithm":
 
-    st.write("This page is under construction.")
+    st.title('1- Feature Selection')
     data = {
         "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
                      "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
@@ -62,6 +62,9 @@ elif page == "Surge Multiplier Algorithm":
     with col2:
         image = Image.open("image/Untitled design.png").resize((450, 300))
         st.image(image, caption="Lime")
+        
+        
+    st.title('2- Models Performances')
 
 else:
     st.title('Yellow Taxis pickups in NYC')
