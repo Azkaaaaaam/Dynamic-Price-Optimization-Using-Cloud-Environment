@@ -58,10 +58,10 @@ elif page == "Surge Multiplier Algorithm":
         st.image(image, caption="Output Image")
 
     with col2:
-        image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((450, 400))
+        image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((450, 300))
         st.image(image, caption="Lime")
         
-    image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((300, 300))
+    image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((250, 250))
     st.image(image2, caption="Lime")
 else:
     st.title('Yellow Taxis pickups in NYC')
