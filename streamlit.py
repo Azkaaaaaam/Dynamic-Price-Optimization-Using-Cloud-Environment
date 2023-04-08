@@ -36,14 +36,11 @@ elif page == "Surge Multiplier Algorithm":
                         0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
                         0.064, 0.063, 0.048, 0.028]
     }
-
     df = pd.DataFrame(data)
     df['color'] = 'green'
     df.loc[df['Variable'] == 'num_trips', 'color'] = 'red'
     df.loc[df['Variable'].isin(['improvement_surcharge', 'extra', 'congestion_surcharge', 'Month']), 'color'] = 'orange'
     st.bar_chart(df.set_index('Variable'), color=df['color'])
-
-
 else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
