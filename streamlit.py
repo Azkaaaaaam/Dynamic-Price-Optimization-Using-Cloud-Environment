@@ -50,13 +50,14 @@ elif page == "Surge Multiplier Algorithm":
             y='Correlation',
             color=alt.Color('Color', scale=None)
         ).properties(
-            width=700,
+            width=900,
             height=300
         )
         st.altair_chart(bars, use_container_width=True)
     with col2:
-        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((250, 250))
+        image2 = Image.open("image/Screenshot 2023-04-08 165433.png").resize((200, 200))
         st.image(image2, caption="Lime")
+        
     col1, col2 = st.columns(2)
     with col1:
         image = Image.open("image/output.png").resize((450, 450))
