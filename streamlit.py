@@ -50,10 +50,11 @@ elif page == "Surge Multiplier Algorithm":
         width=900,
         height=500
     )
+    st.altair_chart(chart, use_container_width=True)
 
     col1, col2 = st.beta_columns(2)
     with col1:
-        image = Image.open("image/output.png").resize((300, 300))
+        image = Image.open("image/output.png").resize((400, 400))
         st.image(image, caption="Output Image")
 
     with col2:
