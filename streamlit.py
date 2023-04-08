@@ -52,7 +52,7 @@ elif page == "Surge Multiplier Algorithm":
     )
 
     st.altair_chart(bars)
-    image = Image.open("image/output.png").resize((500, 600))
+    image = Image.open("image/output.png").resize((500, 500))
     col1, col2 = st.beta_columns([1, 1])
 
     with col1:
@@ -61,8 +61,10 @@ elif page == "Surge Multiplier Algorithm":
     with col2:
         st.write("Enter text here:")
         text_input = st.text_input(label="", value="")
-
-else:
+        
+    image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((900, 500))
+    
+  else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
     url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
