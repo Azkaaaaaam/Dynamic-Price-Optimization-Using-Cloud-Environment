@@ -38,7 +38,9 @@ elif page == "Surge Multiplier Algorithm":
     }
 
     df = pd.DataFrame(data)
-
+    chart_data['color'] = 'green'
+    chart_data.loc[chart_data.index == 'num_trips', 'color'] = 'red'
+    chart_data.loc[chart_data.index.isin(['improvement_surcharge', 'extra', 'congestion_surcharge', 'Month']), 'color'] = 'orange'
     st.bar_chart(df.set_index('Variable'))
 
 else:
