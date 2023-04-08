@@ -64,7 +64,7 @@ elif page == "Surge Multiplier Algorithm":
         
     image = Image.open("image/Screenshot 2023-04-08 165432.png").resize((900, 500))
     
-  else:
+else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
     url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
