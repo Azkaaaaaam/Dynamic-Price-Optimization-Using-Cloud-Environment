@@ -51,6 +51,8 @@ elif page == "Surge Multiplier Algorithm":
     )
 
     st.altair_chart(bars)
+    image = Image.open("Thesis/image/output.png")
+    st.image(image, caption="Output Image")
 
 else:
     st.title('Yellow Taxis pickups in NYC')
