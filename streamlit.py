@@ -12,6 +12,7 @@ import os
 import json
 import pickle
 import joblib
+import altair as alt
 
 ############################################################################# Layout
 
@@ -34,13 +35,24 @@ elif page == "Surge Multiplier Algorithm":
                      "winddir", "Day"],
         "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
                         0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
-                        0.064, 0.063, 0.048, 0.028]
+                        0.064, 0.063, 0.048, 0.028],
+        "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
+                  'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
     }
+
     df = pd.DataFrame(data)
-    df['color'] = 'green'
-    df.loc[df['Variable'] == 'num_trips', 'color'] = 'red'
-    df.loc[df['Variable'].isin(['improvement_surcharge', 'extra', 'congestion_surcharge', 'Month']), 'color'] = 'orange'
-    st.bar_chart(df.set_index('Variable'), color=df['color'])
+
+    bars = alt.Chart(df).mark_bar().encode(
+        x='Variable',
+        y='Correlation',
+        color=alt.Color('Color', scale=None)
+    ).properties(
+        width=700,
+        height=400
+    )
+
+    st.altair_chart(bars)
+
 else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
