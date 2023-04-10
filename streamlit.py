@@ -32,7 +32,7 @@ if page == "Price algorithm":
         'Model': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
         'MSE2': [0.014, 0.006, 0.014, 0.007],
         'MAE2': [0.052, 0.051, 0.056, 0.052],
-        'R2': [0.86, 0.9324, 0.8543, 0.9303]
+        'R_2': [0.86, 0.9324, 0.8543, 0.9303]
     }
 
     dfprice = pd.DataFrame(dataprice)
@@ -112,14 +112,14 @@ if page == "Price algorithm":
         else:
             if chart_type == "MSE2":
                 colors = alt.Scale(
-                    domain=(dfprice["MSE"].min(), dfprice["MSE"].max()),
+                    domain=(dfprice["MSE2"].min(), dfprice["MSE2"].max()),
                     range=["green", "orange"]
                 )
                 # Create a chart with the gradient color scheme
                 chart = alt.Chart(dfprice).mark_bar().encode(
                     x='Model',
-                    y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
-                    color=alt.Color('MSE', scale=colors)
+                    y=alt.Y('MSE2', axis=alt.Axis(title='Mean Squared Error')),
+                    color=alt.Color('MSE2', scale=colors)
                 ).properties(
                     title='Mean Squared Error',
                     width=800,
@@ -128,14 +128,14 @@ if page == "Price algorithm":
 
             elif chart_type == "MAE2":
                 colors = alt.Scale(
-                    domain=(dfprice["MAE"].min(), dfprice["MAE"].max()),
+                    domain=(dfprice["MAE2"].min(), dfprice["MAE2"].max()),
                     range=["green", "orange"]
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
                     x='Model',
-                    y=alt.Y('MAE', scale=alt.Scale('MAE', scheme='yellowgreen')),
-                    tooltip=['Model', 'MAE'],
-                    color=alt.Color('MAE', scale=colors)
+                    y=alt.Y('MAE2', scale=alt.Scale('MAE2', scheme='yellowgreen')),
+                    tooltip=['Model', 'MAE2'],
+                    color=alt.Color('MAE2', scale=colors)
                 ).properties(
                     title='Mean Absolute Error',
                     width=800,
@@ -143,14 +143,14 @@ if page == "Price algorithm":
                 )
             else:
                 colors = alt.Scale(
-                    domain=(dfprice["R2"].min(), dfprice["R2"].max()),
+                    domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
                     range=["orange", "green"]
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
                     x='Model',
-                    y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
-                    tooltip=['Model', alt.Tooltip('R2', format='.2%')],
-                    color=alt.Color('R2', scale=colors)
+                    y=alt.Y('R_2', axis=alt.Axis(format='%', title='R Squared')),
+                    tooltip=['Model', alt.Tooltip('R_2', format='.2%')],
+                    color=alt.Color('R_2', scale=colors)
                 ).properties(
                     title='R Squared',
                     width=800,
