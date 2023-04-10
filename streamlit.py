@@ -66,6 +66,41 @@ elif page == "Surge Multiplier Algorithm":
         
     st.title('2- Models Performances')
 
+        # Create a sample data frame with the data you provided
+    data = {
+        'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
+        'MSE': [42.3, 22.28, 28.90, 41.54, 23.48, 27.67],
+        'MAE': [3.24, 2.28, 2.34, 3.22, 2.31, 2.35],
+        'R2': [0.708, 0.846, 0.800, 0.713, 0.838, 0.808]
+    }
+    df = pd.DataFrame(data)
+
+    # Create a dropdown list to choose which chart to display
+    chart_type = st.selectbox('Select a chart type', ('MSE', 'MAE', 'R2'))
+
+    # Generate the appropriate chart based on the selection
+    if chart_type == 'MSE':
+        chart = alt.Chart(df).mark_bar().encode(
+            x='Model',
+            y='MSE'
+        )
+        st.altair_chart(chart, use_container_width=True)
+
+    elif chart_type == 'MAE':
+        chart = alt.Chart(df).mark_bar().encode(
+            x='Model',
+            y='MAE'
+        )
+        st.altair_chart(chart, use_container_width=True)
+
+    elif chart_type == 'R2':
+        chart = alt.Chart(df).mark_bar().encode(
+            x='Model',
+            y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared'))
+        )
+        st.altair_chart(chart, use_container_width=True)
+    
+    
 else:
     st.title('Yellow Taxis pickups in NYC')
     ############################################################################# Datasets
