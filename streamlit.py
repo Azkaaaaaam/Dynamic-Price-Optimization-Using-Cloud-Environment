@@ -29,7 +29,7 @@ if page == "Feature Selection":
     if algorithm == "Surge algorithm":
         # Create a dataframe with the data
 
-        st.title('1- Feature Selection Surge Multiplier')
+        st.title('2- Feature Selection Surge Multiplier')
         data = {
             "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
                          "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
