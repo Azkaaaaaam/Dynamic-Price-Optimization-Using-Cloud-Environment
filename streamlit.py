@@ -51,7 +51,8 @@ if page == "Price algorithm":
         width=800,
         height=600
         )
-    elif chart_type == "MAE":
+    elif:
+        chart_type == "MAE":
             chart = alt.Chart(df).mark_bar().encode(
                 x='Model',
                 y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
@@ -61,7 +62,6 @@ if page == "Price algorithm":
                 width=800,
                 height=600
             )
-
     else:
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
