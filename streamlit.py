@@ -39,11 +39,11 @@ if page == "Price algorithm":
     st.write("Select chart type:")
     col1, col2, col3 = st.columns(3)
     with col1:
-        chart_type = st.radio("", ("MSE"), key="1")
+        chart_type = st.radio(("MSE"), key="1")
     with col2:
-        chart_type = st.radio("", ("MAE"), key="2")
+        chart_type = st.radio(("MAE"), key="2")
     with col3:
-        chart_type = st.radio("", ("R2"), key="3")
+        chart_type = st.radio( ("R2"), key="3")
 
     # Create the charts
     st.write("Chart:")
