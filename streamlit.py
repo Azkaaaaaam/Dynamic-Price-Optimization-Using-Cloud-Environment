@@ -45,7 +45,7 @@ if page == "Price algorithm":
         ).properties(
             title='Mean Squared Error',
             width=alt.Step(60),  # set the width of the chart
-            height=alt.Step(300)  # set the height of the chart
+            height=alt.Step(500)  # set the height of the chart
         )
     elif chart_type == "MAE":
         chart = alt.Chart(df).mark_bar().encode(
@@ -54,7 +54,7 @@ if page == "Price algorithm":
         ).properties(
             title='Mean Absolute Error',
             width=alt.Step(60),  # set the width of the chart
-            height=alt.Step(300)  # set the height of the chart
+            height=alt.Step(500)  # set the height of the chart
         )
     else:
         chart = alt.Chart(df).mark_bar().encode(
@@ -63,7 +63,7 @@ if page == "Price algorithm":
         ).properties(
             title='R Squared',
             width=alt.Step(60),  # set the width of the chart
-            height=alt.Step(300)  # set the height of the chart
+            height=alt.Step(500)  # set the height of the chart
         )
 
     # Display the chart
