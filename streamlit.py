@@ -17,7 +17,7 @@ from PIL import Image
 
 ############################################################################# Layout
 
-st.set_page_config(layout="wide", page_title="NYC Taxi ", page_icon=":movie_camera:")
+st.set_page_config(layout="wide")
 
 # Create a sidebar with a droplist to redirect to different pages
 st.sidebar.title('Page Selection')
