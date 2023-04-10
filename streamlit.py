@@ -38,7 +38,7 @@ if page == "Price algorithm":
     chart_type = st.sidebar.radio("Select chart type", ("MSE", "MAE", "R2"))
     colors = alt.Scale(
         domain=(df["MSE"].min(), df["MSE"].max()),
-        range=["yellow", "green"]
+        range=["orange", "green"]
     )
 
     # Create a chart with the gradient color scheme
@@ -50,43 +50,30 @@ if page == "Price algorithm":
         title='Mean Squared Error',
         width=800,
         height=600
-    )
-
-    # Display the chart
-    st.altair_chart(chart, use_container_width=True)
-
-
-        # Generate the chart based on the selected chart type
-    if chart_type == "MSE":
-        chart = alt.Chart(df).mark_bar(color='green').encode(
-            x='Model',
-            y='MSE',
-            tooltip=['Model', 'MSE']
-        ).properties(
-            title='Mean Squared Error',
-            width=800,
-            height=600
         )
     elif chart_type == "MAE":
-        chart = alt.Chart(df).mark_bar().encode(
-            x='Model',
-            y='MAE',
-            tooltip=['Model', 'MAE']
-        ).properties(
-            title='Mean Absolute Error',
-            width=800,
-            height=600
-        )
+            chart = alt.Chart(df).mark_bar().encode(
+                x='Model',
+                y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+                tooltip=['Model', 'MAE']
+            ).properties(
+                title='Mean Absolute Error',
+                width=800,
+                height=600
+            )
+
     else:
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
             y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
-            tooltip=['Model', alt.Tooltip('R2', format='.2%')]
+            tooltip=['Model', alt.Tooltip('R2', format='.2%')],
+            color=alt.Color('R2', scale=alt.Scale(scheme='yellowgreen'))
         ).properties(
             title='R Squared',
             width=800,
             height=600
         )
+
 
     # Display the chart
     st.altair_chart(chart, use_container_width=True)
