@@ -25,7 +25,7 @@ page = st.sidebar.selectbox("Select a page", ["Algorithm Performance", "Feature 
 
     
 if page == "Algorithm Performance":
-    algo = st.selectbox("Select a ", ["Price algorithm", "Surge algorithm"])
+    algo = st.selectbox("## Select an algorithm ", ["Price algorithm", "Surge algorithm"])
     
     if algo == "Surge algorithm":
         # Create a dataframe with the data
@@ -50,8 +50,7 @@ if page == "Algorithm Performance":
 
         with col2:
             # Create the charts
-            st.write("Chart:")
-            st.write("")  
+
             if chart_type == "MSE":
                 colors = alt.Scale(
                     domain=(df["MSE"].min(), df["MSE"].max()),
@@ -124,8 +123,6 @@ if page == "Algorithm Performance":
 
         with col2:
             # Create the charts
-            st.write("Chart:")
-            st.write("")  
             if chart_type == "MSE":
                 colors = alt.Scale(
                     domain=(df["MSE"].min(), df["MSE"].max()),
