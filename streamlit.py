@@ -94,7 +94,7 @@ if page == "Price algorithm":
                     width=800,
                     height=600
                     )
-        if algorithm_type == "Price Model":
+        else:
             colors = alt.Scale(
                 domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
                 range=["orange", "green"]
