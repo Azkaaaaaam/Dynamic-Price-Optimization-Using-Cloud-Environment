@@ -27,6 +27,8 @@ page = st.sidebar.selectbox("Select a page", ["Price algorithm", "Feature Select
 if page == "Price algorithm":
 
     
+if page == "Price algorithm":
+
     # Create the data dictionary
     dataprice = {
         'Model2': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
@@ -36,6 +38,7 @@ if page == "Price algorithm":
     }
 
     dfprice = pd.DataFrame(dataprice)
+    
     # Create a dataframe with the data Surge
     data = {
         'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
@@ -90,25 +93,23 @@ if page == "Price algorithm":
                     title='Mean Absolute Error',
                     width=800,
                     height=600
-                )
+                    )
         if algorithm_type == "Price Model":
-                colors = alt.Scale(
-                    domain=(df["R2"].min(), df["R2"].max()),
-                    range=["orange", "green"]
-                )
-                chart = alt.Chart(df).mark_bar().encode(
-                    x='Model',
-                    y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
-                    tooltip=['Model', alt.Tooltip('R2', format='.2%')],
-                    color=alt.Color('R2', scale=colors)
-                ).properties(
-                    title='R Squared',
-                    width=800,
-                    height=600
-                )
+            colors = alt.Scale(
+                domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
+                range=["orange", "green"]
+            )
+            chart = alt.Chart(dfprice).mark_bar().encode(
+                x='Model2',
+                y=alt.Y('R_2', axis=alt.Axis(format='%', title='R Squared')),
+                tooltip=['Model2', alt.Tooltip('R_2', format='.2%')],
+                color=alt.Color('R_2', scale=colors)
+            ).properties(
+                title='R Squared',
+                width=800,
+                height=600
+            )
 
-            # Display the chart
-            st.altair_chart(chart, use_container_width=True)
         else:
             if chart_type == "MSE2":
                 colors = alt.Scale(
@@ -133,7 +134,7 @@ if page == "Price algorithm":
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
                     x='Model2',
-                    y=alt.Y('MAE2', scale=alt.Scale('MAE2', scheme='yellowgreen')),
+                    y=alt.Y('MAE2', axis=alt.Axis(title='Mean Absolute Error')),
                     tooltip=['Model2', 'MAE2'],
                     color=alt.Color('MAE2', scale=colors)
                 ).properties(
@@ -157,8 +158,8 @@ if page == "Price algorithm":
                     height=600
                 )
 
-            # Display the chart
-            st.altair_chart(chart, use_container_width=True)
+        # Display the chart
+        st.altair_chart(chart, use_container_width=True)
 
 elif page == "Feature Selection":
 
