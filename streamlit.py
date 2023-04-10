@@ -23,6 +23,7 @@ st.set_page_config(layout="wide")
 # Create a sidebar with a droplist to redirect to different pages
 page = st.sidebar.selectbox("Select a page", ["Price algorithm", "Feature Selection", "Real Time Demo"])
 
+
 if page == "Price algorithm":
 
     # Create a dataframe with the data
@@ -32,22 +33,17 @@ if page == "Price algorithm":
         'MAE': [3.24, 2.28, 2.34, 3.22, 2.31, 2.35],
         'R2': [0.708, 0.846, 0.8003, 0.713, 0.8377, 0.8088]
     }
-    df = pd.DataFrame(data)    
-    # Prompt the user to select the chart type
+    df = pd.DataFrame(data)
+
     # Set up the radio buttons to select the chart type
     st.write("Select chart type:")
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.beta_columns(3)
     with col1:
         chart_type = st.radio("", ("MSE"), key="1")
     with col2:
         chart_type = st.radio("", ("MAE"), key="2")
     with col3:
         chart_type = st.radio("", ("R2"), key="3")
-
-    # Create the charts
-    st.write("Chart:")
-    st.write("")
-    
 
     # Create the charts
     st.write("Chart:")
@@ -102,7 +98,6 @@ if page == "Price algorithm":
 
     # Display the chart
     st.altair_chart(chart, use_container_width=True)
-
    
 elif page == "Feature Selection":
 
