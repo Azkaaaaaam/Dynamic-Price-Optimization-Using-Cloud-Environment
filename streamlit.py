@@ -133,7 +133,7 @@ if page == "Price algorithm":
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
                     x='Model',
-                    y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+                    y=alt.Y('MAE', scale=alt.Scale('MAE', scheme='yellowgreen')),
                     tooltip=['Model', 'MAE'],
                     color=alt.Color('MAE', scale=colors)
                 ).properties(
