@@ -36,13 +36,13 @@ if page == "Price algorithm":
     df = pd.DataFrame(data)
     
     # Set up the layout of the page with the two columns
-    col1, col2 = st.columns([1, 3])
+    col1, col2 = st.columns([1, 2])
     
     # Create the checkbox and display the appropriate chart based on the selection
     with col1:
         st.write("Select algorithm:")
         options = ["Surge Multiplier", "Price Model"]
-        algorithm_type = st.checkbox("", options)
+        algorithm_type = st.radio("", options)
         # Set up the radio buttons to select the chart type
         st.write("Select chart type:")
         options = ["MSE", "MAE", "R2"]
@@ -51,7 +51,6 @@ if page == "Price algorithm":
         # Create the charts
         st.write("Chart:")
         st.write("")
-        
         if algorithm_type == "Surge Multiplier":
             if chart_type == "MSE":
                 colors = alt.Scale(
