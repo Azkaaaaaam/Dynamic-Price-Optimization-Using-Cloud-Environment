@@ -64,7 +64,6 @@ if page == "Feature Selection":
             image = Image.open("image/Untitled design.png").resize((450, 300))
             st.image(image, caption="Lime")
             
-
     else:
         st.title('1- Feature Selection Price Model')
         data = {
@@ -90,6 +89,15 @@ if page == "Feature Selection":
         )
 
         st.altair_chart(bars, use_container_width=True)
+        col1, col2= st.columns(2)
+        with col1:
+            image = Image.open("image/shap pRICE.png").resize((450, 450))
+            st.image(image, caption="Output Image")
+
+        with col2:
+            image = Image.open("image/LIME pRICE.png").resize((450, 300))
+            st.image(image, caption="Lime")
+            
 
 elif page == "Algorithms Performances":
     st.title('Algorithms Performances:')
