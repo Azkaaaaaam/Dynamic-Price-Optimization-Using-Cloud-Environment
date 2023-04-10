@@ -36,6 +36,25 @@ if page == "Price algorithm":
 
     # Set up the radio buttons to select the chart type
     chart_type = st.sidebar.radio("Select chart type", ("MSE", "MAE", "R2"))
+    colors = alt.Scale(
+        domain=(df["MSE"].min(), df["MSE"].max()),
+        range=["yellow", "green"]
+    )
+
+    # Create a chart with the gradient color scheme
+    chart = alt.Chart(df).mark_bar().encode(
+        x='Model',
+        y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
+        color=alt.Color('MSE', scale=colors)
+    ).properties(
+        title='Mean Squared Error',
+        width=800,
+        height=600
+    )
+
+    # Display the chart
+    st.altair_chart(chart, use_container_width=True)
+
 
         # Generate the chart based on the selected chart type
     if chart_type == "MSE":
