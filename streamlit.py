@@ -91,21 +91,21 @@ if page == "Price algorithm":
                     width=800,
                     height=600
                     )
-        else:
-            colors = alt.Scale(
-                domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
-                range=["orange", "green"]
-            )
-            chart = alt.Chart(dfprice).mark_bar().encode(
-                x='Model2',
-                y=alt.Y('R_2', axis=alt.Axis(format='%', title='R Squared')),
-                tooltip=['Model2', alt.Tooltip('R_2', format='.2%')],
-                color=alt.Color('R_2', scale=colors)
-            ).properties(
-                title='R Squared',
-                width=800,
-                height=600
-            )
+            else:
+                colors = alt.Scale(
+                    domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
+                    range=["orange", "green"]
+                )
+                chart = alt.Chart(dfprice).mark_bar().encode(
+                    x='Model2',
+                    y=alt.Y('R_2', axis=alt.Axis(format='%', title='R Squared')),
+                    tooltip=['Model2', alt.Tooltip('R_2', format='.2%')],
+                    color=alt.Color('R_2', scale=colors)
+                ).properties(
+                    title='R Squared',
+                    width=800,
+                    height=600
+                )
 
         else:
             if chart_type == "MSE2":
