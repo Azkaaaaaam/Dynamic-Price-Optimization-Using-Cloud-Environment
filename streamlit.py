@@ -149,7 +149,7 @@ if page == "Algorithm Performance":
                     )
                 chart = alt.Chart(df).mark_bar().encode(
                     x='Model',
-                    y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+                    y=alt.Y('MAE', scale=alt.Scale( scheme='yellowgreen')),
                     tooltip=['Model', 'MAE'],
                     color=alt.Color('MAE', scale=colors)
                     ).properties(
