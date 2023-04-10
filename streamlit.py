@@ -44,7 +44,7 @@ if page == "Price algorithm":
             y='MSE'
         ).properties(
             title='Mean Squared Error',
-            width=alt.Step(60),  # set the width of the chart
+            width=alt.Step(600),  # set the width of the chart
             height=alt.Step(500)  # set the height of the chart
         )
     elif chart_type == "MAE":
@@ -53,7 +53,7 @@ if page == "Price algorithm":
             y='MAE'
         ).properties(
             title='Mean Absolute Error',
-            width=alt.Step(60),  # set the width of the chart
+            width=alt.Step(600),  # set the width of the chart
             height=alt.Step(500)  # set the height of the chart
         )
     else:
@@ -62,7 +62,7 @@ if page == "Price algorithm":
             y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared'))
         ).properties(
             title='R Squared',
-            width=alt.Step(60),  # set the width of the chart
+            width=alt.Step(600),  # set the width of the chart
             height=alt.Step(500)  # set the height of the chart
         )
 
