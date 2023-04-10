@@ -76,7 +76,7 @@ elif page == "Surge Multiplier Algorithm":
     df = pd.DataFrame(data)
 
     # Create a dropdown list to choose which chart to display
-    chart_type = st.selectbox('Select a chart type', ('MSE', 'MAE', 'R2'))
+    chart_type = st.sidebar.radio("Select chart type", ("MSE", "MAE", "R2"))
 
     # Generate the appropriate chart based on the selection
     if chart_type == 'MSE':
