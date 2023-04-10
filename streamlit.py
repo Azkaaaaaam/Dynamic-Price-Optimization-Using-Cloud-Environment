@@ -82,7 +82,7 @@ if page == "Feature Selection":
         bars = alt.Chart(df).mark_bar().encode(
             x=alt.X('Variable', sort=None),
             y='Correlation',
-            color=alt.Color('Correlation', scale=alt.Scale(scheme='orangegreen'), legend=None),
+            color=alt.Color('Correlation', scale=alt.Scale(scheme='yellowgreen'), legend=None),
             tooltip=['Variable', 'Correlation']
         ).properties(
             width=900,
