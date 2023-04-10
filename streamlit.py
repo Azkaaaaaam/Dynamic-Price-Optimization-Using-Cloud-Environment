@@ -26,7 +26,17 @@ page = st.sidebar.selectbox("Select a page", ["Price algorithm", "Feature Select
 
 if page == "Price algorithm":
 
-    # Create a dataframe with the data
+    
+    # Create the data dictionary
+    dataprice = {
+        'Model': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
+        'MSE': [0.014, 0.006, 0.014, 0.007, 27.67],
+        'MAE': [0.052, 0.051, 0.056, 0.052, 2.35],
+        'R Squared': ['86.00%', '93.24%', '85.43%', '93.03%', '80.88%']
+    }
+
+    dfprice = pd.DataFrame(dataprice)
+    # Create a dataframe with the data Surge
     data = {
         'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
         'MSE': [42.3, 22.28, 28.90, 41.54, 23.48, 27.67],
@@ -49,8 +59,6 @@ if page == "Price algorithm":
         chart_type = st.radio("", options)
     with col2:
         # Create the charts
-        st.write("# Chart:")
-        st.write("")
         if algorithm_type == "Surge Multiplier":
             if chart_type == "MSE":
                 colors = alt.Scale(
@@ -89,6 +97,56 @@ if page == "Price algorithm":
                     range=["orange", "green"]
                 )
                 chart = alt.Chart(df).mark_bar().encode(
+                    x='Model',
+                    y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
+                    tooltip=['Model', alt.Tooltip('R2', format='.2%')],
+                    color=alt.Color('R2', scale=colors)
+                ).properties(
+                    title='R Squared',
+                    width=800,
+                    height=600
+                )
+
+            # Display the chart
+            st.altair_chart(chart, use_container_width=True)
+        else:
+            if chart_type == "MSE":
+                colors = alt.Scale(
+                    domain=(dfprice["MSE"].min(), dfprice["MSE"].max()),
+                    range=["green", "orange"]
+                )
+                # Create a chart with the gradient color scheme
+                chart = alt.Chart(dfprice).mark_bar().encode(
+                    x='Model',
+                    y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
+                    color=alt.Color('MSE', scale=colors)
+                ).properties(
+                    title='Mean Squared Error',
+                    width=800,
+                    height=600
+                )
+
+            elif chart_type == "MAE":
+                colors = alt.Scale(
+                    domain=(dfprice["MAE"].min(), dfprice["MAE"].max()),
+                    range=["green", "orange"]
+                )
+                chart = alt.Chart(dfprice).mark_bar().encode(
+                    x='Model',
+                    y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+                    tooltip=['Model', 'MAE'],
+                    color=alt.Color('MAE', scale=colors)
+                ).properties(
+                    title='Mean Absolute Error',
+                    width=800,
+                    height=600
+                )
+            else:
+                colors = alt.Scale(
+                    domain=(dfprice["R2"].min(), dfprice["R2"].max()),
+                    range=["orange", "green"]
+                )
+                chart = alt.Chart(dfprice).mark_bar().encode(
                     x='Model',
                     y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
                     tooltip=['Model', alt.Tooltip('R2', format='.2%')],
