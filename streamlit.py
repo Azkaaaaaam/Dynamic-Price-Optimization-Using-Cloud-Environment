@@ -14,6 +14,7 @@ import pickle
 import joblib
 import altair as alt
 from PIL import Image
+import streamlit_fontawesome as stf
 
 ############################################################################# Layout
 
