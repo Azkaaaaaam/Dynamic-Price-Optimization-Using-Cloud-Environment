@@ -54,9 +54,8 @@ if page == "Price algorithm":
         st.write("Chart:")
         st.write("")
         
-        if algorithm_type == "Surge Multiplier":
-            image = Image.open('surge_multiplier.png')
-            st.image(image, use_column_width=True)
+        if algorithm_type == "Price Model":
+
         else:
             if chart_type == "MSE":
                 colors = alt.Scale(
