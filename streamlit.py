@@ -26,16 +26,7 @@ page = st.sidebar.selectbox("Select a page", ["Price algorithm", "Feature Select
     
 if page == "Price algorithm":
 
-    # Create the data dictionary
-    dataprice = {
-        'Model2': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
-        'MSE2': [0.014, 0.006, 0.014, 0.007],
-        'MAE2': [0.052, 0.051, 0.056, 0.052],
-        'R_2': [0.86, 0.9324, 0.8543, 0.9303]
-    }
 
-    dfprice = pd.DataFrame(dataprice)
-    
     # Create a dataframe with the data Surge
     data = {
         'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
@@ -108,9 +99,18 @@ if page == "Price algorithm":
                 )
 
         else:
+                # Create the data dictionary
+            dataprice = {
+                'Model2': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
+                'MSE2': [0.014, 0.006, 0.014, 0.007],
+                'MAE2': [0.052, 0.051, 0.056, 0.052],
+                'R_2': [0.86, 0.9324, 0.8543, 0.9303]
+            }
+
+            dfprice = pd.DataFrame(dataprice)
             if chart_type == "MSE2":
                 colors = alt.Scale(
-                    domain=(dfprice["MSE2"].min(), dfprice["MSE2"].max()),
+                    domain=(dfprice["MSE"].min(), dfprice["MSE"].max()),
                     range=["green", "orange"]
                 )
                 # Create a chart with the gradient color scheme
@@ -130,15 +130,15 @@ if page == "Price algorithm":
                     range=["green", "orange"]
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model2',
-                    y=alt.Y('MAE2', axis=alt.Axis(title='Mean Absolute Error')),
-                    tooltip=['Model2', 'MAE2'],
-                    color=alt.Color('MAE2', scale=colors)
+                    x='Model',
+                    y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+                    tooltip=['Model', 'MAE'],
+                    color=alt.Color('MAE', scale=colors)
                 ).properties(
                     title='Mean Absolute Error',
                     width=800,
                     height=600
-                )
+                    )
             else:
                 colors = alt.Scale(
                     domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
@@ -154,9 +154,6 @@ if page == "Price algorithm":
                     width=800,
                     height=600
                 )
-
-        # Display the chart
-        st.altair_chart(chart, use_container_width=True)
 
 elif page == "Feature Selection":
 
