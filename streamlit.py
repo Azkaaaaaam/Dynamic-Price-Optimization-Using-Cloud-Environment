@@ -21,89 +21,87 @@ st.set_page_config(layout="wide")
 
 
 # Create a sidebar with a droplist to redirect to different pages
-page = st.sidebar.selectbox("Select a page", ["Price algorithm", "Feature Selection", "Real Time Demo"])
+page = st.sidebar.selectbox("Select a page", ["Algorithm Performance", "Feature Selection", "Real Time Demo"])
 
     
-if page == "Price algorithm":
-
-    # Create a dataframe with the data
-    data = {
-        'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
-        'MSE': [42.3, 22.28, 28.90, 41.54, 23.48, 27.67],
-        'MAE': [3.24, 2.28, 2.34, 3.22, 2.31, 2.35],
-        'R2': [0.708, 0.846, 0.8003, 0.713, 0.8377, 0.8088]
-    }
-    df = pd.DataFrame(data)
+if page == "Algorithm Performance":
+    algo = st.selectbox("Select a ", ["Price algorithm", "Surge algorithm"])
     
-    # Set up the layout of the page with the two columns
-    col1, col2 = st.columns([1, 3])
-    
-    # Create the checkbox and display the appropriate chart based on the selection
-    with col1:
-        st.write("# Select algorithm:")
-        options = ["Surge Multiplier", "Price Model"]
-        algorithm_type = st.radio("", options)
+    if algo == "Surge algorithm":
+        # Create a dataframe with the data
+        data = {
+            'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
+            'MSE': [42.3, 22.28, 28.90, 41.54, 23.48, 27.67],
+            'MAE': [3.24, 2.28, 2.34, 3.22, 2.31, 2.35],
+            'R2': [0.708, 0.846, 0.8003, 0.713, 0.8377, 0.8088]
+        }
+        df = pd.DataFrame(data)
 
-        st.write("# Select chart type:")
-        options = ["MSE", "MAE", "R2"]
-        chart_type = st.radio("", options)
+        # Set up the layout of the page with the two columns
+        col1, col2 = st.columns([1, 3])
+
+        # Create the checkbox and display the appropriate chart based on the selection
+        with col1:
+
+            st.write("# Select chart type:")
+            options = ["MSE", "MAE", "R2"]
+            chart_type = st.radio("", options)
 
 
-    with col2:
-        # Create the charts
-        st.write("Chart:")
-        st.write("")
-        
-        if algorithm_type == "Surge Multiplier":
-            if chart_type == "MSE":
-                colors = alt.Scale(
-                    domain=(df["MSE"].min(), df["MSE"].max()),
-                    range=["green", "orange"]
-                )
-                # Create a chart with the gradient color scheme
-                chart = alt.Chart(df).mark_bar().encode(
-                    x='Model',
-                    y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
-                    color=alt.Color('MSE', scale=colors)
-                ).properties(
-                    title='Mean Squared Error',
-                    width=800,
-                    height=600
-                )
+        with col2:
+            # Create the charts
+            st.write("Chart:")
+            st.write("")  
+            if algorithm_type == "Surge Multiplier":
+                if chart_type == "MSE":
+                    colors = alt.Scale(
+                        domain=(df["MSE"].min(), df["MSE"].max()),
+                        range=["green", "orange"]
+                    )
+                    # Create a chart with the gradient color scheme
+                    chart = alt.Chart(df).mark_bar().encode(
+                        x='Model',
+                        y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
+                        color=alt.Color('MSE', scale=colors)
+                    ).properties(
+                        title='Mean Squared Error',
+                        width=800,
+                        height=600
+                    )
 
-            elif chart_type == "MAE":
-                colors = alt.Scale(
-                    domain=(df["MAE"].min(), df["MAE"].max()),
-                    range=["green", "orange"]
-                )
-                chart = alt.Chart(df).mark_bar().encode(
-                    x='Model',
-                    y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
-                    tooltip=['Model', 'MAE'],
-                    color=alt.Color('MAE', scale=colors)
-                ).properties(
-                    title='Mean Absolute Error',
-                    width=800,
-                    height=600
-                )
-            else:
-                colors = alt.Scale(
-                    domain=(df["R2"].min(), df["R2"].max()),
-                    range=["orange", "green"]
-                )
-                chart = alt.Chart(df).mark_bar().encode(
-                    x='Model',
-                    y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
-                    tooltip=['Model', alt.Tooltip('R2', format='.2%')],
-                    color=alt.Color('R2', scale=colors)
-                ).properties(
-                    title='R Squared',
-                    width=800,
-                    height=600
-                )
+                elif chart_type == "MAE":
+                    colors = alt.Scale(
+                        domain=(df["MAE"].min(), df["MAE"].max()),
+                        range=["green", "orange"]
+                    )
+                    chart = alt.Chart(df).mark_bar().encode(
+                        x='Model',
+                        y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+                        tooltip=['Model', 'MAE'],
+                        color=alt.Color('MAE', scale=colors)
+                    ).properties(
+                        title='Mean Absolute Error',
+                        width=800,
+                        height=600
+                    )
+                else:
+                    colors = alt.Scale(
+                        domain=(df["R2"].min(), df["R2"].max()),
+                        range=["orange", "green"]
+                    )
+                    chart = alt.Chart(df).mark_bar().encode(
+                        x='Model',
+                        y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
+                        tooltip=['Model', alt.Tooltip('R2', format='.2%')],
+                        color=alt.Color('R2', scale=colors)
+                    ).properties(
+                        title='R Squared',
+                        width=800,
+                        height=600
+                    )
 
-            # Display the chart
-            st.altair_chart(chart, use_container_width=True)
+                # Display the chart
+                st.altair_chart(chart, use_container_width=True)
 
 
 elif page == "Feature Selection":
