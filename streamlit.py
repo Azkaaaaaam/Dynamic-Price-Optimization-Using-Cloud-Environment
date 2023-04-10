@@ -40,9 +40,14 @@ if page == "Price algorithm":
     
     # Create the checkbox and display the appropriate chart based on the selection
     with col1:
-        st.write("Select algorithm:")
+        st.write("# Select algorithm:")
         options = ["Surge Multiplier", "Price Model"]
-        algorithm_type = st.checkbox("", options)
+        algorithm_type = st.radio("", options)
+
+        st.write("# Select chart type:")
+        options = ["MSE", "MAE", "R2"]
+        chart_type = st.radio("", options)
+
 
     with col2:
         # Create the charts
