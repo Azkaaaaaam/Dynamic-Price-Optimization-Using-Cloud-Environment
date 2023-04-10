@@ -35,7 +35,12 @@ if page == "Price algorithm":
     df = pd.DataFrame(data)
 
     # Set up the radio buttons to select the chart type
-    chart_type = st.sidebar.radio("Select chart type", ("MSE", "MAE", "R2"))
+    st.sidebar.write("Select chart type:")
+    chart_type = st.sidebar.radio("", ("MSE", "MAE", "R2"), key="1")
+
+    # Create the charts
+    st.write("Chart:")
+    st.write("")
     
     if chart_type == "MSE":
         colors = alt.Scale(
@@ -52,7 +57,7 @@ if page == "Price algorithm":
             width=800,
             height=600
         )
-        
+
     elif chart_type == "MAE":
         colors = alt.Scale(
             domain=(df["MAE"].min(), df["MAE"].max()),
@@ -84,10 +89,9 @@ if page == "Price algorithm":
             height=600
         )
 
-
-
     # Display the chart
     st.altair_chart(chart, use_container_width=True)
+
    
 elif page == "Feature Selection":
 
