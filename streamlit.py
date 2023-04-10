@@ -39,7 +39,7 @@ if page == "Price algorithm":
 
         # Generate the chart based on the selected chart type
     if chart_type == "MSE":
-        chart = alt.Chart(df).mark_bar().encode(
+        chart = alt.Chart(df).mark_bar(color='green').encode(
             x='Model',
             y='MSE',
             tooltip=['Model', 'MSE']
