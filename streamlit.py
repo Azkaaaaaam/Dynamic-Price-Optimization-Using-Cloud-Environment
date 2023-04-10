@@ -98,63 +98,6 @@ if page == "Price algorithm":
                     height=600
                 )
 
-        else:
-                # Create the data dictionary
-            dataprice = {
-                'Model2': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
-                'MSE2': [0.014, 0.006, 0.014, 0.007],
-                'MAE2': [0.052, 0.051, 0.056, 0.052],
-                'R_2': [0.86, 0.9324, 0.8543, 0.9303]
-            }
-
-            dfprice = pd.DataFrame(dataprice)
-            if chart_type == "MSE2":
-                colors = alt.Scale(
-                    domain=(dfprice["MSE"].min(), dfprice["MSE"].max()),
-                    range=["green", "orange"]
-                )
-                # Create a chart with the gradient color scheme
-                chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model2',
-                    y=alt.Y('MSE2', axis=alt.Axis(title='Mean Squared Error')),
-                    color=alt.Color('MSE2', scale=colors)
-                ).properties(
-                    title='Mean Squared Error',
-                    width=800,
-                    height=600
-                )
-
-            elif chart_type == "MAE2":
-                colors = alt.Scale(
-                    domain=(dfprice["MAE2"].min(), dfprice["MAE2"].max()),
-                    range=["green", "orange"]
-                )
-                chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model',
-                    y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
-                    tooltip=['Model', 'MAE'],
-                    color=alt.Color('MAE', scale=colors)
-                ).properties(
-                    title='Mean Absolute Error',
-                    width=800,
-                    height=600
-                    )
-            else:
-                colors = alt.Scale(
-                    domain=(dfprice["R_2"].min(), dfprice["R_2"].max()),
-                    range=["orange", "green"]
-                )
-                chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model2',
-                    y=alt.Y('R_2', axis=alt.Axis(format='%', title='R Squared')),
-                    tooltip=['Model2', alt.Tooltip('R_2', format='.2%')],
-                    color=alt.Color('R_2', scale=colors)
-                ).properties(
-                    title='R Squared',
-                    width=800,
-                    height=600
-                )
-
 elif page == "Feature Selection":
 
     st.title('1- Feature Selection Surge Multiplier')
