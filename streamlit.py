@@ -21,7 +21,7 @@ st.set_page_config(layout="wide")
 
 
 # Create a sidebar with a droplist to redirect to different pages
-page = st.sidebar.selectbox("Select a page", ["Algorithm Performance", "Feature Selection", "Real Time Demo"])
+page = st.sidebar.selectbox("Select a page", ["Algorithms Performances", "Feature Selection", "Real Time Demo"])
 if page == "Feature Selection":
     st.title('Feature Selection:')
     algorithm = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
