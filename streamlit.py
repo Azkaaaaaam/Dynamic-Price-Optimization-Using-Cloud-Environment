@@ -29,7 +29,7 @@ if page == "Price algorithm":
     
     # Create the data dictionary
     dataprice = {
-        'Model': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
+        'Model2': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
         'MSE2': [0.014, 0.006, 0.014, 0.007],
         'MAE2': [0.052, 0.051, 0.056, 0.052],
         'R_2': [0.86, 0.9324, 0.8543, 0.9303]
@@ -91,7 +91,7 @@ if page == "Price algorithm":
                     width=800,
                     height=600
                 )
-            else:
+        if algorithm_type == "Price Model":
                 colors = alt.Scale(
                     domain=(df["R2"].min(), df["R2"].max()),
                     range=["orange", "green"]
@@ -117,7 +117,7 @@ if page == "Price algorithm":
                 )
                 # Create a chart with the gradient color scheme
                 chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model',
+                    x='Model2',
                     y=alt.Y('MSE2', axis=alt.Axis(title='Mean Squared Error')),
                     color=alt.Color('MSE2', scale=colors)
                 ).properties(
@@ -132,9 +132,9 @@ if page == "Price algorithm":
                     range=["green", "orange"]
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model',
+                    x='Model2',
                     y=alt.Y('MAE2', scale=alt.Scale('MAE2', scheme='yellowgreen')),
-                    tooltip=['Model', 'MAE2'],
+                    tooltip=['Model2', 'MAE2'],
                     color=alt.Color('MAE2', scale=colors)
                 ).properties(
                     title='Mean Absolute Error',
@@ -147,9 +147,9 @@ if page == "Price algorithm":
                     range=["orange", "green"]
                 )
                 chart = alt.Chart(dfprice).mark_bar().encode(
-                    x='Model',
+                    x='Model2',
                     y=alt.Y('R_2', axis=alt.Axis(format='%', title='R Squared')),
-                    tooltip=['Model', alt.Tooltip('R_2', format='.2%')],
+                    tooltip=['Model2', alt.Tooltip('R_2', format='.2%')],
                     color=alt.Color('R_2', scale=colors)
                 ).properties(
                     title='R Squared',
