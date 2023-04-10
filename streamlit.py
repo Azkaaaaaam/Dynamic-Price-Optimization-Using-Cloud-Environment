@@ -24,48 +24,6 @@ st.set_page_config(layout="wide")
 page = st.sidebar.selectbox("Select a page", ["Price algorithm", "Surge Multiplier Algorithm", "Real Time Demo"])
 
 if page == "Price algorithm":
-    st.write("This page is under construction.")
-    
-elif page == "Surge Multiplier Algorithm":
-
-    st.title('1- Feature Selection')
-    data = {
-        "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
-                     "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
-                     "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
-                     "winddir", "Day"],
-        "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
-                        0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
-                        0.064, 0.063, 0.048, 0.028],
-        "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
-                  'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
-    }
-
-    df = pd.DataFrame(data)
-
-    bars = alt.Chart(df).mark_bar().encode(
-        x='Variable',
-        y='Correlation',
-        color=alt.Color('Color', scale=None)
-    ).properties(
-        width=900,
-        height=300  # adjust height here
-    )
-    st.altair_chart(bars, use_container_width=True)
-
-          
-    col1, col2= st.columns(2)
-    with col1:
-        image = Image.open("image/output.png").resize((450, 450))
-        st.image(image, caption="Output Image")
-
-    with col2:
-        image = Image.open("image/Untitled design.png").resize((450, 300))
-        st.image(image, caption="Lime")
-        
-        
-    st.title('2- Models Performances')
-
 
     # Create a dataframe with the data
     data = {
@@ -104,6 +62,46 @@ elif page == "Surge Multiplier Algorithm":
 
     # Display the chart
     st.altair_chart(chart, use_container_width=True)
+   
+elif page == "Feature Selection":
+
+    st.title('1- Feature Selection Surge Multiplier')
+    data = {
+        "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
+                     "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
+                     "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
+                     "winddir", "Day"],
+        "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
+                        0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
+                        0.064, 0.063, 0.048, 0.028],
+        "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
+                  'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
+    }
+
+    df = pd.DataFrame(data)
+
+    bars = alt.Chart(df).mark_bar().encode(
+        x='Variable',
+        y='Correlation',
+        color=alt.Color('Color', scale=None)
+    ).properties(
+        width=900,
+        height=300  # adjust height here
+    )
+    st.altair_chart(bars, use_container_width=True)
+
+          
+    col1, col2= st.columns(2)
+    with col1:
+        image = Image.open("image/output.png").resize((450, 450))
+        st.image(image, caption="Output Image")
+
+    with col2:
+        image = Image.open("image/Untitled design.png").resize((450, 300))
+        st.image(image, caption="Lime")
+        
+        
+    st.title('2- Models Performances')
     
 else:
     st.title('Yellow Taxis pickups in NYC')
