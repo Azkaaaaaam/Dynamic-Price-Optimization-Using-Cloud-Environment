@@ -36,7 +36,7 @@ if page == "Price algorithm":
     df = pd.DataFrame(data)
     
     # Set up the layout of the page with the two columns
-    col1, col2 = st.columns([1, 2])
+    col1, col2 = st.columns([1, 3])
     
     # Create the checkbox and display the appropriate chart based on the selection
     with col1:
