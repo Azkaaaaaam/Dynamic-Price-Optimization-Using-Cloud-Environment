@@ -53,9 +53,6 @@ if page == "Price algorithm":
         st.write("")
         
         if algorithm_type == "Surge Multiplier":
-            image = Image.open('surge_multiplier.png')
-            st.image(image, use_column_width=True)
-        else:
             if chart_type == "MSE":
                 colors = alt.Scale(
                     domain=(df["MSE"].min(), df["MSE"].max()),
