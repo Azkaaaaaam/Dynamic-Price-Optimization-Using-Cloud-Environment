@@ -43,7 +43,10 @@ if page == "Price algorithm":
         st.write("Select algorithm:")
         options = ["Surge Multiplier", "Price Model"]
         algorithm_type = st.checkbox("", options)
-
+        # Set up the radio buttons to select the chart type
+        st.write("Select chart type:")
+        options = ["MSE", "MAE", "R2"]
+        chart_type = st.radio("", options)
     with col2:
         # Create the charts
         st.write("Chart:")
