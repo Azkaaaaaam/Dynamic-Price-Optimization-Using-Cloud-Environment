@@ -32,11 +32,11 @@ if page == "Price algorithm":
         'MAE': [3.24, 2.28, 2.34, 3.22, 2.31, 2.35],
         'R2': [0.708, 0.846, 0.8003, 0.713, 0.8377, 0.8088]
     }
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(data)    
+    # Prompt the user to select the chart type
+    st.write("Select chart type:")
+    chart_type = st.radio("", ("MSE", "MAE", "R2"), key="1")
 
-    # Set up the radio buttons to select the chart type
-    st.sidebar.write("Select chart type:")
-    chart_type = st.sidebar.radio("", ("MSE", "MAE", "R2"), key="1")
 
     # Create the charts
     st.write("Chart:")
