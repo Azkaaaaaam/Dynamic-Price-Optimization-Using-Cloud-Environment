@@ -30,8 +30,8 @@ if page == "Price algorithm":
     # Create the data dictionary
     dataprice = {
         'Model': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest'],
-        'MSE': [0.014, 0.006, 0.014, 0.007],
-        'MAE': [0.052, 0.051, 0.056, 0.052],
+        'MSE2': [0.014, 0.006, 0.014, 0.007],
+        'MAE2': [0.052, 0.051, 0.056, 0.052],
         'R2': [0.86, 0.9324, 0.8543, 0.9303]
     }
 
@@ -110,7 +110,7 @@ if page == "Price algorithm":
             # Display the chart
             st.altair_chart(chart, use_container_width=True)
         else:
-            if dataprice == "MSE":
+            if chart_type == "MSE2":
                 colors = alt.Scale(
                     domain=(dfprice["MSE"].min(), dfprice["MSE"].max()),
                     range=["green", "orange"]
@@ -126,7 +126,7 @@ if page == "Price algorithm":
                     height=600
                 )
 
-            elif dataprice == "MAE":
+            elif chart_type == "MAE2":
                 colors = alt.Scale(
                     domain=(dfprice["MAE"].min(), dfprice["MAE"].max()),
                     range=["green", "orange"]
