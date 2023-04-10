@@ -25,7 +25,7 @@ page = st.sidebar.selectbox("Select a page", ["Algorithm Performance", "Feature 
 
     
 if page == "Algorithm Performance":
-    algo = st.selectbox( ["Price algorithm", "Surge algorithm"])
+    algo = st.selectbox("Select an Algorithm", ["Price algorithm", "Surge algorithm"])
     
     if algo == "Surge algorithm":
         # Create a dataframe with the data
