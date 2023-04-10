@@ -37,11 +37,12 @@ if page == "Price algorithm":
     # Set up the radio buttons to select the chart type
     chart_type = st.sidebar.radio("Select chart type", ("MSE", "MAE", "R2"))
 
-    # Generate the chart based on the selected chart type
+        # Generate the chart based on the selected chart type
     if chart_type == "MSE":
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
-            y='MSE'
+            y='MSE',
+            tooltip=['Model', 'MSE']
         ).properties(
             title='Mean Squared Error',
             width=800,
@@ -50,7 +51,8 @@ if page == "Price algorithm":
     elif chart_type == "MAE":
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
-            y='MAE'
+            y='MAE',
+            tooltip=['Model', 'MAE']
         ).properties(
             title='Mean Absolute Error',
             width=800,
@@ -59,7 +61,8 @@ if page == "Price algorithm":
     else:
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
-            y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared'))
+            y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
+            tooltip=['Model', alt.Tooltip('R2', format='.2%')]
         ).properties(
             title='R Squared',
             width=800,
