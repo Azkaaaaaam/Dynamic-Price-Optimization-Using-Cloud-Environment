@@ -89,13 +89,13 @@ if page == "Feature Selection":
         )
 
         st.altair_chart(bars, use_container_width=True)
-        col1, col2= st.columns([1, 3])
+        col1, col2= st.columns(2)
         with col1:
             image = Image.open("image/shap pRICE.png").resize((400, 400))
             st.image(image, caption="Output Image")
 
         with col2:
-            image = Image.open("image/LIME pRICE.png").resize((800, 500))
+            image = Image.open("image/LIME pRICE.png").resize((800, 450))
             st.image(image, caption="Lime")
             
 
