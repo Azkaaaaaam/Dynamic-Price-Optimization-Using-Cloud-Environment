@@ -54,9 +54,7 @@ if page == "Price algorithm":
         st.write("Chart:")
         st.write("")
         
-        if algorithm_type == "Price Model":
-
-        else:
+        if algorithm_type == "Surge Multiplier":
             if chart_type == "MSE":
                 colors = alt.Scale(
                     domain=(df["MSE"].min(), df["MSE"].max()),
