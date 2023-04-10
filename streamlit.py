@@ -40,7 +40,7 @@ if page == "Price algorithm":
     if chart_type == "MSE":
         colors = alt.Scale(
             domain=(df["MSE"].min(), df["MSE"].max()),
-            range=["orange", "green"]
+            range=["green", "orange"]
         )
         # Create a chart with the gradient color scheme
         chart = alt.Chart(df).mark_bar().encode(
@@ -55,8 +55,8 @@ if page == "Price algorithm":
         
     elif chart_type == "MAE":
         colors = alt.Scale(
-            domain=(0, 4),
-            range=["yellow", "green"]
+            domain=(df["MAE"].min(), df["MAE"].max()),
+            range=["green", "orange"]
         )
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
@@ -70,8 +70,8 @@ if page == "Price algorithm":
         )
     else:
         colors = alt.Scale(
-            domain=(0, 1),
-            range=["yellow", "green"]
+            domain=(df["R2"].min(), df["R2"].max()),
+            range=["orange", "green"]
         )
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
