@@ -36,43 +36,54 @@ if page == "Price algorithm":
 
     # Set up the radio buttons to select the chart type
     chart_type = st.sidebar.radio("Select chart type", ("MSE", "MAE", "R2"))
-    colors = alt.Scale(
-        domain=(df["MSE"].min(), df["MSE"].max()),
-        range=["orange", "green"]
-    )
-
-    # Create a chart with the gradient color scheme
-    chart = alt.Chart(df).mark_bar().encode(
-        x='Model',
-        y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
-        color=alt.Color('MSE', scale=colors)
-    ).properties(
-        title='Mean Squared Error',
-        width=800,
-        height=600
+    
+    if chart_type == "MSE":
+        colors = alt.Scale(
+            domain=(df["MSE"].min(), df["MSE"].max()),
+            range=["orange", "green"]
         )
-    elif:
-        chart_type == "MAE":
-            chart = alt.Chart(df).mark_bar().encode(
-                x='Model',
-                y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
-                tooltip=['Model', 'MAE']
-            ).properties(
-                title='Mean Absolute Error',
-                width=800,
-                height=600
-            )
+        # Create a chart with the gradient color scheme
+        chart = alt.Chart(df).mark_bar().encode(
+            x='Model',
+            y=alt.Y('MSE', axis=alt.Axis(title='Mean Squared Error')),
+            color=alt.Color('MSE', scale=colors)
+        ).properties(
+            title='Mean Squared Error',
+            width=800,
+            height=600
+        )
+        
+    elif chart_type == "MAE":
+        colors = alt.Scale(
+            domain=(0, 4),
+            range=["yellow", "green"]
+        )
+        chart = alt.Chart(df).mark_bar().encode(
+            x='Model',
+            y=alt.Y('MAE', scale=alt.Scale(domain=(0, 4), scheme='yellowgreen')),
+            tooltip=['Model', 'MAE'],
+            color=alt.Color('MAE', scale=colors)
+        ).properties(
+            title='Mean Absolute Error',
+            width=800,
+            height=600
+        )
     else:
+        colors = alt.Scale(
+            domain=(0, 1),
+            range=["yellow", "green"]
+        )
         chart = alt.Chart(df).mark_bar().encode(
             x='Model',
             y=alt.Y('R2', axis=alt.Axis(format='%', title='R Squared')),
             tooltip=['Model', alt.Tooltip('R2', format='.2%')],
-            color=alt.Color('R2', scale=alt.Scale(scheme='yellowgreen'))
+            color=alt.Color('R2', scale=colors)
         ).properties(
             title='R Squared',
             width=800,
             height=600
         )
+
 
 
     # Display the chart
