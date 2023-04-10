@@ -25,7 +25,7 @@ page = st.sidebar.selectbox("Select a page", ["Algorithm Performance", "Feature 
 
     
 if page == "Algorithm Performance":
-    algo = st.selectbox("Select an Algorithm", ["Price algorithm", "Surge algorithm"])
+    algo = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
     
     if algo == "Surge algorithm":
         # Create a dataframe with the data
@@ -176,56 +176,59 @@ if page == "Algorithm Performance":
 
 
 elif page == "Feature Selection":
-
-    st.title('1- Feature Selection Surge Multiplier')
-    data = {
-        "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
-                     "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
-                     "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
-                     "winddir", "Day"],
-        "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
-                        0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
-                        0.064, 0.063, 0.048, 0.028],
-        "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
-                  'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
-    }
-
-    df = pd.DataFrame(data)
-
-    bars = alt.Chart(df).mark_bar().encode(
-        x='Variable',
-        y='Correlation',
-        color=alt.Color('Color', scale=None)
-    ).properties(
-        width=900,
-        height=300  # adjust height here
-    )
-    st.altair_chart(bars, use_container_width=True)
-
-          
-    col1, col2= st.columns(2)
-    with col1:
-        image = Image.open("image/output.png").resize((450, 450))
-        st.image(image, caption="Output Image")
-
-    with col2:
-        image = Image.open("image/Untitled design.png").resize((450, 300))
-        st.image(image, caption="Lime")
-        
-        
-    st.title('2- Models Performances')
+    algo = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
     
-else:
-    st.title('Yellow Taxis pickups in NYC')
-    ############################################################################# Datasets
-    url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
-    response2 = requests.get(url2)
-    if response2.status_code == 200:
-        data2 = response2.json()
-        df = pd.json_normalize(data2)
-        print(df.head())
+    if algo == "Surge algorithm":
+        # Create a dataframe with the data
+
+        st.title('1- Feature Selection Surge Multiplier')
+        data = {
+            "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
+                         "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
+                         "improvement_surcharge", "humidity", "windspeed", "cloudcover", "passenger_count", 
+                         "winddir", "Day"],
+            "Correlation": [1.000000, 0.970, 0.412, 0.407, 0.313, 0.289, 0.284, 0.248, 
+                            0.211, 0.191, 0.190, 0.189, 0.157, 0.131, 0.100, 0.086, 
+                            0.064, 0.063, 0.048, 0.028],
+            "Color": ['green', 'red', 'green', 'orange', 'orange', 'green', 'green', 'green', 'orange', 'green', 'green',
+                      'green', 'green', 'orange', 'green', 'green', 'green', 'green', 'green', 'green']
+        }
+
+        df = pd.DataFrame(data)
+
+        bars = alt.Chart(df).mark_bar().encode(
+            x='Variable',
+            y='Correlation',
+            color=alt.Color('Color', scale=None)
+        ).properties(
+            width=900,
+            height=300  # adjust height here
+        )
+        st.altair_chart(bars, use_container_width=True)
+
+
+        col1, col2= st.columns(2)
+        with col1:
+            image = Image.open("image/output.png").resize((450, 450))
+            st.image(image, caption="Output Image")
+
+        with col2:
+            image = Image.open("image/Untitled design.png").resize((450, 300))
+            st.image(image, caption="Lime")
+
+
+
     else:
-        print("Error: Could not retrieve data from API.")
+        st.title('Yellow Taxis pickups in NYC')
+        ############################################################################# Datasets
+        url2 = "https://data.cityofnewyork.us/resource/m6nq-qud6.json?$query=SELECT%0A%20%20%60tpep_pickup_datetime%60%2C%0A%20%20%60tpep_dropoff_datetime%60%2C%0A%20%20%60passenger_count%60%2C%0A%20%20%60trip_distance%60%2C%0A%20%20%60pulocationid%60%2C%0A%20%20%60dolocationid%60%2C%0A%20%20%60total_amount%60"
+        response2 = requests.get(url2)
+        if response2.status_code == 200:
+            data2 = response2.json()
+            df = pd.json_normalize(data2)
+            print(df.head())
+        else:
+            print("Error: Could not retrieve data from API.")
 
     ############################################################################# Locations Ids and Coordinates
     # Set the API endpoint URL
