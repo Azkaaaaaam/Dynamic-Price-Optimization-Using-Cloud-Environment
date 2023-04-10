@@ -63,6 +63,31 @@ if page == "Feature Selection":
         with col2:
             image = Image.open("image/Untitled design.png").resize((450, 300))
             st.image(image, caption="Lime")
+            
+            
+    else:
+
+        st.title('1- Feature Selection Price Model')
+        data = {
+            "Variable": ["total_amount", "fare_amount", "trip_distance", "improvement_surcharge", "congestion_surcharge", 
+                          "duration", "pulocationid", "Hour", "dolocationid", "passenger_count", "extra", "vendorid", 
+                          "Weekday", "Day", "Month", "month", "windspeed", "humidity", "cloudcover", "feelslikemin", 
+                          "feelslike", "winddir", "temp", "snow"],
+            "Correlation": [1.000000, 0.976664, 0.901369, 0.168341, 0.116466, 0.082067, 0.075935, 0.067078, 0.040840, 
+                            0.017018, 0.014667, 0.014171, 0.010144, 0.009795, 0.007256, 0.007256, 0.006563, 0.006198, 
+                            0.005888, 0.004398, 0.003822, 0.002538, 0.002309, 0.001213],
+        }
+
+        df = pd.DataFrame(data)
+
+        bars = alt.Chart(df).mark_bar().encode(
+            x='Variable',
+            y='Correlation',
+        ).properties(
+            width=900,
+            height=300  # adjust height here
+        )
+        st.altair_chart(bars, use_container_width=True)
 
 elif page == "Algorithms Performances":
     st.title('Algorithms Performances:')
