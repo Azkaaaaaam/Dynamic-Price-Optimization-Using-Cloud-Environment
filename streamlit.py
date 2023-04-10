@@ -37,13 +37,13 @@ if page == "Price algorithm":
 
     # Set up the radio buttons to select the chart type
     st.write("Select chart type:")
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.olumns(3)
     with col1:
         chart_type = st.radio("", ("MSE"), key="1")
     with col2:
-        chart_type = st.radio("", ("MAE"), key="1")
+        chart_type = st.radio("", ("MAE"), key="2")
     with col3:
-        chart_type = st.radio("", ("R2"), key="1")
+        chart_type = st.radio("", ("R2"), key="3")
 
     # Create the charts
     st.write("Chart:")
