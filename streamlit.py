@@ -95,7 +95,7 @@ if page == "Feature Selection":
             st.image(image, caption="Output Image")
 
         with col2:
-            image = Image.open("image/LIME pRICE.png").resize((800, 600))
+            image = Image.open("image/LIME pRICE.png").resize((800, 550))
             st.image(image, caption="Lime")
             
 
