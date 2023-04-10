@@ -43,7 +43,7 @@ if page == "Algorithm Performance":
         # Create the checkbox and display the appropriate chart based on the selection
         with col1:
 
-            st.write("# Select chart type:")
+            st.write("### Select chart type:")
             options = ["MSE", "MAE", "R2"]
             chart_type = st.radio("", options)
 
@@ -117,7 +117,7 @@ if page == "Algorithm Performance":
         # Create the checkbox and display the appropriate chart based on the selection
         with col1:
 
-            st.write("# Select chart type:")
+            st.write("### Select chart type:")
             options = ["MSE", "MAE", "R2"]
             chart_type = st.radio("", options)
 
