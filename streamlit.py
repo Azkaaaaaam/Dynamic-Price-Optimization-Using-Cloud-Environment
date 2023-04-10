@@ -14,7 +14,6 @@ import pickle
 import joblib
 import altair as alt
 from PIL import Image
-import streamlit_fontawesome as stf
 
 ############################################################################# Layout
 
@@ -24,8 +23,7 @@ st.set_page_config(layout="wide")
 # Create a sidebar with a droplist to redirect to different pages
 page = st.sidebar.selectbox("Select a page", ["Feature Selection","Algorithms Performances", "Real Time Demo"])
 if page == "Feature Selection":
-    icon = stf.icons['fa-flask']
-    st.title('f"{icon}Feature Selection:')
+    st.title('Feature Selection:')
     algorithm = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
     
     if algorithm == "Surge algorithm":
