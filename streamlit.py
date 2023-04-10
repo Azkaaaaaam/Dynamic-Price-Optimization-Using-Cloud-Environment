@@ -34,17 +34,16 @@ if page == "Price algorithm":
         'R2': [0.708, 0.846, 0.8003, 0.713, 0.8377, 0.8088]
     }
     df = pd.DataFrame(data)
+    # Set up the layout of the page with the two columns
+    col1, col2 = st.columns([1, 2])
+    # Create the chart for the selected chart type and display it in the second column
+    with col1:
+        # Set up the radio buttons to select the chart type
+        st.write("Select chart type:")
+        options = ["MSE", "MAE", "R2"]
+        chart_type = st.radio("", options)
 
-    # Set up the radio buttons to select the chart type
-    st.write("Select chart type:")
-    options = ["MSE", "MAE", "R2"]
-    chart_type = st.radio("", options)
-
-    # Create the charts
-    st.write("Chart:")
-    st.write("")
-
-
+    with col2:
     # Create the charts
     st.write("Chart:")
     st.write("")
