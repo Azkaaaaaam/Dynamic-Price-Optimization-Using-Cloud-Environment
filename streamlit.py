@@ -32,7 +32,7 @@ if page == "Price algorithm":
         'Model': ['Decision Tree', 'Random Forest', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
         'MSE': [0.014, 0.006, 0.014, 0.007, 27.67],
         'MAE': [0.052, 0.051, 0.056, 0.052, 2.35],
-        'R Squared': [0.86, 0.9324, 0.8543, 0.9303, 0.8088]
+        'R2': [0.86, 0.9324, 0.8543, 0.9303, 0.8088]
     }
 
     dfprice = pd.DataFrame(dataprice)
