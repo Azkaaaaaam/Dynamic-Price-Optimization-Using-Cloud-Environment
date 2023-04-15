@@ -24,7 +24,7 @@ st.sidebar.title('Page Selection')
 page = st.sidebar.selectbox(" ", ["Real Time Demo","Feature Selection","Algorithms Performances" ])
 if page == "Feature Selection":
     st.title('Feature Selection:')
-    st.write("For feature selection, we used different techniques such as correlation analysis, LIME (Local Interpretable Model-Agnostic Explanations), and SHAP (Shapley Additive Explanations).")
+    st.write("In this section, we included the feature selection process results performed to start modeling our datasets. Indeed, we used different techniques such as correlation analysis, LIME (Local Interpretable Model-Agnostic Explanations), and SHAP (Shapley Additive Explanations).")
     
     algorithm = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])    
     if algorithm == "Surge algorithm":
@@ -103,6 +103,7 @@ if page == "Feature Selection":
 
 elif page == "Algorithms Performances":
     st.title('Algorithms Performances:')
+    st.write("In this section, we will explore the different performances of each model for every dataset: surge multiplier and static price")
     algo = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
     
     if algo == "Price algorithm":
