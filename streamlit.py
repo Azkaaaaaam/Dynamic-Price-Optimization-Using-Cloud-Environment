@@ -30,6 +30,17 @@ if page == "Feature Selection":
         # Create a dataframe with the data
 
         st.title('2- Feature Selection Surge Multiplier')
+       
+
+        col1, col2= st.columns(2)
+        with col1:
+            image = Image.open("image/output.png").resize((450, 450))
+            st.image(image, caption="Output Image")
+
+        with col2:
+            image = Image.open("image/Untitled design.png").resize((450, 300))
+            st.image(image, caption="Lime")
+            
         data = {
             "Variable": ["surge_multiplier", "num_trips", "Hour", "congestion_surcharge", "Month", "feelslike", 
                          "temp", "duration", "extra", "fare_amount", "trip_distance", "total_amount", "snow", 
@@ -54,16 +65,6 @@ if page == "Feature Selection":
         )
         st.altair_chart(bars, use_container_width=True)
 
-
-        col1, col2= st.columns(2)
-        with col1:
-            image = Image.open("image/output.png").resize((450, 450))
-            st.image(image, caption="Output Image")
-
-        with col2:
-            image = Image.open("image/Untitled design.png").resize((450, 300))
-            st.image(image, caption="Lime")
-            
     else:
         st.title('1- Feature Selection Price Model')
         data = {
@@ -77,7 +78,15 @@ if page == "Feature Selection":
         }
 
         df = pd.DataFrame(data)
+        col1, col2= st.columns(2)
+        with col1:
+            image = Image.open("image/shap pRICE.png").resize((450, 450))
+            st.image(image, caption="Output Image")
 
+        with col2:
+            image = Image.open("image/LIME pRICE.png").resize((800, 450))
+            st.image(image, caption="Lime")
+          
         bars = alt.Chart(df).mark_bar().encode(
             x=alt.X('Variable', sort=None),
             y='Correlation',
@@ -89,15 +98,7 @@ if page == "Feature Selection":
         )
 
         st.altair_chart(bars, use_container_width=True)
-        col1, col2= st.columns(2)
-        with col1:
-            image = Image.open("image/shap pRICE.png").resize((450, 450))
-            st.image(image, caption="Output Image")
 
-        with col2:
-            image = Image.open("image/LIME pRICE.png").resize((800, 450))
-            st.image(image, caption="Lime")
-            
 
 elif page == "Algorithms Performances":
     st.title('Algorithms Performances:')
