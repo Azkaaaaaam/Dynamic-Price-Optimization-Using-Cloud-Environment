@@ -25,6 +25,7 @@ page = st.sidebar.selectbox(" ", ["Real Time Demo","Feature Selection","Algorith
 if page == "Feature Selection":
     st.title('Feature Selection:')
     algorithm = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
+    st.write("For feature selection, we used different techniques such as correlation analysis, LIME (Local Interpretable Model-Agnostic Explanations), and SHAP (SHapley Additive exPlanations).")
     
     if algorithm == "Surge algorithm":
         # Create a dataframe with the data
@@ -104,7 +105,7 @@ elif page == "Algorithms Performances":
     st.title('Algorithms Performances:')
     algo = st.selectbox("  ", ["Price algorithm", "Surge algorithm"])
     
-    if algo == "Surge algorithm":
+    if algo == "Price algorithm":
         # Create a dataframe with the data
         data = {
             'Model': ['Decision Tree', 'Random Forest', 'LSTM', 'Monte Carlo + Decision Tree', 'Monte Carlo + Random Forest', 'Monte Carlo + LSTM'],
