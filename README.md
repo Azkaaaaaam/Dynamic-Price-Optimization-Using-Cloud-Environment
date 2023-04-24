@@ -15,7 +15,6 @@ Here are some important links related  to the projects
 
 [Step by Step - How to Deploy a Model in Cloud - GCP ](https://github.com/Azkaaaaaam/Thesis/blob/ec3176c7e9929c882250a893e08b3fffdba05e9c/GCP%20Deployment%20-%20Surge%20Example/Step%20by%20Step%20-%20How%20to%20Deploy%20a%20Model%20in%20Cloud.pdf)
 
-correct this link !
 [Report Explaining the detailed work ](https://github.com/Azkaaaaaam/Thesis/blob/ec3176c7e9929c882250a893e08b3fffdba05e9c/GCP%20Deployment%20-%20Surge%20Example/Step%20by%20Step%20-%20How%20to%20Deploy%20a%20Model%20in%20Cloud.pdf)
 
 # Repository Tour 
